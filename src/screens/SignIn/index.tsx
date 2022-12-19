@@ -3,40 +3,40 @@ import Button from 'components/Button';
 import COLORS from 'src/constants/colors';
 import {useForm} from 'react-hook-form';
 import ControlledInput from 'components/ControlledInput';
-import {authenticateUser, clearAll, IUser} from 'src/store/sliceUser';
-import {useAppDispatch} from 'src/hooks';
+import {IUser} from 'src/store/sliceUser';
 import {GoBackButton} from 'components/GoBackButton';
 import {RootStackScreenProps} from 'src/navigation/types';
 
-export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
-  const dispatch = useAppDispatch();
+const onSignIn = async (formValues: IUser) => {
+  console.log('formValues >>', formValues);
 
+  const response = await fetch('http://localhost:3080/graphql', {
+    body: JSON.stringify({
+      query: `mutation AUTHORIZE {
+        authorize (input: { username: "${formValues.login}", password: "${formValues.password}" })
+      }`,
+    }),
+    headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+    method: 'POST',
+  });
+  const responseBody = await response.json();
+
+  console.log('responseBody.data.authorize >>', responseBody.data.authorize);
+};
+
+export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
   const {
     control,
     handleSubmit,
     formState: {},
   } = useForm();
 
-  const onSignIn = (userData: IUser) => {
-    console.log('userData');
-    console.log(userData);
-
-    dispatch(clearAll());
-    setTimeout(() => dispatch(authenticateUser(userData)), 1000);
-    setTimeout(
-      () =>
-        navigation.navigate('Main', {
-          screen: 'Home',
-        }),
-      2000,
-    );
-  };
-  const onSignUp = () => {
-    navigation.navigate('Sign Up');
-  };
-  const onForgotPassword = () => {
-    navigation.navigate('Forgot Password');
-  };
+  // const onSignUp = () => {
+  //   navigation.navigate('Sign Up');
+  // };
+  // const onForgotPassword = () => {
+  //   navigation.navigate('Forgot Password');
+  // };
   return (
     <View style={styles.container}>
       <View style={styles.inputsWrapper}>
@@ -60,12 +60,12 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
           }}
         />
 
-        <Button
+        {/* <Button
           style={{alignSelf: 'flex-end'}}
           type="flat"
           title="Forgot password?"
           onPress={onForgotPassword}
-        />
+        /> */}
         <Button
           style={{marginVertical: 30, alignSelf: 'flex-end'}}
           type="primary"
@@ -73,7 +73,7 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
           //@ts-ignore
           onPress={handleSubmit(onSignIn)}
         />
-        <View style={styles.registerWrapper}>
+        {/* <View style={styles.registerWrapper}>
           <Text style={styles.newToText}>New to Femme?</Text>
           <Button
             style={{width: 50}}
@@ -81,7 +81,7 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
             title="Register"
             onPress={onSignUp}
           />
-        </View>
+        </View> */}
       </View>
       <View style={{position: 'absolute', top: 100, left: 20}}>
         <GoBackButton type="flat" onPress={() => navigation.goBack()} />
@@ -100,13 +100,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
-  registerWrapper: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
+  // registerWrapper: {
+  //   width: '100%',
+  //   display: 'flex',
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'space-around',
+  // },
   inputsWrapper: {
     height: '100%',
     width: '90%',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     marginLeft: 20,
   },
-  newToText: {
-    fontSize: 18,
-  },
+  // newToText: {
+  //   fontSize: 18,
+  // },
 });
