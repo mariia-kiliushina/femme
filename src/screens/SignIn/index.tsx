@@ -6,30 +6,24 @@ import ControlledInput from 'components/ControlledInput';
 import {IUser} from 'src/store/sliceUser';
 import {GoBackButton} from 'components/GoBackButton';
 import {RootStackScreenProps} from 'src/navigation/types';
-
-const onSignIn = async (formValues: IUser) => {
-  console.log('formValues >>', formValues);
-
-  const response = await fetch('http://localhost:3080/graphql', {
-    body: JSON.stringify({
-      query: `mutation AUTHORIZE {
-        authorize (input: { username: "${formValues.login}", password: "${formValues.password}" })
-      }`,
-    }),
-    headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-    method: 'POST',
-  });
-  const responseBody = await response.json();
-
-  console.log('responseBody.data.authorize >>', responseBody.data.authorize);
-};
+import {useAuthorizeMutation} from 'src/api/authorization';
 
 export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
+  const [authorize] = useAuthorizeMutation();
+
   const {
     control,
     handleSubmit,
     formState: {},
   } = useForm();
+
+  const onSignIn = async (formValues: IUser) => {
+    console.log('formValues >>', formValues);
+    const res = await authorize({
+      variables: {username: formValues.login, password: formValues.password},
+    });
+    console.log('res.data?.authorize >>', res.data?.authorize);
+  };
 
   // const onSignUp = () => {
   //   navigation.navigate('Sign Up');
