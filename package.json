@@ -8,7 +8,9 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "ts": "npx tsc"
+    "ts": "npx tsc",
+    "graphql-codegen": "graphql-codegen --config ./codegen.ts",
+    "graphql-codegen:watch": "graphql-codegen --config ./codegen.ts --watch"
   },
   "dependencies": {
     "@apollo/client": "^3.7.2",
@@ -46,6 +48,12 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
+    "@graphql-codegen/cli": "2.13.7",
+    "@graphql-codegen/client-preset": "1.1.1",
+    "@graphql-codegen/near-operation-file-preset": "2.4.3",
+    "@graphql-codegen/typescript": "2.8.0",
+    "@graphql-codegen/typescript-operations": "2.5.5",
+    "@graphql-codegen/typescript-react-apollo": "3.3.5",
     "@react-native-community/eslint-config": "^2.0.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^29.2.3",
