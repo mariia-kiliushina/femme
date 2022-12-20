@@ -15,7 +15,9 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
     control,
     handleSubmit,
     formState: {},
-  } = useForm();
+  } = useForm({
+    defaultValues: {login: 'john-doe', password: 'john-doe-password'},
+  });
 
   const onSignIn = async (formValues: IUser) => {
     console.log('formValues >>', formValues);
