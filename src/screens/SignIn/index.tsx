@@ -25,14 +25,9 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
       variables: {username: formValues.login, password: formValues.password},
     });
     console.log('res.data?.authorize >>', res.data?.authorize);
+    navigation.navigate('Profile');
   };
 
-  // const onSignUp = () => {
-  //   navigation.navigate('Sign Up');
-  // };
-  // const onForgotPassword = () => {
-  //   navigation.navigate('Forgot Password');
-  // };
   return (
     <View style={styles.container}>
       <View style={styles.inputsWrapper}>
@@ -56,31 +51,15 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
           }}
         />
 
-        {/* <Button
-          style={{alignSelf: 'flex-end'}}
-          type="flat"
-          title="Forgot password?"
-          onPress={onForgotPassword}
-        /> */}
         <Button
           style={{marginVertical: 30, alignSelf: 'flex-end'}}
           type="primary"
           title="Sign In"
-          //@ts-ignore
           onPress={handleSubmit(onSignIn)}
         />
-        {/* <View style={styles.registerWrapper}>
-          <Text style={styles.newToText}>New to Femme?</Text>
-          <Button
-            style={{width: 50}}
-            type="flat"
-            title="Register"
-            onPress={onSignUp}
-          />
-        </View> */}
       </View>
       <View style={{position: 'absolute', top: 100, left: 20}}>
-        <GoBackButton type="flat" onPress={() => navigation.goBack()} />
+        <GoBackButton type="flat" onPress={navigation.goBack} />
       </View>
     </View>
   );

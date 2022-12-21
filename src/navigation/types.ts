@@ -9,6 +9,7 @@ export type RootStackParamList = {
   Welcome: undefined;
   'Sign In': undefined;
   'Sign Up': undefined;
+  Profile: undefined;
   Main: NavigatorScreenParams<TabsParamList>;
   'Forgot Password': undefined;
 };
