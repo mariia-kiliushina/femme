@@ -10,6 +10,7 @@ import {useAuthorizeMutation} from 'src/api/authorization';
 // import EncryptedStorage from 'react-native-encrypted-storage';
 import {useContext} from 'react';
 import {authorizationContext} from 'src/components/AuthorizationContextProvider';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
   const [authorize] = useAuthorizeMutation();
@@ -34,10 +35,10 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
       authorizationTokenFromServer,
     );
     if (authorizationTokenFromServer !== undefined) {
-      // await EncryptedStorage.setItem(
-      //   'authorizationToken',
-      //   authorizationTokenFromServer,
-      // );
+      await EncryptedStorage.setItem(
+        'authorizationToken',
+        authorizationTokenFromServer,
+      );
       setAuthorizationToken(authorizationTokenFromServer);
     }
 
