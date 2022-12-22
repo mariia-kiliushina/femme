@@ -7,9 +7,13 @@ import {IUser} from 'src/store/sliceUser';
 import {GoBackButton} from 'components/GoBackButton';
 import {RootStackScreenProps} from 'src/navigation/types';
 import {useAuthorizeMutation} from 'src/api/authorization';
+// import EncryptedStorage from 'react-native-encrypted-storage';
+import {useContext} from 'react';
+import {authorizationContext} from 'src/components/AuthorizationContextProvider';
 
 export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
   const [authorize] = useAuthorizeMutation();
+  const {setAuthorizationToken} = useContext(authorizationContext);
 
   const {
     control,
@@ -24,7 +28,19 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
     const res = await authorize({
       variables: {username: formValues.login, password: formValues.password},
     });
-    console.log('res.data?.authorize >>', res.data?.authorize);
+    const authorizationTokenFromServer = res.data?.authorize;
+    console.log(
+      'authorizationTokenFromServer >>',
+      authorizationTokenFromServer,
+    );
+    if (authorizationTokenFromServer !== undefined) {
+      // await EncryptedStorage.setItem(
+      //   'authorizationToken',
+      //   authorizationTokenFromServer,
+      // );
+      setAuthorizationToken(authorizationTokenFromServer);
+    }
+
     navigation.navigate('Profile');
   };
 

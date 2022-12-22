@@ -4,7 +4,7 @@ import {GoBackButton} from 'src/components/GoBackButton';
 import {useGetUserQuery} from 'src/api/users';
 
 export const Profile = ({navigation}: RootStackScreenProps<'Profile'>) => {
-  const {data, error} = useGetUserQuery({variables: {id: 1}});
+  const {data, error} = useGetUserQuery({variables: {id: 0}});
   console.log('error >>', error);
   return (
     <View style={styles.container}>
