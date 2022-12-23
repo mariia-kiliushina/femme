@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
   rules: {
+    curly: 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react-native/no-unused-styles': 2,

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   StyleSheet,
   View,
@@ -7,20 +6,24 @@ import {
   TouchableWithoutFeedback,
   ImageSourcePropType,
 } from 'react-native';
-import { FC } from 'react';
 import COLORS from 'src/constants/colors';
 type Props = {
   marked?: boolean;
   source: ImageSourcePropType;
   symptomText: string;
   value?: string | undefined;
-  onChange?(...event: any[]): void;
+  onChange?(arg0: string | undefined): void;
   optionValue?: string;
 };
 
-const RoundIcon: FC<Props> = (props) => {
-  const { marked = false, optionValue, symptomText, source, onChange = () => {} } = props;
-  const { symptomImage, standard } = styles;
+const RoundIcon = (props: Props) => {
+  const {
+    marked = false,
+    optionValue,
+    symptomText,
+    source,
+    onChange = () => {},
+  } = props;
 
   const isOptionSelected =
     (props.value === props.optionValue &&
@@ -28,18 +31,20 @@ const RoundIcon: FC<Props> = (props) => {
       props.optionValue !== undefined) ||
     marked;
 
-  const combinedStyles = StyleSheet.flatten([symptomImage, standard]);
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         onChange(optionValue);
       }}
     >
-      <View style={[styles.container, { padding: 2 }]}>
-        <Image source={source} style={combinedStyles} />
+      <View style={[styles.container, {padding: 2}]}>
+        <Image source={source} style={[styles.symptomImage, styles.standard]} />
         {isOptionSelected && (
           <View style={styles.mark}>
-            <Image source={require('../../assets/marked.png')} style={{ height: 12, width: 12 }} />
+            <Image
+              source={require('../../assets/marked.png')}
+              style={{height: 12, width: 12}}
+            />
           </View>
         )}
         <Text style={styles.symptomText}>{symptomText}</Text>

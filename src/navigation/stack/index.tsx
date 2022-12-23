@@ -7,26 +7,22 @@ import {RootStackParamList} from 'src/navigation/types';
 import {FC} from 'react';
 import {useGetUserQuery} from 'src/api/users';
 import {Text, View} from 'react-native';
+import {checkIsAuthorized} from './checkIsAuthorized';
 
 export const ScreenNavigation: FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
 
   const authorizedUserResponse = useGetUserQuery({variables: {id: 0}});
 
-  if (authorizedUserResponse.loading)
+  if (authorizedUserResponse.loading) {
     return (
       <View style={{flex: 1, backgroundColor: 'blue'}}>
         <Text>LOADING</Text>
       </View>
     );
+  }
 
-  const isNotAuthorized =
-    authorizedUserResponse.error !== undefined &&
-    authorizedUserResponse.error.graphQLErrors.some((error) => {
-      // @ts-ignore
-      return error.extensions?.response?.statusCode === 401;
-    });
-  const isAuthorized = !isNotAuthorized;
+  const isAuthorized = checkIsAuthorized({authorizedUserResponse});
 
   return (
     <Stack.Navigator

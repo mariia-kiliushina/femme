@@ -1,6 +1,5 @@
-import React from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
-import { FC } from 'react';
+import {StyleSheet, View, TextInput, ViewStyle} from 'react-native';
+import {FC} from 'react';
 import COLORS from 'src/constants/colors';
 
 export type Ttype = 'password' | 'e-mail' | 'default';
@@ -11,7 +10,7 @@ type Props = {
   type?: Ttype;
   placeholder: string;
   isError?: boolean | undefined;
-  style?: any;
+  style?: ViewStyle;
 };
 
 const MyInput: FC<Props> = (props) => {
@@ -28,7 +27,6 @@ const MyInput: FC<Props> = (props) => {
     switch (type) {
       case 'e-mail':
         return 'email-address';
-        break;
       default:
         return 'default';
     }

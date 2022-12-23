@@ -1,28 +1,27 @@
-import React, { JSXElementConstructor, ReactElement } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { FC } from 'react';
-import { Control, Controller, FieldValues } from 'react-hook-form';
+import {StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {FC} from 'react';
+import {Control, Controller, FieldValues} from 'react-hook-form';
 import Input from '../Input';
-import { Ttype } from '../Input';
+import {Ttype} from '../Input';
 
 type Props = {
-  control: Control<FieldValues, any> | undefined;
+  control: Control<FieldValues>;
   name: string;
   type?: Ttype;
   placeholder: string;
   rules: {};
-  style?: any;
+  style?: ViewStyle;
 };
 
 const ControlledInput: FC<Props> = (props) => {
-  const { name, control, placeholder, type = 'default', rules, style } = props;
+  const {name, control, placeholder, type = 'default', rules, style} = props;
 
   return (
     <Controller
       name={name}
       rules={rules}
       control={control}
-      render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+      render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (
         <View style={styles.container}>
           <Input
             style={style}

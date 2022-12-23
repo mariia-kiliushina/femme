@@ -1,5 +1,13 @@
-import { StyleSheet, ImageSourcePropType, Pressable, Text, Image, View } from 'react-native';
-import React, { FC } from 'react';
+import {
+  StyleSheet,
+  ImageSourcePropType,
+  Pressable,
+  Text,
+  Image,
+  View,
+  ImageStyle,
+  ViewStyle,
+} from 'react-native';
 import COLORS from 'src/constants/colors';
 
 type Props = {
@@ -7,14 +15,23 @@ type Props = {
   size?: keyof typeof textStyles;
   title?: string;
   onPress: () => void;
-  style?: any;
+  style?: ViewStyle;
   imageSrc?: ImageSourcePropType;
-  imageStyle?: any;
+  imageStyle?: ImageStyle;
 };
 
-const MyButton: FC<Props> = (props) => {
-  const { style, imageStyle, title, imageSrc, onPress, type = 'primary', size = 'medium' } = props;
-  const { defaultButton, primary, secondary, disabled, danger, outlined, flat } = buttonStyles;
+const MyButton = (props: Props) => {
+  const {
+    style,
+    imageStyle,
+    title,
+    imageSrc,
+    onPress,
+    type = 'primary',
+    size = 'medium',
+  } = props;
+  const {defaultButton, primary, secondary, disabled, danger, outlined, flat} =
+    buttonStyles;
   const customTypeStyle = (type: string) => {
     switch (type) {
       case 'primary':
@@ -46,7 +63,10 @@ const MyButton: FC<Props> = (props) => {
   //   if (type === 'disabled') return disabledText;
   //   return blueText;
   // };
-  const combinedViewStyles = StyleSheet.flatten([defaultButton, customTypeStyle(type)]);
+  const combinedViewStyles = StyleSheet.flatten([
+    defaultButton,
+    customTypeStyle(type),
+  ]);
 
   return (
     <View style={[viewStyles.container, style]}>
