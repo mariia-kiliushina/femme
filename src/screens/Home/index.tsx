@@ -1,55 +1,52 @@
-// import CalendarStrip from 'src/components/CalendarStrip';
-// import RoundButton from 'components/RoundButton';
-// import TodaysLogs from 'components/TodaysLogs';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {GoBackButton} from 'src/components/GoBackButton';
+import {useGetUserQuery} from 'src/api/users';
+import COLORS from 'src/constants/colors';
 import {TabScreenProps} from 'src/navigation/types';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import {useContext} from 'react';
+import {
+  authorizationContext,
+  DEFAULT_AUTHORIZATION_TOKEN,
+} from 'src/components/AuthorizationContextProvider';
 
-export const Home = ({}: TabScreenProps<'Settings'>) => {
-  // const {} = props;
-  // const {} = styles;
-  // const dispatch = useAppDispatch();
+export const Home = ({navigation}: TabScreenProps<'Home'>) => {
+  const {setAuthorizationToken} = useContext(authorizationContext);
+  const {data, error} = useGetUserQuery({variables: {id: 0}});
+  console.log('error >>', error);
 
-  // useEffect(() => {
-  //   dispatch(getData());
-  // }, []);
+  const onLogOut = async () => {
+    await EncryptedStorage.removeItem('authorizationToken');
+    setAuthorizationToken(DEFAULT_AUTHORIZATION_TOKEN);
+  };
 
-  // const {...tracks} = useAppSelector(
-  //   (state: {dataSliceReducer: IState; userSliceReducer: IUsersState}) =>
-  //     state.dataSliceReducer.periods,
-  // );
-  // const periods = Object.values(tracks);
-
-  // let [date, setDate] = useState('2022-09-07');
-  // return (
-  //   <View style={styles.container}>
-  //     <View style={styles.contentWrapper}>
-  //       <CalendarStrip />
-  //       <RoundButton date={date} />
-  //       <TodaysLogs />
-  //       <Text>Your period is likely to start at 29th of September</Text>
-  //     </View>
-  //   </View>
-  // );
-
-  return null;
+  return (
+    <View style={styles.container}>
+      <Text>Hello WORLD</Text>
+      <Text>ID:{data?.user.id}</Text>
+      <Text>Username:{data?.user.username}</Text>
+      <GoBackButton type="flat" onPress={navigation.goBack} />
+      <Pressable onPress={onLogOut} style={styles.button}>
+        <Text>Log out</Text>
+      </Pressable>
+    </View>
+  );
 };
 
-// const styles = StyleSheet.create({
-//   container: {
-//     height: '100%',
-//     width: '100%',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'flex-start',
-//     backgroundColor: 'white',
-//     flex: 1,
-//     paddingTop: 50,
-//   },
-//   contentWrapper: {
-//     height: '100%',
-//     width: '90%',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'flex-start',
-//     flex: 1,
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    columnGap: 20,
+    backgroundColor: 'white',
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  button: {
+    backgroundColor: COLORS.colorPrimaryLight,
+    padding: 15,
+    borderRadius: 10,
+  },
+});

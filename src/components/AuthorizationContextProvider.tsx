@@ -1,7 +1,7 @@
 import {createContext, FC, PropsWithChildren, useEffect, useState} from 'react';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-const DEFAULT_AUTHORIZATION_TOKEN = 'NO_AUTHORIZATION_TOKEN';
+export const DEFAULT_AUTHORIZATION_TOKEN = 'NO_AUTHORIZATION_TOKEN';
 
 interface AuthorizationContextValue {
   authorizationToken: string;

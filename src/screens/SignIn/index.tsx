@@ -7,7 +7,6 @@ import {IUser} from 'src/store/sliceUser';
 import {GoBackButton} from 'components/GoBackButton';
 import {RootStackScreenProps} from 'src/navigation/types';
 import {useAuthorizeMutation} from 'src/api/authorization';
-// import EncryptedStorage from 'react-native-encrypted-storage';
 import {useContext} from 'react';
 import {authorizationContext} from 'src/components/AuthorizationContextProvider';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -41,8 +40,6 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
       );
       setAuthorizationToken(authorizationTokenFromServer);
     }
-
-    navigation.navigate('Profile');
   };
 
   return (

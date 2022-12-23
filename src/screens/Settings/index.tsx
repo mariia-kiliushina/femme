@@ -1,31 +1,16 @@
-// import {StyleSheet} from 'react-native';
+import {Text, View} from 'react-native';
+import {useGetSymptomsQuery} from 'src/api/symptoms';
 import {TabScreenProps} from 'src/navigation/types';
-// import {useGetSymptomsQuery} from 'src/api/symptoms';
-type Props = {};
 
 export const Settings = ({}: TabScreenProps<'Settings'>) => {
-  // const getSymptomsResult = useGetSymptomsQuery();
-  // if (!getSymptomsResult.data) return null;
+  const {data, error} = useGetSymptomsQuery();
+  console.log('error >>', error);
 
-  // return (
-  //   <View style={styles.container}>
-  //     {getSymptomsResult.data.symptoms.map(symptom => (
-  //       <Text key={symptom.id}>{symptom.name}</Text>
-  //     ))}
-  //   </View>
-  // );
-  return null;
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      {data?.symptoms.map((symptom) => (
+        <Text key={symptom.id}>{symptom.name}</Text>
+      ))}
+    </View>
+  );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     height: '100%',
-//     width: '100%',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'flex-start',
-//     backgroundColor: 'white',
-//     flex: 1,
-//     paddingTop: 20,
-//   },
-// });

@@ -2,17 +2,23 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Welcome} from 'screens/Welcome';
 import {SignIn} from 'screens/SignIn';
 import {SignUp} from 'screens/SignUp';
-import {Profile} from 'screens/Profile';
-// import Main from 'src/navigation/tab';
-// import ForgotPassword from 'screens/ForgotPassword';
+import {Main} from 'src/navigation/tab/index';
 import {RootStackParamList} from 'src/navigation/types';
 import {FC} from 'react';
 import {useGetUserQuery} from 'src/api/users';
+import {Text, View} from 'react-native';
 
 export const ScreenNavigation: FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
 
   const authorizedUserResponse = useGetUserQuery({variables: {id: 0}});
+
+  if (authorizedUserResponse.loading)
+    return (
+      <View style={{flex: 1, backgroundColor: 'blue'}}>
+        <Text>LOADING</Text>
+      </View>
+    );
 
   const isNotAuthorized =
     authorizedUserResponse.error !== undefined &&
@@ -22,15 +28,15 @@ export const ScreenNavigation: FC = () => {
     });
   const isAuthorized = !isNotAuthorized;
 
-  console.log('isAuthorized >>', isAuthorized);
-
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
       initialRouteName="Welcome"
     >
       {isAuthorized ? (
-        <Stack.Screen name="Profile" component={Profile} />
+        <>
+          <Stack.Screen name="Main" component={Main} />
+        </>
       ) : (
         <>
           <Stack.Screen name="Welcome" component={Welcome} />

@@ -1,44 +1,39 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Home from 'screens/Home';
-import CalendarView from 'components/CalendarView';
-import Settings from 'screens/Settings';
+import {Home} from 'screens/Home';
+import {Settings} from 'screens/Settings';
 import COLORS from 'src/constants/colors';
+import {TabsParamList} from 'src/navigation/types';
+import {Pressable, Text} from 'react-native';
 
-type Props = {};
-
-const Main = (props): Props => {
-  const Tab = createBottomTabNavigator();
+export const Main = () => {
+  const Tab = createBottomTabNavigator<TabsParamList>();
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
+      screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: COLORS.colorPrimaryDark,
-      })}>
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="home" color={color} size={size} />
+          tabBarIcon: () => (
+            <Pressable>
+              <Text>Icon</Text>
+            </Pressable>
           ),
         }}
       />
-      <Tab.Screen
-        name="Calendar"
-        component={CalendarView}
-        options={{
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="calendar" color={color} size={size} />
-          ),
-        }}
-      />
+
       <Tab.Screen
         name="Settings"
         component={Settings}
         options={{
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="settings" color={color} size={size} />
+          tabBarIcon: () => (
+            <Pressable>
+              <Text>Icon</Text>
+            </Pressable>
           ),
         }}
       />

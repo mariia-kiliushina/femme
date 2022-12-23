@@ -9,9 +9,7 @@ export type RootStackParamList = {
   Welcome: undefined;
   'Sign In': undefined;
   'Sign Up': undefined;
-  Profile: undefined;
   Main: NavigatorScreenParams<TabsParamList>;
-  'Forgot Password': undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -20,7 +18,6 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 export type TabsParamList = {
   Home: undefined;
   Settings: undefined;
-  Calendar: undefined;
 };
 
 export type TabScreenProps<T extends keyof TabsParamList> =
