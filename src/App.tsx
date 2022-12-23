@@ -2,20 +2,25 @@ import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
 import store from 'src/store';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {ApolloProvider} from '@apollo/client';
-import {apolloClient} from './helpers/apolloClient';
 import {ScreenNavigation} from './navigation/stack';
+import {FC} from 'react';
+import {AuthorizationContextProvider} from './components/AuthorizationContextProvider';
+import {ApolloContextProvider} from './components/ApolloContextProvider';
 
-export default function App() {
+const App: FC = () => {
   return (
     <Provider store={store}>
-      <ApolloProvider client={apolloClient}>
-        <SafeAreaProvider>
-          <NavigationContainer>
-            <ScreenNavigation />
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </ApolloProvider>
+      <AuthorizationContextProvider>
+        <ApolloContextProvider>
+          <SafeAreaProvider>
+            <NavigationContainer>
+              <ScreenNavigation />
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </ApolloContextProvider>
+      </AuthorizationContextProvider>
     </Provider>
   );
-}
+};
+
+export default App;

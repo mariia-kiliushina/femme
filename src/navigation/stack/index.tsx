@@ -2,24 +2,48 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Welcome} from 'screens/Welcome';
 import {SignIn} from 'screens/SignIn';
 import {SignUp} from 'screens/SignUp';
-// import Main from 'src/navigation/tab';
-// import ForgotPassword from 'screens/ForgotPassword';
+import {Main} from 'src/navigation/tab/index';
 import {RootStackParamList} from 'src/navigation/types';
+import {FC} from 'react';
+import {useGetUserQuery} from 'src/api/users';
+import {Text, View} from 'react-native';
 
-export function ScreenNavigation() {
+export const ScreenNavigation: FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
+
+  const authorizedUserResponse = useGetUserQuery({variables: {id: 0}});
+
+  if (authorizedUserResponse.loading)
+    return (
+      <View style={{flex: 1, backgroundColor: 'blue'}}>
+        <Text>LOADING</Text>
+      </View>
+    );
+
+  const isNotAuthorized =
+    authorizedUserResponse.error !== undefined &&
+    authorizedUserResponse.error.graphQLErrors.some((error) => {
+      // @ts-ignore
+      return error.extensions?.response?.statusCode === 401;
+    });
+  const isAuthorized = !isNotAuthorized;
 
   return (
     <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      initialRouteName="Welcome">
-      <Stack.Screen name="Welcome" component={Welcome} />
-      <Stack.Screen name="Sign In" component={SignIn} />
-      <Stack.Screen name="Sign Up" component={SignUp} />
-      {/* <Stack.Screen name="Main" component={Main} /> */}
-      {/* <Stack.Screen name="Forgot Password" component={ForgotPassword} /> */}
+      screenOptions={{headerShown: false}}
+      initialRouteName="Welcome"
+    >
+      {isAuthorized ? (
+        <>
+          <Stack.Screen name="Main" component={Main} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Welcome" component={Welcome} />
+          <Stack.Screen name="Sign In" component={SignIn} />
+          <Stack.Screen name="Sign Up" component={SignUp} />
+        </>
+      )}
     </Stack.Navigator>
   );
-}
+};

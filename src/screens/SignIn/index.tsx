@@ -3,40 +3,45 @@ import Button from 'components/Button';
 import COLORS from 'src/constants/colors';
 import {useForm} from 'react-hook-form';
 import ControlledInput from 'components/ControlledInput';
-import {authenticateUser, clearAll, IUser} from 'src/store/sliceUser';
-import {useAppDispatch} from 'src/hooks';
+import {IUser} from 'src/store/sliceUser';
 import {GoBackButton} from 'components/GoBackButton';
 import {RootStackScreenProps} from 'src/navigation/types';
+import {useAuthorizeMutation} from 'src/api/authorization';
+import {useContext} from 'react';
+import {authorizationContext} from 'src/components/AuthorizationContextProvider';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
-  const dispatch = useAppDispatch();
+  const [authorize] = useAuthorizeMutation();
+  const {setAuthorizationToken} = useContext(authorizationContext);
 
   const {
     control,
     handleSubmit,
     formState: {},
-  } = useForm();
+  } = useForm({
+    defaultValues: {login: 'john-doe', password: 'john-doe-password'},
+  });
 
-  const onSignIn = (userData: IUser) => {
-    console.log('userData');
-    console.log(userData);
-
-    dispatch(clearAll());
-    setTimeout(() => dispatch(authenticateUser(userData)), 1000);
-    setTimeout(
-      () =>
-        navigation.navigate('Main', {
-          screen: 'Home',
-        }),
-      2000,
+  const onSignIn = async (formValues: IUser) => {
+    console.log('formValues >>', formValues);
+    const res = await authorize({
+      variables: {username: formValues.login, password: formValues.password},
+    });
+    const authorizationTokenFromServer = res.data?.authorize;
+    console.log(
+      'authorizationTokenFromServer >>',
+      authorizationTokenFromServer,
     );
+    if (authorizationTokenFromServer !== undefined) {
+      await EncryptedStorage.setItem(
+        'authorizationToken',
+        authorizationTokenFromServer,
+      );
+      setAuthorizationToken(authorizationTokenFromServer);
+    }
   };
-  const onSignUp = () => {
-    navigation.navigate('Sign Up');
-  };
-  const onForgotPassword = () => {
-    navigation.navigate('Forgot Password');
-  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputsWrapper}>
@@ -61,30 +66,14 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
         />
 
         <Button
-          style={{alignSelf: 'flex-end'}}
-          type="flat"
-          title="Forgot password?"
-          onPress={onForgotPassword}
-        />
-        <Button
           style={{marginVertical: 30, alignSelf: 'flex-end'}}
           type="primary"
           title="Sign In"
-          //@ts-ignore
           onPress={handleSubmit(onSignIn)}
         />
-        <View style={styles.registerWrapper}>
-          <Text style={styles.newToText}>New to Femme?</Text>
-          <Button
-            style={{width: 50}}
-            type="flat"
-            title="Register"
-            onPress={onSignUp}
-          />
-        </View>
       </View>
       <View style={{position: 'absolute', top: 100, left: 20}}>
-        <GoBackButton type="flat" onPress={() => navigation.goBack()} />
+        <GoBackButton type="flat" onPress={navigation.goBack} />
       </View>
     </View>
   );
@@ -100,13 +89,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
-  registerWrapper: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
+  // registerWrapper: {
+  //   width: '100%',
+  //   display: 'flex',
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'space-around',
+  // },
   inputsWrapper: {
     height: '100%',
     width: '90%',
@@ -124,7 +113,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     marginLeft: 20,
   },
-  newToText: {
-    fontSize: 18,
-  },
+  // newToText: {
+  //   fontSize: 18,
+  // },
 });
