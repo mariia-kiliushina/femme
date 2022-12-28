@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {useGetSymptomsQuery} from 'src/api/symptoms';
 import {TabScreenProps} from 'src/navigation/types';
 
@@ -7,10 +7,18 @@ export const Settings = ({}: TabScreenProps<'Settings'>) => {
   console.log('error >>', error);
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={styles.wrapper}>
       {data?.symptoms.map((symptom) => (
         <Text key={symptom.id}>{symptom.name}</Text>
       ))}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

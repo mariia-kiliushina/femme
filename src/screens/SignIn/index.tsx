@@ -6,13 +6,11 @@ import ControlledInput from 'components/ControlledInput';
 import {GoBackButton} from 'components/GoBackButton';
 import {RootStackScreenProps} from 'src/navigation/types';
 import {useAuthorizeMutation} from 'src/api/authorization';
-import {useContext} from 'react';
-import {authorizationContext} from 'src/components/AuthorizationContextProvider';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {authorizationToken} from 'src/state';
 
 export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
   const [authorize] = useAuthorizeMutation();
-  const {setAuthorizationToken} = useContext(authorizationContext);
 
   const {
     control,
@@ -35,7 +33,7 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
         'authorizationToken',
         authorizationTokenFromServer,
       );
-      setAuthorizationToken(authorizationTokenFromServer);
+      authorizationToken(authorizationTokenFromServer);
     }
   };
 

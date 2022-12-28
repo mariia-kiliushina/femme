@@ -6,8 +6,8 @@ import {Main} from 'src/navigation/tab/index';
 import {RootStackParamList} from 'src/navigation/types';
 import {FC} from 'react';
 import {useGetUserQuery} from 'src/api/users';
-import {Text, View} from 'react-native';
-import {checkIsAuthorized} from './checkIsAuthorized';
+import {StyleSheet, Text, View} from 'react-native';
+import {checkIsAuthorized} from '../../helpers/checkIsAuthorized';
 
 export const ScreenNavigation: FC = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -16,13 +16,15 @@ export const ScreenNavigation: FC = () => {
 
   if (authorizedUserResponse.loading) {
     return (
-      <View style={{flex: 1, backgroundColor: 'blue'}}>
+      <View style={styles.loader}>
         <Text>LOADING</Text>
       </View>
     );
   }
 
-  const isAuthorized = checkIsAuthorized({authorizedUserResponse});
+  const isAuthorized = checkIsAuthorized({
+    authorizedUserResponse,
+  });
 
   return (
     <Stack.Navigator
@@ -43,3 +45,7 @@ export const ScreenNavigation: FC = () => {
     </Stack.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  loader: {flex: 1, backgroundColor: 'blue'},
+});

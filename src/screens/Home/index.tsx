@@ -1,33 +1,35 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {GoBackButton} from 'src/components/GoBackButton';
 import {useGetUserQuery} from 'src/api/users';
 import COLORS from 'src/constants/colors';
-import {TabScreenProps} from 'src/navigation/types';
+import {authorizationToken, DEFAULT_AUTHORIZATION_TOKEN} from 'src/state';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import {useContext} from 'react';
-import {
-  authorizationContext,
-  DEFAULT_AUTHORIZATION_TOKEN,
-} from 'src/components/AuthorizationContextProvider';
+import {useReactiveVar} from '@apollo/client';
 
-export const Home = ({navigation}: TabScreenProps<'Home'>) => {
-  const {setAuthorizationToken} = useContext(authorizationContext);
-  const {data, error} = useGetUserQuery({variables: {id: 0}});
-  console.log('error >>', error);
+export const Home = () => {
+  const {data} = useGetUserQuery({variables: {id: 0}});
 
   const onLogOut = async () => {
     await EncryptedStorage.removeItem('authorizationToken');
-    setAuthorizationToken(DEFAULT_AUTHORIZATION_TOKEN);
+    authorizationToken(DEFAULT_AUTHORIZATION_TOKEN);
   };
+
+  const authorizationTokenValue = useReactiveVar(authorizationToken);
 
   return (
     <View style={styles.container}>
       <Text>Hello WORLD</Text>
       <Text>ID:{data?.user.id}</Text>
       <Text>Username:{data?.user.username}</Text>
-      <GoBackButton type="flat" onPress={navigation.goBack} />
       <Pressable onPress={onLogOut} style={styles.button}>
         <Text>Log out</Text>
+        <Text>{authorizationTokenValue}</Text>
+      </Pressable>
+      <Text>Token:</Text>
+      <Pressable
+        onPress={() => authorizationToken(DEFAULT_AUTHORIZATION_TOKEN)}
+        style={styles.button}
+      >
+        <Text>Reset token to default</Text>
       </Pressable>
     </View>
   );
