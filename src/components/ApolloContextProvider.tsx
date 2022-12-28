@@ -3,21 +3,20 @@ import {
   ApolloProvider,
   createHttpLink,
   InMemoryCache,
+  useReactiveVar,
 } from '@apollo/client';
 import {setContext} from '@apollo/client/link/context';
-import {FC, PropsWithChildren, useContext} from 'react';
-import {authorizationContext} from './AuthorizationContextProvider';
+import {FC, PropsWithChildren} from 'react';
+import {authorizationToken} from 'src/state';
 
 const httpLink = createHttpLink({uri: 'http://localhost:3080/graphql'});
 
 export const ApolloContextProvider: FC<PropsWithChildren> = ({children}) => {
-  const {authorizationToken} = useContext(authorizationContext);
-
   const authorizationLink = setContext((_, {headers}) => {
     return {
       headers: {
         ...headers,
-        authorization: authorizationToken,
+        authorization: authorizationToken(),
       },
     };
   });
@@ -27,9 +26,11 @@ export const ApolloContextProvider: FC<PropsWithChildren> = ({children}) => {
     link: authorizationLink.concat(httpLink),
   });
 
+  const authorizationTokenValue = useReactiveVar(authorizationToken);
+
   console.log(
-    'authorizationToken inside ApolloContextProvider  >>',
-    authorizationToken,
+    'authorizationTokenValue inside ApolloContextProvider  >>',
+    authorizationTokenValue,
   );
 
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;

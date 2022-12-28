@@ -1,29 +1,24 @@
 import {StyleSheet, View, Text} from 'react-native';
 import Button from 'components/Button';
 import COLORS from 'src/constants/colors';
-import {useForm} from 'react-hook-form';
+import {FieldValues, useForm} from 'react-hook-form';
 import ControlledInput from 'components/ControlledInput';
-import {IUser} from 'src/store/sliceUser';
 import {GoBackButton} from 'components/GoBackButton';
 import {RootStackScreenProps} from 'src/navigation/types';
 import {useAuthorizeMutation} from 'src/api/authorization';
-import {useContext} from 'react';
-import {authorizationContext} from 'src/components/AuthorizationContextProvider';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {authorizationToken} from 'src/state';
 
 export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
   const [authorize] = useAuthorizeMutation();
-  const {setAuthorizationToken} = useContext(authorizationContext);
 
   const {
     control,
     handleSubmit,
     formState: {},
-  } = useForm({
-    defaultValues: {login: 'john-doe', password: 'john-doe-password'},
-  });
+  } = useForm({});
 
-  const onSignIn = async (formValues: IUser) => {
+  const onSignIn = async (formValues: FieldValues) => {
     console.log('formValues >>', formValues);
     const res = await authorize({
       variables: {username: formValues.login, password: formValues.password},
@@ -38,7 +33,7 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
         'authorizationToken',
         authorizationTokenFromServer,
       );
-      setAuthorizationToken(authorizationTokenFromServer);
+      authorizationToken(authorizationTokenFromServer);
     }
   };
 
@@ -66,13 +61,13 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
         />
 
         <Button
-          style={{marginVertical: 30, alignSelf: 'flex-end'}}
+          style={styles.button}
           type="primary"
           title="Sign In"
           onPress={handleSubmit(onSignIn)}
         />
       </View>
-      <View style={{position: 'absolute', top: 100, left: 20}}>
+      <View style={styles.goBack}>
         <GoBackButton type="flat" onPress={navigation.goBack} />
       </View>
     </View>
@@ -89,13 +84,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
-  // registerWrapper: {
-  //   width: '100%',
-  //   display: 'flex',
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   justifyContent: 'space-around',
-  // },
+  button: {
+    marginVertical: 30,
+    alignSelf: 'flex-end',
+  },
   inputsWrapper: {
     height: '100%',
     width: '90%',
@@ -113,7 +105,5 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     marginLeft: 20,
   },
-  // newToText: {
-  //   fontSize: 18,
-  // },
+  goBack: {position: 'absolute', top: 100, left: 20},
 });

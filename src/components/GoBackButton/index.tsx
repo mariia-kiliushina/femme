@@ -1,6 +1,11 @@
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import { FC } from 'react';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+  ViewStyle,
+} from 'react-native';
+import {FC} from 'react';
 import COLORS from 'src/constants/colors';
 import arrow_primary from 'src/assets/arrow-primary.png';
 
@@ -8,33 +13,28 @@ type Props = {
   type?: 'primary' | 'secondary' | 'disabled' | 'danger' | 'outlined' | 'flat';
   size?: 'small' | 'medium' | 'large';
   onPress: () => void;
-  style?: any;
+  style?: ViewStyle;
 };
 
 export const GoBackButton: FC<Props> = (props) => {
-  const { style, onPress, type = 'primary', size = 'medium' } = props;
-  const { defaultButton, primary, secondary, disabled, danger, outlined, flat } = buttonStyles;
-  const { small, medium, large, whiteText, blueText, disabledText } = textStyles;
+  const {style, onPress, type = 'primary', size = 'medium'} = props;
+  const {defaultButton, primary, secondary, disabled, danger, outlined, flat} =
+    buttonStyles;
+  const {small, medium, large, whiteText, blueText, disabledText} = textStyles;
   const customTypeStyle = (type: string) => {
     switch (type) {
       case 'primary':
         return primary;
-        break;
       case 'secondary':
         return secondary;
-        break;
       case 'disabled':
         return disabled;
-        break;
       case 'danger':
         return danger;
-        break;
       case 'outlined':
         return outlined;
-        break;
       case 'flat':
         return flat;
-        break;
       default:
         return primary;
     }
@@ -43,13 +43,10 @@ export const GoBackButton: FC<Props> = (props) => {
     switch (size) {
       case 'small':
         return small;
-        break;
       case 'medium':
         return medium;
-        break;
       case 'large':
         return large;
-        break;
       default:
         return primary;
     }
@@ -60,13 +57,16 @@ export const GoBackButton: FC<Props> = (props) => {
     if (type === 'disabled') return disabledText;
     return blueText;
   };
-  const combinedViewStyles = StyleSheet.flatten([defaultButton, customTypeStyle(type)]);
+  const combinedViewStyles = StyleSheet.flatten([
+    defaultButton,
+    customTypeStyle(type),
+  ]);
 
   return (
     <View style={[viewStyles.container, style]}>
       <TouchableOpacity onPress={onPress}>
         <View style={combinedViewStyles}>
-          <Image source={arrow_primary} style={{ height: 30, width: 30 }}></Image>
+          <Image source={arrow_primary} style={{height: 30, width: 30}}></Image>
         </View>
       </TouchableOpacity>
     </View>
