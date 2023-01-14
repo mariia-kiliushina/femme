@@ -1,0 +1,36 @@
+fragment periodRecordFields on PeriodRecord {
+  id
+  date
+  intensity {
+    slug
+  }
+  mood {
+    slug
+  }
+  symptoms {
+    id
+    name
+  }
+  user {
+    id
+    username
+  }
+}
+
+fragment userFields on User {
+  id
+  username
+}
+
+fragment symptomFields on Symptom {
+  id
+  name
+}
+
+fragment moodFields on Mood {
+  slug
+}
+
+fragment periodIntensitiesFields on PeriodIntensity {
+  slug
+}

@@ -3,7 +3,7 @@ import COLORS from 'src/constants/colors';
 import {authorizationToken, DEFAULT_AUTHORIZATION_TOKEN} from 'src/state';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {useReactiveVar} from '@apollo/client';
-import {useGetPeriodsQuery} from 'src/api/periods';
+import {useGetPeriodRecordsQuery} from 'src/api/periods';
 import {useGetUserQuery} from 'src/api/users';
 
 const onLogOut = async () => {
@@ -15,7 +15,7 @@ export const Home = () => {
   const authorizationTokenValue = useReactiveVar(authorizationToken);
 
   const getAuthorizedUserQueryResult = useGetUserQuery({variables: {id: 0}});
-  const getPeriodsQueryResponse = useGetPeriodsQuery();
+  const getPeriodsQueryResponse = useGetPeriodRecordsQuery();
 
   if (getPeriodsQueryResponse.data === undefined) return null;
   if (getAuthorizedUserQueryResult.data === undefined) return null;

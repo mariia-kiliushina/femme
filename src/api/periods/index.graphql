@@ -1,20 +1,5 @@
-query GetPeriods {
+query GetPeriodRecords {
   periodRecords {
-    id
-    date
-    intensity {
-      slug
-    }
-    mood {
-      slug
-    }
-    symptoms {
-      id
-      name
-    }
-    user {
-      id
-      username
-    }
+    ...periodRecordFields
   }
 }
