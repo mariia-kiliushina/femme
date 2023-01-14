@@ -123,6 +123,11 @@ export type CreateUserInput = {
   username: Scalars['String'];
 };
 
+export type Mood = {
+  __typename?: 'Mood';
+  slug: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addBoardMember: Board;
@@ -253,12 +258,17 @@ export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
 
+export type PeriodIntensity = {
+  __typename?: 'PeriodIntensity';
+  slug: Scalars['String'];
+};
+
 export type PeriodRecord = {
   __typename?: 'PeriodRecord';
   date: Scalars['String'];
   id: Scalars['Int'];
-  intensity: Scalars['String'];
-  mood: Scalars['String'];
+  intensity: PeriodIntensity;
+  mood: Mood;
   symptoms: Array<Symptom>;
   user: User;
 };
@@ -281,6 +291,10 @@ export type Query = {
   budgetCategoryTypes: Array<BudgetCategoryType>;
   budgetRecord: BudgetRecord;
   budgetRecords: Array<BudgetRecord>;
+  mood: Mood;
+  moods: Array<Mood>;
+  periodIntensities: Array<PeriodIntensity>;
+  periodIntensity: PeriodIntensity;
   periodRecord: PeriodRecord;
   periodRecords: Array<PeriodRecord>;
   symptom: Symptom;
@@ -375,6 +389,16 @@ export type QueryBudgetRecordsArgs = {
   orderingById?: InputMaybe<Scalars['String']>;
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryMoodArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type QueryPeriodIntensityArgs = {
+  slug: Scalars['String'];
 };
 
 
