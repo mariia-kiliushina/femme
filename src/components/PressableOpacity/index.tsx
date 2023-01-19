@@ -2,12 +2,12 @@ import {ReactNode} from 'react';
 import {StyleSheet, Pressable, ViewStyle} from 'react-native';
 import COLORS from 'src/constants/colors';
 
-type Props = {
+interface Props {
   type?: 'primary' | 'secondary' | 'disabled';
   onPress: () => void;
   style?: ViewStyle;
   children: ReactNode;
-};
+}
 
 export const PressableOpacity = ({
   type = 'primary',

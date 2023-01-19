@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import COLORS from 'src/constants/colors';
 import {authorizationToken, DEFAULT_AUTHORIZATION_TOKEN} from 'src/state';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -11,6 +11,7 @@ import {
 } from 'src/api/periods';
 import {useGetUserQuery} from 'src/api/users';
 import {PressableOpacity} from 'src/components/PressableOpacity';
+import {Typography} from 'src/components/Typography';
 
 const onLogOut = async () => {
   await EncryptedStorage.removeItem('authorizationToken');
@@ -68,43 +69,43 @@ export const Home = () => {
   };
   return (
     <View style={styles.container}>
-      <Text>Hello WORLD</Text>
-      <Text>ID:{authorizedUser.id}</Text>
-      <Text>Username:{authorizedUser.username}</Text>
+      <Typography>Hello WORLD</Typography>
+      <Typography>ID:{authorizedUser.id}</Typography>
+      <Typography>Username:{authorizedUser.username}</Typography>
       <PressableOpacity onPress={onLogOut} style={styles.button}>
-        <Text>Log out</Text>
-        <Text>{authorizationTokenValue}</Text>
+        <Typography>Log out</Typography>
+        <Typography>{authorizationTokenValue}</Typography>
       </PressableOpacity>
-      <Text>Token:</Text>
+      <Typography>Token:</Typography>
       <PressableOpacity
         onPress={() => authorizationToken(DEFAULT_AUTHORIZATION_TOKEN)}
         style={styles.button}
       >
-        <Text>Reset token to default</Text>
+        <Typography>Reset token to default</Typography>
       </PressableOpacity>
       <FlatList
         data={getPeriodsQueryResponse.data.periodRecords}
         renderItem={({item}) => (
           <View style={styles.listItem}>
             <View>
-              <Text>{item.date}</Text>
+              <Typography>{item.date}</Typography>
             </View>
             <View>
-              <Text>{item.mood.slug}</Text>
+              <Typography>{item.mood.slug}</Typography>
             </View>
             <View>
-              <Text>{item.intensity.slug}</Text>
+              <Typography>{item.intensity.slug}</Typography>
             </View>
           </View>
         )}
       />
       <PressableOpacity onPress={createRecord}>
-        <Text>Add record</Text>
+        <Typography>Add record</Typography>
       </PressableOpacity>
       <PressableOpacity onPress={updateRecord}>
-        <Text> Update the 1st record</Text>
+        <Typography> Update the 1st record</Typography>
       </PressableOpacity>
-      <Text>{JSON.stringify(data || error)}</Text>
+      <Typography>{JSON.stringify(data || error)}</Typography>
     </View>
   );
 };
