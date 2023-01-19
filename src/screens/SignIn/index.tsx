@@ -9,6 +9,8 @@ import {useAuthorizeMutation} from 'src/api/authorization';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {authorizationToken} from 'src/state';
 
+type FormValues = {username: string; password: string};
+
 export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
   const [authorize] = useAuthorizeMutation();
 
@@ -16,12 +18,17 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
     control,
     handleSubmit,
     formState: {},
-  } = useForm({});
+  } = useForm<FormValues>({
+    defaultValues: {
+      username: 'john-doe',
+      password: 'john-doe-password',
+    },
+  });
 
   const onSignIn = async (formValues: FieldValues) => {
     console.log('formValues >>', formValues);
     const res = await authorize({
-      variables: {username: formValues.login, password: formValues.password},
+      variables: {username: formValues.username, password: formValues.password},
     });
     const authorizationTokenFromServer = res.data?.authorize;
     console.log(
@@ -44,7 +51,7 @@ export const SignIn = ({navigation}: RootStackScreenProps<'Sign In'>) => {
         <ControlledInput
           style={styles.input}
           control={control}
-          name="login"
+          name="username"
           type="e-mail"
           placeholder="Email or username"
           rules={{required: 'Username is required'}}

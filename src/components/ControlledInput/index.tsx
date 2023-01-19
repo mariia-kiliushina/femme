@@ -1,11 +1,11 @@
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import {FC} from 'react';
-import {Control, Controller, FieldValues} from 'react-hook-form';
+import {Control, Controller} from 'react-hook-form';
 import Input from '../Input';
 import {Ttype} from '../Input';
 
 type Props = {
-  control: Control<FieldValues>;
+  control: Control<any, any>;
   name: string;
   type?: Ttype;
   placeholder: string;

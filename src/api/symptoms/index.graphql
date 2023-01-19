@@ -1,6 +1,5 @@
 query GetSymptoms {
   symptoms {
-    id
-    name
+    ...symptomFields
   }
 }

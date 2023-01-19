@@ -1,0 +1,55 @@
+query GetPeriodRecord($id: Int!) {
+  periodRecord(id: $id) {
+    ...periodRecordFields
+  }
+}
+
+query GetPeriodRecords($date: String) {
+  periodRecords(date: $date) {
+    ...periodRecordFields
+  }
+}
+
+mutation CreatePeriodRecord(
+  $date: String!
+  $intensitySlug: String!
+  $moodSlug: String!
+  $symptomsIds: [Int!]!
+) {
+  createPeriodRecord(
+    input: {
+      date: $date
+      intensitySlug: $intensitySlug
+      moodSlug: $moodSlug
+      symptomsIds: $symptomsIds
+    }
+  ) {
+    ...periodRecordFields
+  }
+}
+
+mutation UpdatePeriodRecord(
+  $date: String
+  $id: Int!
+  $intensitySlug: String
+  $moodSlug: String
+  $symptomsIds: [Int!]
+) {
+  updatePeriodRecord(
+    input: {
+      id: $id
+      date: $date
+      intensitySlug: $intensitySlug
+      moodSlug: $moodSlug
+      symptomsIds: $symptomsIds
+    }
+  ) {
+    ...periodRecordFields
+  }
+}
+
+mutation DeletePeriodRecord($id: Int!) {
+  deletePeriodRecord(id: $id) {
+    ...periodRecordFields
+  }
+}

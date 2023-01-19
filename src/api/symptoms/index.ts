@@ -1,6 +1,7 @@
 import * as Types from '../types';
 
 import { gql } from '@apollo/client';
+import { SymptomFieldsFragmentDoc } from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetSymptomsQueryVariables = Types.Exact<{ [key: string]: never; }>;
@@ -12,11 +13,10 @@ export type GetSymptomsQuery = { __typename?: 'Query', symptoms: Array<{ __typen
 export const GetSymptomsDocument = gql`
     query GetSymptoms {
   symptoms {
-    id
-    name
+    ...symptomFields
   }
 }
-    `;
+    ${SymptomFieldsFragmentDoc}`;
 
 /**
  * __useGetSymptomsQuery__

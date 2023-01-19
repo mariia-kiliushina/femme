@@ -1,6 +1,7 @@
 import * as Types from '../types';
 
 import { gql } from '@apollo/client';
+import { UserFieldsFragmentDoc } from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetUserQueryVariables = Types.Exact<{
@@ -15,11 +16,10 @@ export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', 
 export const GetUserDocument = gql`
     query GetUser($id: Int, $username: String) {
   user(id: $id, username: $username) {
-    id
-    username
+    ...userFields
   }
 }
-    `;
+    ${UserFieldsFragmentDoc}`;
 
 /**
  * __useGetUserQuery__
