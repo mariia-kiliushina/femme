@@ -2,7 +2,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {ScreenNavigation} from './navigation/stack';
 import {FC, useEffect} from 'react';
-import {ApolloContextProvider} from './components/ApolloContextProvider';
+import {ApolloContextProvider} from './ApolloContextProvider';
 import {authorizationToken} from 'src/state';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
