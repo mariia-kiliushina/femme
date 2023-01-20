@@ -8,10 +8,10 @@ import {
   useUpdatePeriodRecordMutation,
   GetPeriodRecordsDocument,
   useCreatePeriodRecordMutation,
-} from 'src/api/periods';
-import {useGetUserQuery} from 'src/api/users';
-import {PressableOpacity} from 'src/components/PressableOpacity';
-import {Typography} from 'src/components/Typography';
+} from 'api/periods';
+import {useGetUserQuery} from 'api/users';
+import {PressableOpacity} from 'components/PressableOpacity';
+import {Typography} from 'components/Typography';
 
 const onLogOut = async () => {
   await EncryptedStorage.removeItem('authorizationToken');
@@ -24,14 +24,13 @@ export const Home = () => {
   const getAuthorizedUserQueryResult = useGetUserQuery({variables: {id: 0}});
   const getPeriodsQueryResponse = useGetPeriodRecordsQuery();
 
-  const [createPeriodRecordMuatation, {data, error}] =
-    useCreatePeriodRecordMutation({
-      refetchQueries: [
-        {
-          query: GetPeriodRecordsDocument,
-        },
-      ],
-    });
+  const [createPeriodRecordMuatation] = useCreatePeriodRecordMutation({
+    refetchQueries: [
+      {
+        query: GetPeriodRecordsDocument,
+      },
+    ],
+  });
 
   const [updatePeriodRecordMuatation] = useUpdatePeriodRecordMutation({
     refetchQueries: [
@@ -56,10 +55,17 @@ export const Home = () => {
       },
     });
   };
+
+  const records = getPeriodsQueryResponse.data.periodRecords;
+
   const updateRecord = () => {
     updatePeriodRecordMuatation({
       variables: {
-        id: 1,
+        id:
+          (getPeriodsQueryResponse &&
+            getPeriodsQueryResponse?.data &&
+            records[0].id) ||
+          1,
         date: '0001-12-23',
         moodSlug: 'good',
         intensitySlug: 'medium',
@@ -67,6 +73,7 @@ export const Home = () => {
       },
     });
   };
+
   return (
     <View style={styles.container}>
       <Typography>Hello WORLD</Typography>
@@ -84,7 +91,7 @@ export const Home = () => {
         <Typography>Reset token to default</Typography>
       </PressableOpacity>
       <FlatList
-        data={getPeriodsQueryResponse.data.periodRecords}
+        data={getPeriodsQueryResponse.data.periodRecords.slice(0, 5)}
         renderItem={({item}) => (
           <View style={styles.listItem}>
             <View>
@@ -105,7 +112,6 @@ export const Home = () => {
       <PressableOpacity onPress={updateRecord}>
         <Typography> Update the 1st record</Typography>
       </PressableOpacity>
-      <Typography>{JSON.stringify(data || error)}</Typography>
     </View>
   );
 };

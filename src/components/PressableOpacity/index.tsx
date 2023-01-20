@@ -1,6 +1,6 @@
 import {ReactNode} from 'react';
 import {StyleSheet, Pressable, ViewStyle} from 'react-native';
-import COLORS from 'src/constants/colors';
+import COLORS from 'constants/colors';
 
 interface Props {
   type?: 'primary' | 'secondary' | 'disabled';
