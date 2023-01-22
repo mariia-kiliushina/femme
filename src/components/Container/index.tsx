@@ -1,42 +1,40 @@
+import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
-import {COLORS} from 'src/constants/colors';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ConditionalWrapper} from 'src/helpers/conditionalWrapper';
 
-export type ContainerProps = {
+export type AppScreenProps = {
   children: React.ReactNode[] | React.ReactNode;
   viewType?: 'fixed' | 'scroll';
   style?: StyleProp<ViewStyle>;
-  contentLayout?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
   edges?: Edge[];
 };
 
 export const Container = ({
   children,
-  viewType = 'scroll',
+  viewType = 'fixed',
   style,
-  contentLayout,
+  contentContainerStyle,
   edges = ['top', 'right', 'left'],
-}: ContainerProps) => {
-  const Wrapper = viewType === 'scroll' ? SafeAreaView : View;
-
+}: AppScreenProps) => {
   return (
     <SafeAreaView edges={edges} style={[styles.container, style]}>
       <ConditionalWrapper
         condition={viewType === 'scroll'}
         wrapper={(wrapperChildren: React.ReactNode) => (
           <KeyboardAwareScrollView
-            contentContainerStyle={styles.wrapper}
-            enableOnAndroid>
-            {wrapperChildren}
+            contentContainerStyle={styles.keyboardAwareContainerStyle}
+            enableOnAndroid
+          >
+            <>{wrapperChildren}</>
           </KeyboardAwareScrollView>
-        )}>
-        <Wrapper
-          edges={['bottom']}
-          style={[styles.contentContainer, contentLayout]}>
+        )}
+      >
+        <View style={[styles.contentContainer, contentContainerStyle]}>
           <>{children}</>
-        </Wrapper>
+        </View>
       </ConditionalWrapper>
     </SafeAreaView>
   );
@@ -44,14 +42,15 @@ export const Container = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.colorGreyscaleWhite,
+    backgroundColor: 'white',
     flexGrow: 1,
   },
   contentContainer: {
-    flex: 1,
+    flexGrow: 1,
     paddingHorizontal: 20,
   },
-  wrapper: {
-    flexGrow: 1,
+  keyboardAwareContainerStyle: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });

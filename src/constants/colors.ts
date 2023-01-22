@@ -24,7 +24,3 @@ export const COLORS = {
   colorGreyscaleContent: '#1a1a1a',
   colorSupportingErrorredLight: '#e71d3562',
 };
-
-// #70d7c7
-// #50cebb
-export default COLORS;

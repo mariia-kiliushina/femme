@@ -1,29 +1,26 @@
 import {ReactNode} from 'react';
-import {StyleSheet, Pressable, ViewStyle} from 'react-native';
-import COLORS from 'constants/colors';
+import {
+  StyleSheet,
+  Pressable,
+  ViewStyle,
+  StyleProp,
+  PressableProps,
+} from 'react-native';
 
-interface Props {
-  type?: 'primary' | 'secondary' | 'disabled';
-  onPress: () => void;
-  style?: ViewStyle;
+interface Props extends PressableProps {
   children: ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
-export const PressableOpacity = ({
-  type = 'primary',
-  onPress,
-  children,
-  style,
-}: Props) => {
+export const PressableOpacity = ({children, style, ...restProps}: Props) => {
   return (
     <Pressable
-      onPress={onPress}
       style={({pressed}) => [
         pressed && styles.pressed,
         styles.pressableBasicStyle,
-        opacityTypesStyles[type],
         style,
       ]}
+      {...restProps}
     >
       {children}
     </Pressable>
@@ -40,18 +37,4 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.8,
   },
-});
-
-const opacityTypesStyles = StyleSheet.create({
-  /*eslint-disable react-native/no-unused-styles */
-  primary: {
-    backgroundColor: COLORS.colorPrimary,
-  },
-  secondary: {
-    backgroundColor: COLORS.colorSecondary,
-  },
-  disabled: {
-    backgroundColor: COLORS.colorGreyscaleBackgroundGrey,
-  },
-  /*eslint-enable react-native/no-unused-styles */
 });

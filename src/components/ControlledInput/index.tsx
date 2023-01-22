@@ -1,20 +1,18 @@
-import {StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {ViewStyle} from 'react-native';
 import {FC} from 'react';
 import {Control, Controller} from 'react-hook-form';
-import Input from '../Input';
-import {Ttype} from '../Input';
+import {Input} from '../Inputs';
 
 type Props = {
   control: Control<any, any>;
   name: string;
-  type?: Ttype;
   placeholder: string;
   rules: {};
   style?: ViewStyle;
 };
 
 const ControlledInput: FC<Props> = (props) => {
-  const {name, control, placeholder, type = 'default', rules, style} = props;
+  const {name, control, placeholder, rules, style} = props;
 
   return (
     <Controller
@@ -22,34 +20,17 @@ const ControlledInput: FC<Props> = (props) => {
       rules={rules}
       control={control}
       render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (
-        <View style={styles.container}>
-          <Input
-            style={style}
-            isError={error ? true : false}
-            placeholder={placeholder}
-            type={type}
-            value={value ? value : ''}
-            onBlur={onBlur}
-            onChangeText={onChange}
-          />
-          {error && <Text style={styles.text}>{error.message || 'Error'}</Text>}
-        </View>
+        <Input
+          style={style}
+          placeholder={placeholder}
+          value={value ? value : ''}
+          onBlur={onBlur}
+          onChange={onChange}
+          errorText={error?.message}
+        />
       )}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '100%',
-  },
-  text: {
-    alignSelf: 'stretch',
-  },
-});
 
 export default ControlledInput;

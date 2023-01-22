@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home} from 'screens/Home';
 import {Settings} from 'screens/Settings';
-import COLORS from 'src/constants/colors';
+import {COLORS} from 'src/constants/colors';
 import {TabsParamList} from 'src/navigation/types';
 import {Pressable, Text} from 'react-native';
 
