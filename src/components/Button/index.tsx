@@ -5,21 +5,35 @@ import {PressableOpacity} from 'components/PressableOpacity';
 import {Typography} from 'components/Typography';
 
 interface Props {
-  type?: 'primary' | 'secondary';
+  type?: 'primary' | 'secondary' | 'outlined';
   disabled?: boolean;
   onPress: () => void;
   style?: ViewStyle;
   title: string;
 }
 
-export const Button = ({style, title, onPress, type = 'primary'}: Props) => {
+export const Button = ({
+  style,
+  title,
+  onPress,
+  disabled = false,
+  type = 'primary',
+}: Props) => {
+  const buttonStyle = disabled ? styles[`${type}Disabled`] : styles[type];
+
+  const textStyle = disabled
+    ? styles[`${type}TextDisabled`]
+    : styles[`${type}Text`];
+
   return (
     <PressableOpacity
-      style={[styles.button, styles[type], style]}
+      style={[styles.button, buttonStyle, style]}
       onPress={onPress}
     >
       {title && (
-        <Typography color={COLORS.colorGreyscaleWhite}>{title}</Typography>
+        <Typography weight="bold" textStyle={textStyle}>
+          {title}
+        </Typography>
       )}
     </PressableOpacity>
   );
@@ -30,18 +44,54 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: LAYOUT.borderRadius,
-    height: 50,
+    maxHeight: 50,
     padding: 10,
+    marginBottom: 10,
+    flex: 1,
   },
   /*eslint-disable react-native/no-unused-styles */
   primary: {
-    backgroundColor: COLORS.colorPrimary,
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+    borderWidth: 2,
   },
   secondary: {
-    backgroundColor: COLORS.colorSecondary,
+    backgroundColor: COLORS.secondary,
+    borderColor: COLORS.secondary,
+    borderWidth: 2,
   },
-  disabled: {
-    backgroundColor: COLORS.colorGreyscaleBackgroundGrey,
+  outlined: {
+    backgroundColor: COLORS.greyscaleWhite,
+    borderColor: COLORS.secondary,
+    borderWidth: 2,
+  },
+  primaryText: {
+    color: COLORS.greyscaleWhite,
+  },
+  primaryTextDisabled: {
+    color: COLORS.greyscaleLineGrey,
+  },
+  outlinedText: {
+    color: COLORS.secondary,
+  },
+  secondaryText: {
+    color: COLORS.greyscaleWhite,
+  },
+  secondaryTextDisabled: {
+    color: COLORS.greyscaleLineGrey,
+  },
+  outlinedTextDisabled: {
+    color: COLORS.greyscaleLineGrey,
+  },
+  primaryDisabled: {
+    backgroundColor: COLORS.greyscaleBackgroundGrey,
+  },
+  secondaryDisabled: {
+    backgroundColor: COLORS.greyscaleBackgroundGrey,
+  },
+  outlinedDisabled: {
+    borderColor: COLORS.greyscaleBackgroundGrey,
+    borderWidth: 2,
   },
   /*eslint-enable react-native/no-unused-styles */
 });

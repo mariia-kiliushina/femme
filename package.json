@@ -28,6 +28,7 @@
     "react-hook-form": "^7.40.0",
     "react-native": "0.70.6",
     "react-native-biometrics": "^3.0.1",
+    "react-native-date-picker": "^4.2.6",
     "react-native-encrypted-storage": "^4.0.3",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-image-crop-picker": "^0.38.1",

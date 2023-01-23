@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   welcomeText: {
-    color: COLORS.colorSupportingDarkBlue,
+    color: COLORS.supportingDarkBlue,
     fontSize: 40,
     position: 'relative',
     top: -40,

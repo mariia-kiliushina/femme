@@ -1,0 +1,5 @@
+query GetMoods {
+  moods {
+    ...moodFields
+  }
+}

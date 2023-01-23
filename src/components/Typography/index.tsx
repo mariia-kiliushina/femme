@@ -10,6 +10,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {COLORS} from 'constants/colors';
+import {capitalizeFirstLetter} from 'src/helpers/capitalizeFirstLetter';
 
 type TFontVariant = '14' | '16' | '18' | '24' | '36' | '40';
 
@@ -49,21 +50,26 @@ type Props = TextProps & {
   color?: ColorValue;
   textStyle?: StyleProp<TextStyle>;
   style?: StyleProp<ViewStyle>;
+  weight?: 'regular' | 'bold';
 };
 
 export const Typography = ({
   children,
+  weight = 'regular',
   variant = '14',
-  color = COLORS.colorGreyscaleContent,
+  color = COLORS.greyscaleContent,
   textStyle,
   style,
   ...restProps
 }: Props) => {
   const fontVariant = fontVariants[variant];
-
+  const fontFamily = `Raleway-${capitalizeFirstLetter(weight)}`;
   return (
     <View style={style}>
-      <Text style={[fontVariant, {color}, textStyle]} {...restProps}>
+      <Text
+        style={[{fontFamily}, fontVariant, {color}, textStyle]}
+        {...restProps}
+      >
         {children}
       </Text>
     </View>

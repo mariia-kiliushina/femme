@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   text: {
-    color: COLORS.colorGreyscaleContent,
+    color: COLORS.greyscaleContent,
     fontSize: 32,
     alignSelf: 'flex-start',
     marginBottom: 50,

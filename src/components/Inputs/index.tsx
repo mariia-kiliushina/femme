@@ -5,12 +5,11 @@ import {COLORS} from 'src/constants/colors';
 
 const INPUT_PADDING = 12;
 
-export type InputProps = Omit<TextInputProps, 'onChangeText'> & {
+export interface InputProps extends TextInputProps {
   label?: string;
   errorText?: string | undefined;
-  onChange?: (value: string) => void;
   onPress?: () => void;
-};
+}
 
 export const Input = ({
   label,
@@ -32,10 +31,7 @@ export const Input = ({
   return (
     <View>
       {label && (
-        <Typography
-          color={COLORS.colorGreyscaleContent}
-          textStyle={styles.label}
-        >
+        <Typography color={COLORS.greyscaleContent} textStyle={styles.label}>
           {label}
         </Typography>
       )}
@@ -67,26 +63,26 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     borderRadius: 6,
-    borderColor: COLORS.colorGreyscaleContent,
+    borderColor: COLORS.greyscaleContent,
     paddingHorizontal: INPUT_PADDING,
     paddingVertical: 5,
-    backgroundColor: COLORS.colorGreyscaleWhite,
+    backgroundColor: COLORS.greyscaleWhite,
   },
   focused: {
-    borderColor: COLORS.colorSupportingErrorred,
+    borderColor: COLORS.supportingErrorred,
   },
   label: {
     marginVertical: 8,
   },
   error: {
-    borderColor: COLORS.colorSupportingErrorred,
+    borderColor: COLORS.supportingErrorred,
   },
   disabled: {
-    borderColor: COLORS.colorGreyscaleSecondaryGrey,
+    borderColor: COLORS.greyscaleSecondaryGrey,
   },
   errorText: {
     height: 20,
-    color: COLORS.colorSupportingErrorred,
+    color: COLORS.supportingErrorred,
     marginTop: 8,
   },
 });

@@ -11,7 +11,7 @@ export const Main = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: COLORS.colorPrimaryDark,
+        tabBarActiveTintColor: COLORS.primaryDark,
       }}
     >
       <Tab.Screen
