@@ -42,4 +42,6 @@
 
 - Write backend for pills intake
 - Push notifications reminders about pills intake
+- Deep linking
+- Styled components
 - Choose lib https://blog.logrocket.com/react-hook-form-vs-formik-comparison/-->
