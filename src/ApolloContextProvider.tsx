@@ -9,7 +9,7 @@ import {setContext} from '@apollo/client/link/context';
 import {FC, PropsWithChildren} from 'react';
 import {authorizationToken} from 'src/state';
 
-const httpLink = createHttpLink({uri: 'http://localhost:3080/graphql'});
+const httpLink = createHttpLink({uri: 'http://192.168.100.4:3080/graphql'});
 
 export const ApolloContextProvider: FC<PropsWithChildren> = ({children}) => {
   const authorizationLink = setContext((_, {headers}) => {
