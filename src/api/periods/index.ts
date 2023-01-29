@@ -1,22 +1,42 @@
 import * as Types from '../types';
 
-import { gql } from '@apollo/client';
-import { PeriodRecordFieldsFragmentDoc } from '../fragments';
+import {gql} from '@apollo/client';
+import {PeriodRecordFieldsFragmentDoc} from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetPeriodRecordQueryVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
-
-export type GetPeriodRecordQuery = { __typename?: 'Query', periodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
+export type GetPeriodRecordQuery = {
+  __typename?: 'Query';
+  periodRecord: {
+    __typename?: 'PeriodRecord';
+    id: number;
+    date: string;
+    intensity: {__typename?: 'PeriodIntensity'; slug: string};
+    mood: {__typename?: 'Mood'; slug: string};
+    symptoms: Array<{__typename?: 'Symptom'; id: number; name: string}>;
+    user: {__typename?: 'User'; id: number; username: string};
+  };
+};
 
 export type GetPeriodRecordsQueryVariables = Types.Exact<{
   date?: Types.InputMaybe<Types.Scalars['String']>;
 }>;
 
-
-export type GetPeriodRecordsQuery = { __typename?: 'Query', periodRecords: Array<{ __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } }> };
+export type GetPeriodRecordsQuery = {
+  __typename?: 'Query';
+  periodRecords: Array<{
+    __typename?: 'PeriodRecord';
+    id: number;
+    date: string;
+    intensity: {__typename?: 'PeriodIntensity'; slug: string};
+    mood: {__typename?: 'Mood'; slug: string};
+    symptoms: Array<{__typename?: 'Symptom'; id: number; name: string}>;
+    user: {__typename?: 'User'; id: number; username: string};
+  }>;
+};
 
 export type CreatePeriodRecordMutationVariables = Types.Exact<{
   date: Types.Scalars['String'];
@@ -25,35 +45,67 @@ export type CreatePeriodRecordMutationVariables = Types.Exact<{
   symptomsIds: Array<Types.Scalars['Int']> | Types.Scalars['Int'];
 }>;
 
-
-export type CreatePeriodRecordMutation = { __typename?: 'Mutation', createPeriodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
+export type CreatePeriodRecordMutation = {
+  __typename?: 'Mutation';
+  createPeriodRecord: {
+    __typename?: 'PeriodRecord';
+    id: number;
+    date: string;
+    intensity: {__typename?: 'PeriodIntensity'; slug: string};
+    mood: {__typename?: 'Mood'; slug: string};
+    symptoms: Array<{__typename?: 'Symptom'; id: number; name: string}>;
+    user: {__typename?: 'User'; id: number; username: string};
+  };
+};
 
 export type UpdatePeriodRecordMutationVariables = Types.Exact<{
   date?: Types.InputMaybe<Types.Scalars['String']>;
   id: Types.Scalars['Int'];
   intensitySlug?: Types.InputMaybe<Types.Scalars['String']>;
   moodSlug?: Types.InputMaybe<Types.Scalars['String']>;
-  symptomsIds?: Types.InputMaybe<Array<Types.Scalars['Int']> | Types.Scalars['Int']>;
+  symptomsIds?: Types.InputMaybe<
+    Array<Types.Scalars['Int']> | Types.Scalars['Int']
+  >;
 }>;
 
-
-export type UpdatePeriodRecordMutation = { __typename?: 'Mutation', updatePeriodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
+export type UpdatePeriodRecordMutation = {
+  __typename?: 'Mutation';
+  updatePeriodRecord: {
+    __typename?: 'PeriodRecord';
+    id: number;
+    date: string;
+    intensity: {__typename?: 'PeriodIntensity'; slug: string};
+    mood: {__typename?: 'Mood'; slug: string};
+    symptoms: Array<{__typename?: 'Symptom'; id: number; name: string}>;
+    user: {__typename?: 'User'; id: number; username: string};
+  };
+};
 
 export type DeletePeriodRecordMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
-
-export type DeletePeriodRecordMutation = { __typename?: 'Mutation', deletePeriodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
-
+export type DeletePeriodRecordMutation = {
+  __typename?: 'Mutation';
+  deletePeriodRecord: {
+    __typename?: 'PeriodRecord';
+    id: number;
+    date: string;
+    intensity: {__typename?: 'PeriodIntensity'; slug: string};
+    mood: {__typename?: 'Mood'; slug: string};
+    symptoms: Array<{__typename?: 'Symptom'; id: number; name: string}>;
+    user: {__typename?: 'User'; id: number; username: string};
+  };
+};
 
 export const GetPeriodRecordDocument = gql`
-    query GetPeriodRecord($id: Int!) {
-  periodRecord(id: $id) {
-    ...periodRecordFields
+  query GetPeriodRecord($id: Int!) {
+    periodRecord(id: $id) {
+      ...periodRecordFields
+    }
   }
-}
-    ${PeriodRecordFieldsFragmentDoc}`;
+  ${PeriodRecordFieldsFragmentDoc}
+`;
 
 /**
  * __useGetPeriodRecordQuery__
@@ -71,24 +123,48 @@ export const GetPeriodRecordDocument = gql`
  *   },
  * });
  */
-export function useGetPeriodRecordQuery(baseOptions: Apollo.QueryHookOptions<GetPeriodRecordQuery, GetPeriodRecordQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPeriodRecordQuery, GetPeriodRecordQueryVariables>(GetPeriodRecordDocument, options);
-      }
-export function useGetPeriodRecordLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPeriodRecordQuery, GetPeriodRecordQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPeriodRecordQuery, GetPeriodRecordQueryVariables>(GetPeriodRecordDocument, options);
-        }
-export type GetPeriodRecordQueryHookResult = ReturnType<typeof useGetPeriodRecordQuery>;
-export type GetPeriodRecordLazyQueryHookResult = ReturnType<typeof useGetPeriodRecordLazyQuery>;
-export type GetPeriodRecordQueryResult = Apollo.QueryResult<GetPeriodRecordQuery, GetPeriodRecordQueryVariables>;
-export const GetPeriodRecordsDocument = gql`
-    query GetPeriodRecords($date: String) {
-  periodRecords(date: $date) {
-    ...periodRecordFields
-  }
+export function useGetPeriodRecordQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetPeriodRecordQuery,
+    GetPeriodRecordQueryVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetPeriodRecordQuery, GetPeriodRecordQueryVariables>(
+    GetPeriodRecordDocument,
+    options,
+  );
 }
-    ${PeriodRecordFieldsFragmentDoc}`;
+export function useGetPeriodRecordLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPeriodRecordQuery,
+    GetPeriodRecordQueryVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<
+    GetPeriodRecordQuery,
+    GetPeriodRecordQueryVariables
+  >(GetPeriodRecordDocument, options);
+}
+export type GetPeriodRecordQueryHookResult = ReturnType<
+  typeof useGetPeriodRecordQuery
+>;
+export type GetPeriodRecordLazyQueryHookResult = ReturnType<
+  typeof useGetPeriodRecordLazyQuery
+>;
+export type GetPeriodRecordQueryResult = Apollo.QueryResult<
+  GetPeriodRecordQuery,
+  GetPeriodRecordQueryVariables
+>;
+export const GetPeriodRecordsDocument = gql`
+  query GetPeriodRecords($date: String) {
+    periodRecords(date: $date) {
+      ...periodRecordFields
+    }
+  }
+  ${PeriodRecordFieldsFragmentDoc}
+`;
 
 /**
  * __useGetPeriodRecordsQuery__
@@ -106,27 +182,64 @@ export const GetPeriodRecordsDocument = gql`
  *   },
  * });
  */
-export function useGetPeriodRecordsQuery(baseOptions?: Apollo.QueryHookOptions<GetPeriodRecordsQuery, GetPeriodRecordsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPeriodRecordsQuery, GetPeriodRecordsQueryVariables>(GetPeriodRecordsDocument, options);
-      }
-export function useGetPeriodRecordsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPeriodRecordsQuery, GetPeriodRecordsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPeriodRecordsQuery, GetPeriodRecordsQueryVariables>(GetPeriodRecordsDocument, options);
-        }
-export type GetPeriodRecordsQueryHookResult = ReturnType<typeof useGetPeriodRecordsQuery>;
-export type GetPeriodRecordsLazyQueryHookResult = ReturnType<typeof useGetPeriodRecordsLazyQuery>;
-export type GetPeriodRecordsQueryResult = Apollo.QueryResult<GetPeriodRecordsQuery, GetPeriodRecordsQueryVariables>;
-export const CreatePeriodRecordDocument = gql`
-    mutation CreatePeriodRecord($date: String!, $intensitySlug: String!, $moodSlug: String!, $symptomsIds: [Int!]!) {
-  createPeriodRecord(
-    input: {date: $date, intensitySlug: $intensitySlug, moodSlug: $moodSlug, symptomsIds: $symptomsIds}
-  ) {
-    ...periodRecordFields
-  }
+export function useGetPeriodRecordsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetPeriodRecordsQuery,
+    GetPeriodRecordsQueryVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetPeriodRecordsQuery, GetPeriodRecordsQueryVariables>(
+    GetPeriodRecordsDocument,
+    options,
+  );
 }
-    ${PeriodRecordFieldsFragmentDoc}`;
-export type CreatePeriodRecordMutationFn = Apollo.MutationFunction<CreatePeriodRecordMutation, CreatePeriodRecordMutationVariables>;
+export function useGetPeriodRecordsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPeriodRecordsQuery,
+    GetPeriodRecordsQueryVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<
+    GetPeriodRecordsQuery,
+    GetPeriodRecordsQueryVariables
+  >(GetPeriodRecordsDocument, options);
+}
+export type GetPeriodRecordsQueryHookResult = ReturnType<
+  typeof useGetPeriodRecordsQuery
+>;
+export type GetPeriodRecordsLazyQueryHookResult = ReturnType<
+  typeof useGetPeriodRecordsLazyQuery
+>;
+export type GetPeriodRecordsQueryResult = Apollo.QueryResult<
+  GetPeriodRecordsQuery,
+  GetPeriodRecordsQueryVariables
+>;
+export const CreatePeriodRecordDocument = gql`
+  mutation CreatePeriodRecord(
+    $date: String!
+    $intensitySlug: String!
+    $moodSlug: String!
+    $symptomsIds: [Int!]!
+  ) {
+    createPeriodRecord(
+      input: {
+        date: $date
+        intensitySlug: $intensitySlug
+        moodSlug: $moodSlug
+        symptomsIds: $symptomsIds
+      }
+    ) {
+      ...periodRecordFields
+    }
+  }
+  ${PeriodRecordFieldsFragmentDoc}
+`;
+export type CreatePeriodRecordMutationFn = Apollo.MutationFunction<
+  CreatePeriodRecordMutation,
+  CreatePeriodRecordMutationVariables
+>;
 
 /**
  * __useCreatePeriodRecordMutation__
@@ -148,23 +261,53 @@ export type CreatePeriodRecordMutationFn = Apollo.MutationFunction<CreatePeriodR
  *   },
  * });
  */
-export function useCreatePeriodRecordMutation(baseOptions?: Apollo.MutationHookOptions<CreatePeriodRecordMutation, CreatePeriodRecordMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreatePeriodRecordMutation, CreatePeriodRecordMutationVariables>(CreatePeriodRecordDocument, options);
-      }
-export type CreatePeriodRecordMutationHookResult = ReturnType<typeof useCreatePeriodRecordMutation>;
-export type CreatePeriodRecordMutationResult = Apollo.MutationResult<CreatePeriodRecordMutation>;
-export type CreatePeriodRecordMutationOptions = Apollo.BaseMutationOptions<CreatePeriodRecordMutation, CreatePeriodRecordMutationVariables>;
-export const UpdatePeriodRecordDocument = gql`
-    mutation UpdatePeriodRecord($date: String, $id: Int!, $intensitySlug: String, $moodSlug: String, $symptomsIds: [Int!]) {
-  updatePeriodRecord(
-    input: {id: $id, date: $date, intensitySlug: $intensitySlug, moodSlug: $moodSlug, symptomsIds: $symptomsIds}
-  ) {
-    ...periodRecordFields
-  }
+export function useCreatePeriodRecordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreatePeriodRecordMutation,
+    CreatePeriodRecordMutationVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    CreatePeriodRecordMutation,
+    CreatePeriodRecordMutationVariables
+  >(CreatePeriodRecordDocument, options);
 }
-    ${PeriodRecordFieldsFragmentDoc}`;
-export type UpdatePeriodRecordMutationFn = Apollo.MutationFunction<UpdatePeriodRecordMutation, UpdatePeriodRecordMutationVariables>;
+export type CreatePeriodRecordMutationHookResult = ReturnType<
+  typeof useCreatePeriodRecordMutation
+>;
+export type CreatePeriodRecordMutationResult =
+  Apollo.MutationResult<CreatePeriodRecordMutation>;
+export type CreatePeriodRecordMutationOptions = Apollo.BaseMutationOptions<
+  CreatePeriodRecordMutation,
+  CreatePeriodRecordMutationVariables
+>;
+export const UpdatePeriodRecordDocument = gql`
+  mutation UpdatePeriodRecord(
+    $date: String
+    $id: Int!
+    $intensitySlug: String
+    $moodSlug: String
+    $symptomsIds: [Int!]
+  ) {
+    updatePeriodRecord(
+      input: {
+        id: $id
+        date: $date
+        intensitySlug: $intensitySlug
+        moodSlug: $moodSlug
+        symptomsIds: $symptomsIds
+      }
+    ) {
+      ...periodRecordFields
+    }
+  }
+  ${PeriodRecordFieldsFragmentDoc}
+`;
+export type UpdatePeriodRecordMutationFn = Apollo.MutationFunction<
+  UpdatePeriodRecordMutation,
+  UpdatePeriodRecordMutationVariables
+>;
 
 /**
  * __useUpdatePeriodRecordMutation__
@@ -187,21 +330,39 @@ export type UpdatePeriodRecordMutationFn = Apollo.MutationFunction<UpdatePeriodR
  *   },
  * });
  */
-export function useUpdatePeriodRecordMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePeriodRecordMutation, UpdatePeriodRecordMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdatePeriodRecordMutation, UpdatePeriodRecordMutationVariables>(UpdatePeriodRecordDocument, options);
-      }
-export type UpdatePeriodRecordMutationHookResult = ReturnType<typeof useUpdatePeriodRecordMutation>;
-export type UpdatePeriodRecordMutationResult = Apollo.MutationResult<UpdatePeriodRecordMutation>;
-export type UpdatePeriodRecordMutationOptions = Apollo.BaseMutationOptions<UpdatePeriodRecordMutation, UpdatePeriodRecordMutationVariables>;
-export const DeletePeriodRecordDocument = gql`
-    mutation DeletePeriodRecord($id: Int!) {
-  deletePeriodRecord(id: $id) {
-    ...periodRecordFields
-  }
+export function useUpdatePeriodRecordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdatePeriodRecordMutation,
+    UpdatePeriodRecordMutationVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    UpdatePeriodRecordMutation,
+    UpdatePeriodRecordMutationVariables
+  >(UpdatePeriodRecordDocument, options);
 }
-    ${PeriodRecordFieldsFragmentDoc}`;
-export type DeletePeriodRecordMutationFn = Apollo.MutationFunction<DeletePeriodRecordMutation, DeletePeriodRecordMutationVariables>;
+export type UpdatePeriodRecordMutationHookResult = ReturnType<
+  typeof useUpdatePeriodRecordMutation
+>;
+export type UpdatePeriodRecordMutationResult =
+  Apollo.MutationResult<UpdatePeriodRecordMutation>;
+export type UpdatePeriodRecordMutationOptions = Apollo.BaseMutationOptions<
+  UpdatePeriodRecordMutation,
+  UpdatePeriodRecordMutationVariables
+>;
+export const DeletePeriodRecordDocument = gql`
+  mutation DeletePeriodRecord($id: Int!) {
+    deletePeriodRecord(id: $id) {
+      ...periodRecordFields
+    }
+  }
+  ${PeriodRecordFieldsFragmentDoc}
+`;
+export type DeletePeriodRecordMutationFn = Apollo.MutationFunction<
+  DeletePeriodRecordMutation,
+  DeletePeriodRecordMutationVariables
+>;
 
 /**
  * __useDeletePeriodRecordMutation__
@@ -220,10 +381,24 @@ export type DeletePeriodRecordMutationFn = Apollo.MutationFunction<DeletePeriodR
  *   },
  * });
  */
-export function useDeletePeriodRecordMutation(baseOptions?: Apollo.MutationHookOptions<DeletePeriodRecordMutation, DeletePeriodRecordMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeletePeriodRecordMutation, DeletePeriodRecordMutationVariables>(DeletePeriodRecordDocument, options);
-      }
-export type DeletePeriodRecordMutationHookResult = ReturnType<typeof useDeletePeriodRecordMutation>;
-export type DeletePeriodRecordMutationResult = Apollo.MutationResult<DeletePeriodRecordMutation>;
-export type DeletePeriodRecordMutationOptions = Apollo.BaseMutationOptions<DeletePeriodRecordMutation, DeletePeriodRecordMutationVariables>;
+export function useDeletePeriodRecordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeletePeriodRecordMutation,
+    DeletePeriodRecordMutationVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    DeletePeriodRecordMutation,
+    DeletePeriodRecordMutationVariables
+  >(DeletePeriodRecordDocument, options);
+}
+export type DeletePeriodRecordMutationHookResult = ReturnType<
+  typeof useDeletePeriodRecordMutation
+>;
+export type DeletePeriodRecordMutationResult =
+  Apollo.MutationResult<DeletePeriodRecordMutation>;
+export type DeletePeriodRecordMutationOptions = Apollo.BaseMutationOptions<
+  DeletePeriodRecordMutation,
+  DeletePeriodRecordMutationVariables
+>;

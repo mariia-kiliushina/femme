@@ -1,22 +1,24 @@
 import * as Types from '../types';
 
-import { gql } from '@apollo/client';
-import { MoodFieldsFragmentDoc } from '../fragments';
+import {gql} from '@apollo/client';
+import {MoodFieldsFragmentDoc} from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetMoodsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type GetMoodsQueryVariables = Types.Exact<{[key: string]: never}>;
 
-
-export type GetMoodsQuery = { __typename?: 'Query', moods: Array<{ __typename?: 'Mood', slug: string }> };
-
+export type GetMoodsQuery = {
+  __typename?: 'Query';
+  moods: Array<{__typename?: 'Mood'; slug: string}>;
+};
 
 export const GetMoodsDocument = gql`
-    query GetMoods {
-  moods {
-    ...moodFields
+  query GetMoods {
+    moods {
+      ...moodFields
+    }
   }
-}
-    ${MoodFieldsFragmentDoc}`;
+  ${MoodFieldsFragmentDoc}
+`;
 
 /**
  * __useGetMoodsQuery__
@@ -33,14 +35,32 @@ export const GetMoodsDocument = gql`
  *   },
  * });
  */
-export function useGetMoodsQuery(baseOptions?: Apollo.QueryHookOptions<GetMoodsQuery, GetMoodsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetMoodsQuery, GetMoodsQueryVariables>(GetMoodsDocument, options);
-      }
-export function useGetMoodsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMoodsQuery, GetMoodsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetMoodsQuery, GetMoodsQueryVariables>(GetMoodsDocument, options);
-        }
+export function useGetMoodsQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetMoodsQuery, GetMoodsQueryVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetMoodsQuery, GetMoodsQueryVariables>(
+    GetMoodsDocument,
+    options,
+  );
+}
+export function useGetMoodsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetMoodsQuery,
+    GetMoodsQueryVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GetMoodsQuery, GetMoodsQueryVariables>(
+    GetMoodsDocument,
+    options,
+  );
+}
 export type GetMoodsQueryHookResult = ReturnType<typeof useGetMoodsQuery>;
-export type GetMoodsLazyQueryHookResult = ReturnType<typeof useGetMoodsLazyQuery>;
-export type GetMoodsQueryResult = Apollo.QueryResult<GetMoodsQuery, GetMoodsQueryVariables>;
+export type GetMoodsLazyQueryHookResult = ReturnType<
+  typeof useGetMoodsLazyQuery
+>;
+export type GetMoodsQueryResult = Apollo.QueryResult<
+  GetMoodsQuery,
+  GetMoodsQueryVariables
+>;
