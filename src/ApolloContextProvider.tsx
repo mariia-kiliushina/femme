@@ -1,3 +1,4 @@
+import {FC, PropsWithChildren} from 'react';
 import {
   ApolloClient,
   ApolloProvider,
@@ -6,10 +7,15 @@ import {
   useReactiveVar,
 } from '@apollo/client';
 import {setContext} from '@apollo/client/link/context';
-import {FC, PropsWithChildren} from 'react';
 import {authorizationToken} from 'src/state';
+import {Platform} from 'react-native';
+import Config from 'react-native-config';
 
-const httpLink = createHttpLink({uri: 'http://192.168.100.4:3080/graphql'});
+const DEV_HOST = Platform.OS === 'ios' ? 'localhost' : Config.ANDROID_DEV_HOST;
+
+const Host = __DEV__ ? DEV_HOST : Config.PROD_HOST;
+
+const httpLink = createHttpLink({uri: `http://${Host}:3080/graphql`});
 
 export const ApolloContextProvider: FC<PropsWithChildren> = ({children}) => {
   const authorizationLink = setContext((_, {headers}) => {

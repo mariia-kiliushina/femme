@@ -12,10 +12,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1E4B7069F1F84767B9F1DC25 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CDB9512FCBE24F36A6ADCAC2 /* Raleway-Regular.ttf */; };
+		525F6A33E00648659C752D3D /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45F961C6E7144E05A4F3FDEB /* Raleway-Bold.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-WomenHealthMobile-WomenHealthMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-WomenHealthMobile-WomenHealthMobileTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		525F6A33E00648659C752D3D /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45F961C6E7144E05A4F3FDEB /* Raleway-Bold.ttf */; };
-		1E4B7069F1F84767B9F1DC25 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CDB9512FCBE24F36A6ADCAC2 /* Raleway-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,14 +40,14 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = WomenHealthMobile/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-WomenHealthMobile-WomenHealthMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WomenHealthMobile-WomenHealthMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-WomenHealthMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WomenHealthMobile.debug.xcconfig"; path = "Target Support Files/Pods-WomenHealthMobile/Pods-WomenHealthMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		45F961C6E7144E05A4F3FDEB /* Raleway-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Raleway-Bold.ttf"; path = "../assets/fonts/Raleway-Bold.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-WomenHealthMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WomenHealthMobile.release.xcconfig"; path = "Target Support Files/Pods-WomenHealthMobile/Pods-WomenHealthMobile.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-WomenHealthMobile-WomenHealthMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WomenHealthMobile-WomenHealthMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-WomenHealthMobile-WomenHealthMobileTests/Pods-WomenHealthMobile-WomenHealthMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-WomenHealthMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WomenHealthMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = WomenHealthMobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-WomenHealthMobile-WomenHealthMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WomenHealthMobile-WomenHealthMobileTests.release.xcconfig"; path = "Target Support Files/Pods-WomenHealthMobile-WomenHealthMobileTests/Pods-WomenHealthMobile-WomenHealthMobileTests.release.xcconfig"; sourceTree = "<group>"; };
+		CDB9512FCBE24F36A6ADCAC2 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Raleway-Regular.ttf"; path = "../assets/fonts/Raleway-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		45F961C6E7144E05A4F3FDEB /* Raleway-Bold.ttf */ = {isa = PBXFileReference; name = "Raleway-Bold.ttf"; path = "../assets/fonts/Raleway-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CDB9512FCBE24F36A6ADCAC2 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; name = "Raleway-Regular.ttf"; path = "../assets/fonts/Raleway-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,14 +154,14 @@
 			sourceTree = "<group>";
 		};
 		E19FE429840C4B5FB3355671 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				45F961C6E7144E05A4F3FDEB /* Raleway-Bold.ttf */,
 				CDB9512FCBE24F36A6ADCAC2 /* Raleway-Regular.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
 			path = "";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
