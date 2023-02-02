@@ -9,11 +9,12 @@ import {
 import {setContext} from '@apollo/client/link/context';
 import {authorizationToken} from 'src/state';
 import {Platform} from 'react-native';
-import Config from 'react-native-config';
 
-const DEV_HOST = Platform.OS === 'ios' ? 'localhost' : Config.ANDROID_DEV_HOST;
+const ANDROID_DEV_HOST = '192.168.100.4';
+const PROD_HOST = 'https://women-health-server.onrender.com/graphql';
 
-const Host = __DEV__ ? DEV_HOST : Config.PROD_HOST;
+const DEV_HOST = Platform.OS === 'ios' ? 'localhost' : ANDROID_DEV_HOST;
+const Host = __DEV__ ? DEV_HOST : PROD_HOST;
 
 const httpLink = createHttpLink({uri: `http://${Host}:3080/graphql`});
 
