@@ -1,13 +1,13 @@
 import {StyleSheet, Text} from 'react-native';
 import {Button} from 'components/Button';
 import {COLORS} from 'src/constants/colors';
-import {FieldValues, useForm} from 'react-hook-form';
-import ControlledInput from 'components/ControlledInput';
+import {Controller, FieldValues, useForm} from 'react-hook-form';
 import {RootStackScreenProps} from 'src/navigation/types';
 import {useAuthorizeMutation} from 'src/api/authorization';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {authorizationToken} from 'src/state';
 import {Container} from 'components/Container';
+import {Input} from 'components/Inputs/BaseInput';
 
 type FormValues = {username: string; password: string};
 
@@ -21,7 +21,6 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
   } = useForm<FormValues>({
     defaultValues: {
       username: 'john-doe',
-      password: 'john-doe-password',
     },
   });
 
@@ -47,41 +46,41 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
   return (
     <Container>
       <Text style={styles.text}>Sign In</Text>
-      <ControlledInput
+      <Controller
+        name={'username'}
         control={control}
-        name="username"
-        placeholder="Email or username"
-        rules={{required: 'Username is required'}}
+        render={({field: {value, onChange}, fieldState: {error}}) => (
+          <Input
+            placeholder={'Username'}
+            value={value}
+            onChange={onChange}
+            errorText={error?.message}
+          />
+        )}
       />
-      <ControlledInput
+      <Controller
+        name={'password'}
         control={control}
-        name="password"
-        placeholder="Password"
-        rules={{
-          required: 'Password is required',
-        }}
+        render={({field: {value, onChange}, fieldState: {error}}) => (
+          <Input
+            placeholder={'Password'}
+            value={value}
+            onChange={onChange}
+            errorText={error?.message}
+          />
+        )}
       />
 
-      <Button
-        style={styles.button}
-        type="primary"
-        title="Sign In"
-        onPress={handleSubmit(onSignIn)}
-      />
+      <Button type="primary" title="Sign In" onPress={handleSubmit(onSignIn)} />
     </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    marginVertical: 30,
-    alignSelf: 'flex-end',
-  },
   text: {
     color: COLORS.greyscaleContent,
     fontSize: 32,
     alignSelf: 'flex-start',
-    marginBottom: 50,
-    marginLeft: 20,
+    marginBottom: 30,
   },
 });
