@@ -32,12 +32,12 @@
 - ~~Install on iOS~~
 - ~~Install on Android~~
 
-<!-- ## 3. Make the app more usable
+## 3. Make the app more usable
 
 - Create password input
 - Create Text/Numeric inputs
 
-## 3. Additional functionality
+<!-- ## 3. Additional functionality
 
 - Write backend for pills intake
 - Push notifications reminders about pills intake
