@@ -34,8 +34,13 @@
 
 ## 3. Make the app more usable
 
-- Create password input
+- ~~Create password input~~
 - Create Text/Numeric inputs
+- Add icons on bottom tab
+- Replace natice pickers with calendar
+- Create modal window component
+- Create Modal for record creation and displaying record's info for selecte date
+- Create user profile component
 
 <!-- ## 3. Additional functionality
 
