@@ -7,7 +7,8 @@ import {useAuthorizeMutation} from 'src/api/authorization';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {authorizationToken} from 'src/state';
 import {Container} from 'components/Container';
-import {Input} from 'components/Inputs/BaseInput';
+import {Input} from 'components/Inputs/Input';
+import {InputPassword} from 'components/Inputs/InputPassword';
 
 type FormValues = {username: string; password: string};
 
@@ -21,6 +22,7 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
   } = useForm<FormValues>({
     defaultValues: {
       username: 'john-doe',
+      password: 'john-doe-password',
     },
   });
 
@@ -62,7 +64,7 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
         name={'password'}
         control={control}
         render={({field: {value, onChange}, fieldState: {error}}) => (
-          <Input
+          <InputPassword
             placeholder={'Password'}
             value={value}
             onChange={onChange}

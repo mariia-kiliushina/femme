@@ -46,30 +46,30 @@ const fontVariants: {[k in TFontVariant]: StyleProp<TextStyle>} =
 
 type Props = TextProps & {
   children: ReactNode;
-  variant?: TFontVariant;
   color?: ColorValue;
-  textStyle?: StyleProp<TextStyle>;
+  fontSize?: TFontVariant;
   style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
   weight?: 'regular' | 'bold';
 };
 
 export const Typography = ({
   children,
-  weight = 'regular',
-  variant = '14',
   color = COLORS.greyscaleContent,
+  fontSize = '14',
   textStyle,
   style,
+  weight = 'regular',
   ...restProps
 }: Props) => {
-  const fontVariant = fontVariants[variant];
+  const fontVariant = fontVariants[fontSize];
   const fontFamily = `Raleway-${capitalizeFirstLetter(weight)}`;
+
+  const finalTextStyle = [{fontFamily}, fontVariant, {color}, textStyle];
+
   return (
     <View style={style}>
-      <Text
-        style={[{fontFamily}, fontVariant, {color}, textStyle]}
-        {...restProps}
-      >
+      <Text style={finalTextStyle} {...restProps}>
         {children}
       </Text>
     </View>
