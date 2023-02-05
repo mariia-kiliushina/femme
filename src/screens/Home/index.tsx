@@ -1,21 +1,19 @@
 import {useState} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import DatePicker from 'react-native-date-picker';
-
+import {StyleSheet, View} from 'react-native';
 import {Typography} from 'components/Typography';
 import {Button} from 'components/Button';
 import {Container} from 'components/Container';
-
+import {MainCalendar} from 'components/Calendar';
 import {useGetSymptomsQuery} from 'api/symptoms';
 import {useGetUserQuery} from 'api/users';
 import {useGetMoodsQuery} from 'api/mood/index';
 import {useGetPeriodIntensitiesQuery} from 'api/period-intensity';
 import {
   useGetPeriodRecordsQuery,
-  useUpdatePeriodRecordMutation,
   GetPeriodRecordsDocument,
   useCreatePeriodRecordMutation,
 } from 'api/periods';
+import {formatDateToString} from 'src/helpers/formatDate';
 
 export const Home = () => {
   const [selectedPeriodIntensity, setselectedPeriodIntensitySlug] =
@@ -23,8 +21,9 @@ export const Home = () => {
   const [selectedMoodSlug, setSelectedMoodSlug] = useState('');
   const [selectedSymptomsIds, setSelectedSymptomsIds] = useState<number[]>([]);
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
+  const [selectedDateString, setSelectedDateString] = useState<string>(
+    formatDateToString(new Date()),
+  );
   const symptomsQueryResult = useGetSymptomsQuery();
   const moodsQueryResult = useGetMoodsQuery();
   const periodIntensitiesQueryResult = useGetPeriodIntensitiesQuery();
@@ -40,27 +39,21 @@ export const Home = () => {
     ],
   });
 
-  const [updatePeriodRecordMuatation] = useUpdatePeriodRecordMutation({
-    refetchQueries: [
-      {
-        query: GetPeriodRecordsDocument,
-      },
-    ],
-  });
+  // const [updatePeriodRecordMuatation] = useUpdatePeriodRecordMutation({
+  //   refetchQueries: [
+  //     {
+  //       query: GetPeriodRecordsDocument,
+  //     },
+  //   ],
+  // });
 
   if (getPeriodsQueryResponse.data === undefined) return null;
   if (getAuthorizedUserQueryResult.data === undefined) return null;
 
   const createRecord = () => {
-    const selectedDateFormatted = `${selectedDate.getFullYear()}-${(
-      selectedDate.getUTCMonth() + 1
-    )
-      .toString()
-      .padStart(2, '0')}-${selectedDate.getUTCDate()}`;
-
     createPeriodRecordMuatation({
       variables: {
-        date: selectedDateFormatted,
+        date: selectedDateString,
         moodSlug: selectedMoodSlug,
         intensitySlug: selectedPeriodIntensity,
         symptomsIds: selectedSymptomsIds,
@@ -68,30 +61,12 @@ export const Home = () => {
     });
   };
 
-  const records = getPeriodsQueryResponse.data.periodRecords;
-
-  const updateRecord = () => {
-    updatePeriodRecordMuatation({
-      variables: {
-        id:
-          (getPeriodsQueryResponse &&
-            getPeriodsQueryResponse?.data &&
-            records[0].id) ||
-          1,
-        date: '0001-12-23',
-        moodSlug: 'good',
-        intensitySlug: 'medium',
-        symptomsIds: [1, 2],
-      },
-    });
-  };
-
   return (
-    <Container>
-      <DatePicker
-        mode="date"
-        date={selectedDate}
-        onDateChange={setSelectedDate}
+    <Container viewType="scroll">
+      <MainCalendar
+        selectedDateString={selectedDateString}
+        setSelectedDateString={setSelectedDateString}
+        periodRecords={getPeriodsQueryResponse.data?.periodRecords}
       />
       <Typography>Intensity</Typography>
       <View style={styles.buttonWrapper}>
@@ -150,23 +125,11 @@ export const Home = () => {
           />
         ))}
       </View>
-      <Button onPress={createRecord} title="Add record" />
-      <Button onPress={updateRecord} title="Update the 1st record" />
-      <View style={styles.listWrapper}>
-        <FlatList
-          data={getPeriodsQueryResponse.data.periodRecords.slice(0, 16)}
-          renderItem={({item}) => (
-            <View style={styles.listItem}>
-              <Typography>{item.date}</Typography>
-              <Typography>{item.mood.slug}</Typography>
-              <Typography>{item.intensity.slug}</Typography>
-              <Typography>
-                {item.symptoms.map((s) => s.name).join(', ')}
-              </Typography>
-            </View>
-          )}
-        />
-      </View>
+      <Button
+        style={styles.formSubmitButton}
+        onPress={createRecord}
+        title="Save"
+      />
     </Container>
   );
 };
@@ -175,11 +138,7 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     flexDirection: 'row',
   },
-  listWrapper: {
-    flex: 1,
-  },
-  listItem: {
-    borderColor: 'grey',
-    borderWidth: 1,
+  formSubmitButton: {
+    marginVertical: 15,
   },
 });
