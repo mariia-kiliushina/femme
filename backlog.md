@@ -36,8 +36,8 @@
 
 - ~~Create password input~~
 - Create Text/Numeric inputs
-- Add icons on bottom tab
-- Replace natice pickers with calendar
+- ~~Add icons on bottom tab~~
+- ~~Replace native pickers with calendar~~
 - Create modal window component
 - Create Modal for record creation and displaying record's info for selecte date
 - Create user profile component
