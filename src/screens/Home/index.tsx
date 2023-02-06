@@ -80,6 +80,7 @@ export const Home = () => {
         {periodIntensitiesQueryResult.data?.periodIntensities.map(
           (periodIntensity) => (
             <Controller
+              key={periodIntensity.slug}
               name={'intensitySlug'}
               control={control}
               render={({field}) => (
@@ -104,6 +105,7 @@ export const Home = () => {
       <View style={styles.buttonWrapper}>
         {moodsQueryResult.data?.moods.map((mood) => (
           <Controller
+            key={mood.slug}
             name={'moodSlug'}
             control={control}
             render={({field}) => (
@@ -125,6 +127,7 @@ export const Home = () => {
       <View style={styles.buttonWrapper}>
         {symptomsQueryResult.data?.symptoms.map((symptom) => (
           <Controller
+            key={symptom.id}
             name="symptomsIds"
             control={control}
             render={({field}) => (

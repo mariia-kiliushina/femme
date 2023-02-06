@@ -19,11 +19,7 @@ export const Main = () => {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: () => (
-            <PressableOpacity>
-              <HomeIcon color={COLORS.greyscaleContent} />
-            </PressableOpacity>
-          ),
+          tabBarIcon: () => <HomeIcon color={COLORS.greyscaleContent} />,
         }}
       />
 
@@ -31,11 +27,7 @@ export const Main = () => {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: () => (
-            <PressableOpacity>
-              <FemaleUser color={COLORS.greyscaleContent} />
-            </PressableOpacity>
-          ),
+          tabBarIcon: () => <FemaleUser color={COLORS.greyscaleContent} />,
         }}
       />
     </Tab.Navigator>

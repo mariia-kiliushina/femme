@@ -1,40 +1,36 @@
-import {StyleSheet, Text, Image, useWindowDimensions} from 'react-native';
+import {StyleSheet, Image, View} from 'react-native';
 import {Button} from 'components/Button';
-import {COLORS} from 'src/constants/colors';
-import girlWithFlowers from 'assets/girl-flowers-removebg.png';
-import {RootStackScreenProps} from 'src/navigation/types';
 import {Container} from 'components/Container';
+import {Typography} from 'components/Typography';
+import {RootStackScreenProps} from 'src/navigation/types';
+import girlWithFlowers from 'assets/girl-welcome-screen.png';
 
 export const Welcome = ({navigation}: RootStackScreenProps<'Welcome'>) => {
-  const {height, width} = useWindowDimensions();
-
   const onSignIn = () => {
     navigation.navigate('Sign In');
   };
 
   return (
-    <Container>
-      <Image
-        source={girlWithFlowers}
-        style={[styles.image, {height: height * 0.5, width: width}]}
-      />
-      <Text style={styles.welcomeText}>Welcome to Femme</Text>
+    <Container contentContainerStyle={styles.container}>
+      <View>
+        <Image
+          resizeMode="contain"
+          source={girlWithFlowers}
+          style={styles.image}
+        />
+      </View>
+      <Typography fontSize="36">Welcome to Femme</Typography>
       <Button type="primary" title="Sign In" onPress={onSignIn} />
     </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  image: {
-    position: 'relative',
-    top: -80,
-    left: 0,
+  container: {
+    flex: 1,
+    rowGap: 20,
   },
-  welcomeText: {
-    color: COLORS.supportingDarkBlue,
-    fontSize: 40,
-    position: 'relative',
-    top: -40,
-    left: 0,
+  image: {
+    width: '100%',
   },
 });
