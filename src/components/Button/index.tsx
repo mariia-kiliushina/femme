@@ -7,17 +7,17 @@ import {Typography} from 'components/Typography';
 interface Props {
   type?: 'primary' | 'secondary' | 'outlined';
   disabled?: boolean;
-  onPress: () => void;
   style?: ViewStyle;
   title: string;
+  onPress: any;
 }
 
 export const Button = ({
   style,
   title,
-  onPress,
   disabled = false,
   type = 'primary',
+  onPress,
 }: Props) => {
   const buttonStyle = disabled ? styles[`${type}Disabled`] : styles[type];
 
