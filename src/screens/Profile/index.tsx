@@ -16,6 +16,7 @@ const onLogOut = async () => {
 
 export const Profile = ({}: TabScreenProps<'Profile'>) => {
   const authorizationTokenValue = useReactiveVar(authorizationToken);
+  authorizationTokenValue;
   const {data} = useGetSymptomsQuery();
 
   const getAuthorizedUserQueryResult = useGetUserQuery({variables: {id: 0}});
@@ -43,7 +44,6 @@ export const Profile = ({}: TabScreenProps<'Profile'>) => {
         default"
         onPress={() => authorizationToken(DEFAULT_AUTHORIZATION_TOKEN)}
       />
-      <Typography>{authorizationTokenValue}</Typography>
     </Container>
   );
 };
