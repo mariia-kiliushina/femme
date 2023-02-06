@@ -27,7 +27,6 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
   });
 
   const onSignIn = async (formValues: FieldValues) => {
-    console.log('formValues >>', formValues);
     const res = await authorize({
       variables: {username: formValues.username, password: formValues.password},
     });

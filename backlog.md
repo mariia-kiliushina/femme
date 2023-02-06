@@ -41,10 +41,12 @@
 - Create modal window component
 - Create Modal for record creation and displaying record's info for selecte date
 - Create user profile component
+- Fix main image positioning and size
 
 <!-- ## 3. Additional functionality
 
 - Write backend for pills intake
+- Write backend for custom symptoms creation
 - Push notifications reminders about pills intake
 - Deep linking
 - Styled components
