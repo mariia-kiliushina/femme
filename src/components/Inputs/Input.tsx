@@ -81,6 +81,7 @@ export const Input = ({
       <View style={styles.wrapper}>
         <>
           <TextInput
+            autoCapitalize="none"
             style={flattenStyle}
             onFocus={() => {
               setIsFocused(true);

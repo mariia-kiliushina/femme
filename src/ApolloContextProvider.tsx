@@ -10,13 +10,16 @@ import {setContext} from '@apollo/client/link/context';
 import {authorizationToken} from 'src/state';
 import {Platform} from 'react-native';
 
-const ANDROID_DEV_HOST = '192.168.100.4';
 const PROD_HOST = 'https://women-health-server.onrender.com/graphql';
 
-const DEV_HOST = Platform.OS === 'ios' ? 'localhost' : ANDROID_DEV_HOST;
+const DEV_HOST =
+  Platform.OS === 'ios'
+    ? 'http://localhost:3080/graphql'
+    : 'http://192.168.100.4:3080/graphql';
+
 const Host = __DEV__ ? DEV_HOST : PROD_HOST;
 
-const httpLink = createHttpLink({uri: `http://${Host}:3080/graphql`});
+const httpLink = createHttpLink({uri: Host});
 
 export const ApolloContextProvider: FC<PropsWithChildren> = ({children}) => {
   const authorizationLink = setContext((_, {headers}) => {

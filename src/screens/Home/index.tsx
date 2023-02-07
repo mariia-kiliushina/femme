@@ -1,10 +1,11 @@
 import {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ImageSourcePropType, ScrollView, StyleSheet, View} from 'react-native';
 import {Controller, FieldValues, useForm} from 'react-hook-form';
 import {Typography} from 'components/Typography';
 import {Button} from 'components/Button';
 import {Container} from 'components/Container';
 import {MainCalendar} from 'components/Calendar';
+import {PressableRoundIcon} from 'components/PressableRoundIcon';
 import {useGetSymptomsQuery} from 'api/symptoms';
 import {useGetUserQuery} from 'api/users';
 import {useGetMoodsQuery} from 'api/mood/index';
@@ -15,7 +16,25 @@ import {
   useCreatePeriodRecordMutation,
 } from 'api/periods';
 import {Symptom, Mood, PeriodIntensity} from 'api/types';
+
 import {formatDateToString} from 'src/helpers/formatDate';
+import {LAYOUT} from 'constants/layout';
+import good from 'assets/moods/good.png';
+import sad from 'assets/moods/sad.png';
+import noFlow from 'assets/flows/no-flows.png';
+import light from 'assets/flows/light.png';
+import medium from 'assets/flows/medium.png';
+import heavy from 'assets/flows/heavy.png';
+import acne from 'assets/symptoms/acne.png';
+import headache from 'assets/symptoms/headache.png';
+import crumps from 'assets/symptoms/crumps.png';
+import foodCraving from 'assets/symptoms/food-craving.png';
+import bodyHeat from 'assets/symptoms/body-heat.png';
+import decreasedLibido from 'assets/symptoms/decreased-libido.png';
+import discharges from 'assets/symptoms/discharges.png';
+import fatigue from 'assets/symptoms/fatigue.png';
+import spotting from 'assets/symptoms/spotting.png';
+import moodSwings from 'assets/symptoms/mood-swings.png';
 
 type FormValues = {
   intensitySlug: PeriodIntensity['slug'];
@@ -32,6 +51,53 @@ export const Home = () => {
   const moodsQueryResult = useGetMoodsQuery();
   const periodIntensitiesQueryResult = useGetPeriodIntensitiesQuery();
   const getPeriodsQueryResponse = useGetPeriodRecordsQuery();
+
+  const symptomsNamesArray =
+    symptomsQueryResult.data?.symptoms.map((symptom) => symptom.name) ||
+    ([] as const);
+  console.log('symptomsNamesArray >>', symptomsNamesArray);
+
+  const periodSlugsArray =
+    periodIntensitiesQueryResult.data?.periodIntensities.map(
+      (period) => period.slug,
+    ) || ([] as const);
+
+  const moodsSlugsArray =
+    moodsQueryResult.data?.moods.map((mood) => mood.slug) || ([] as const);
+
+  const symptomsImg: Record<
+    (typeof symptomsNamesArray)[number],
+    ImageSourcePropType
+  > = {
+    acne,
+    crumps,
+    discharges,
+    fatigue,
+    headache,
+    spotting,
+    'body heat': bodyHeat,
+    'decreased libido': decreasedLibido,
+    'food craving': foodCraving,
+    'mood swings': moodSwings,
+  };
+
+  const periodIntensitiesSlugsMock: Record<
+    (typeof periodSlugsArray)[number],
+    ImageSourcePropType
+  > = {
+    'no-flow': noFlow,
+    light,
+    medium,
+    heavy,
+  };
+
+  const moodsSlugsMock: Record<
+    (typeof moodsSlugsArray)[number],
+    ImageSourcePropType
+  > = {
+    good,
+    sad,
+  };
 
   const [createPeriodRecordMuatation] = useCreatePeriodRecordMutation({
     refetchQueries: [
@@ -59,24 +125,36 @@ export const Home = () => {
         symptomsIds: formValues.symptomsIds,
       },
     });
-    console.log('variables');
     console.log({
-      date: selectedDateString,
-      moodSlug: formValues.moodSlug,
-      periodIntensitySlug: formValues.periodIntensitySlug,
-      symptomsIds: formValues.symptomsIds,
+      variables: {
+        date: selectedDateString,
+        moodSlug: formValues.moodSlug,
+        intensitySlug: formValues.intensitySlug,
+        symptomsIds: formValues.symptomsIds,
+      },
     });
   };
 
   return (
-    <Container viewType="scroll">
-      <MainCalendar
-        selectedDateString={selectedDateString}
-        setSelectedDateString={setSelectedDateString}
-        periodRecords={getPeriodsQueryResponse.data?.periodRecords}
-      />
-      <Typography>Intensity</Typography>
-      <View style={styles.buttonWrapper}>
+    <Container
+      viewType="scroll"
+      contentContainerStyle={styles.contentContainer}
+    >
+      <View style={styles.paddingHorizontalWrapper}>
+        <MainCalendar
+          selectedDateString={selectedDateString}
+          setSelectedDateString={setSelectedDateString}
+          periodRecords={getPeriodsQueryResponse.data?.periodRecords}
+        />
+      </View>
+
+      <Typography style={styles.recordFieldText}>Intensity</Typography>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollView}
+      >
         {periodIntensitiesQueryResult.data?.periodIntensities.map(
           (periodIntensity) => (
             <Controller
@@ -84,59 +162,59 @@ export const Home = () => {
               name={'intensitySlug'}
               control={control}
               render={({field}) => (
-                <Button
+                <PressableRoundIcon
                   key={periodIntensity.slug}
-                  onPress={() => {
-                    field.onChange(periodIntensity.slug);
-                  }}
-                  type={
-                    field.value === periodIntensity.slug
-                      ? 'secondary'
-                      : 'outlined'
-                  }
-                  title={periodIntensity.slug}
+                  onPress={() => field.onChange(periodIntensity.slug)}
+                  image={periodIntensitiesSlugsMock[periodIntensity.slug]}
+                  marked={field.value === periodIntensity.slug}
                 />
               )}
             />
           ),
         )}
-      </View>
-      <Typography>Moods</Typography>
-      <View style={styles.buttonWrapper}>
-        {moodsQueryResult.data?.moods.map((mood) => (
-          <Controller
-            key={mood.slug}
-            name={'moodSlug'}
-            control={control}
-            render={({field}) => (
-              <Button
-                key={mood.slug}
-                type={field.value === mood.slug ? 'secondary' : 'outlined'}
-                title={mood.slug}
-                onPress={() => {
-                  field.onChange(mood.slug);
-                }}
-              />
-            )}
-          />
-        ))}
-      </View>
+      </ScrollView>
 
-      <Typography>Symptoms</Typography>
+      <Typography style={styles.recordFieldText}>Moods</Typography>
 
       <View style={styles.buttonWrapper}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollView}
+        >
+          {moodsQueryResult.data?.moods.map((mood) => (
+            <Controller
+              key={mood.slug}
+              name={'moodSlug'}
+              control={control}
+              render={({field}) => (
+                <PressableRoundIcon
+                  key={mood.slug}
+                  onPress={() => field.onChange(mood.slug)}
+                  image={moodsSlugsMock[mood.slug]}
+                  marked={field.value === mood.slug}
+                />
+              )}
+            />
+          ))}
+        </ScrollView>
+      </View>
+
+      <Typography style={styles.recordFieldText}>Symptoms</Typography>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollView}
+      >
         {symptomsQueryResult.data?.symptoms.map((symptom) => (
           <Controller
             key={symptom.id}
             name="symptomsIds"
             control={control}
             render={({field}) => (
-              <Button
+              <PressableRoundIcon
                 key={symptom.id}
-                type={
-                  field.value.includes(symptom.id) ? 'secondary' : 'outlined'
-                }
-                title={symptom.name}
                 onPress={() => {
                   if (field.value.includes(symptom.id)) {
                     const updatedSymptomsIds = field.value.filter(
@@ -149,11 +227,13 @@ export const Home = () => {
                     field.onChange([...field.value, symptom.id]);
                   }
                 }}
+                image={symptomsImg[symptom.name]}
+                marked={field.value.includes(symptom.id)}
               />
             )}
           />
         ))}
-      </View>
+      </ScrollView>
 
       <Button
         style={styles.formSubmitButton}
@@ -165,10 +245,28 @@ export const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    paddingHorizontal: 0,
+  },
   buttonWrapper: {
     flexDirection: 'row',
   },
   formSubmitButton: {
-    marginVertical: 15,
+    marginTop: 8,
+    marginHorizontal: LAYOUT.paddingHorizontal,
+  },
+  paddingHorizontalWrapper: {
+    paddingHorizontal: LAYOUT.paddingHorizontal,
+  },
+  scrollView: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    columnGap: 10,
+    marginVertical: 8,
+    paddingHorizontal: LAYOUT.paddingHorizontal,
+    justifyContent: 'flex-start',
+  },
+  recordFieldText: {
+    marginLeft: LAYOUT.paddingHorizontal,
   },
 });

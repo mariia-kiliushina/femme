@@ -44,6 +44,8 @@
 - Fix main image positioning and size
 - Create dropdowns for selections for the records
 - Fix calendar behaviour (highlight selected days if they have records)
+- Create auto sorting for imports
+- Highlight those days with no flows but with some records with dots but not a color
 
 <!-- ## 3. Additional functionality
 

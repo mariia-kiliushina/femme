@@ -12,12 +12,12 @@ export const InputPassword = ({...props}: TInputProps) => {
 
   return (
     <Input
+      autoCapitalize="none"
       iconName={iconName}
       onIconPress={toggleisibiity}
       onBlur={toggleisibiity}
       iconColor={COLORS.greyscaleContent}
       secureTextEntry={!visible}
-      autoCapitalize="none"
       {...props}
     />
   );
