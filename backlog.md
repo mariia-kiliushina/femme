@@ -43,6 +43,7 @@
 - Create user profile component
 - Fix main image positioning and size
 - Create dropdowns for selections for the records
+- Fix calendar behaviour (highlight selected days if they have records)
 
 <!-- ## 3. Additional functionality
 

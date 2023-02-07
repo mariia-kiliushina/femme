@@ -1,6 +1,5 @@
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Button} from 'components/Button';
-import {COLORS} from 'src/constants/colors';
 import {Controller, FieldValues, useForm} from 'react-hook-form';
 import {RootStackScreenProps} from 'src/navigation/types';
 import {useAuthorizeMutation} from 'src/api/authorization';
@@ -9,6 +8,7 @@ import {authorizationToken} from 'src/state';
 import {Container} from 'components/Container';
 import {Input} from 'components/Inputs/Input';
 import {InputPassword} from 'components/Inputs/InputPassword';
+import {Typography} from 'components/Typography';
 
 type FormValues = {username: string; password: string};
 
@@ -46,7 +46,9 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
 
   return (
     <Container>
-      <Text style={styles.text}>Sign In</Text>
+      <Typography fontSize="24" style={styles.text}>
+        Sign In
+      </Typography>
       <Controller
         name={'username'}
         control={control}
@@ -79,9 +81,6 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
 
 const styles = StyleSheet.create({
   text: {
-    color: COLORS.greyscaleContent,
-    fontSize: 32,
-    alignSelf: 'flex-start',
-    marginBottom: 30,
+    marginVertical: 20,
   },
 });
