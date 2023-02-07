@@ -1,9 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home} from 'screens/Home';
-import {Settings} from 'screens/Settings';
-import {COLORS} from 'src/constants/colors';
+import {Profile} from 'screens/Profile';
+import {PressableOpacity} from 'components/PressableOpacity';
+import {COLORS} from 'constants/colors';
 import {TabsParamList} from 'src/navigation/types';
-import {Pressable, Text} from 'react-native';
+import {HomeIcon, FemaleUser} from 'assets/svg';
 
 export const Main = () => {
   const Tab = createBottomTabNavigator<TabsParamList>();
@@ -18,23 +19,15 @@ export const Main = () => {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: () => (
-            <Pressable>
-              <Text>Icon</Text>
-            </Pressable>
-          ),
+          tabBarIcon: () => <HomeIcon color={COLORS.greyscaleContent} />,
         }}
       />
 
       <Tab.Screen
-        name="Settings"
-        component={Settings}
+        name="Profile"
+        component={Profile}
         options={{
-          tabBarIcon: () => (
-            <Pressable>
-              <Text>Icon</Text>
-            </Pressable>
-          ),
+          tabBarIcon: () => <FemaleUser color={COLORS.greyscaleContent} />,
         }}
       />
     </Tab.Navigator>

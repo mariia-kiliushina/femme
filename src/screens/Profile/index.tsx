@@ -1,22 +1,22 @@
-import {Typography} from 'components/Typography';
 import {Text} from 'react-native';
-import {useGetSymptomsQuery} from 'src/api/symptoms';
-import {TabScreenProps} from 'src/navigation/types';
-
-import {authorizationToken, DEFAULT_AUTHORIZATION_TOKEN} from 'src/state';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {useReactiveVar} from '@apollo/client';
-import {useGetUserQuery} from 'api/users';
-import {Container} from 'components/Container';
 import {Button} from 'components/Button';
+import {Container} from 'components/Container';
+import {Typography} from 'components/Typography';
+import {useGetSymptomsQuery} from 'src/api/symptoms';
+import {TabScreenProps} from 'src/navigation/types';
+import {authorizationToken, DEFAULT_AUTHORIZATION_TOKEN} from 'src/state';
+import {useGetUserQuery} from 'api/users';
 
 const onLogOut = async () => {
   await EncryptedStorage.removeItem('authorizationToken');
   authorizationToken(DEFAULT_AUTHORIZATION_TOKEN);
 };
 
-export const Settings = ({}: TabScreenProps<'Settings'>) => {
+export const Profile = ({}: TabScreenProps<'Profile'>) => {
   const authorizationTokenValue = useReactiveVar(authorizationToken);
+  authorizationTokenValue;
   const {data} = useGetSymptomsQuery();
 
   const getAuthorizedUserQueryResult = useGetUserQuery({variables: {id: 0}});
@@ -44,7 +44,6 @@ export const Settings = ({}: TabScreenProps<'Settings'>) => {
         default"
         onPress={() => authorizationToken(DEFAULT_AUTHORIZATION_TOKEN)}
       />
-      <Typography>{authorizationTokenValue}</Typography>
     </Container>
   );
 };
