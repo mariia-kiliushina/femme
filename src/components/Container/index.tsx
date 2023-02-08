@@ -25,7 +25,7 @@ export const Container = ({
         condition={viewType === 'scroll'}
         wrapper={(wrapperChildren: React.ReactNode) => (
           <KeyboardAwareScrollView
-            showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={true}
             enableOnAndroid
           >
             <>{wrapperChildren}</>

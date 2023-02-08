@@ -15,15 +15,8 @@ type FormValues = {username: string; password: string};
 export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
   const [authorize] = useAuthorizeMutation();
 
-  const {
-    control,
-    handleSubmit,
-    formState: {},
-  } = useForm<FormValues>({
-    defaultValues: {
-      username: 'john-doe',
-      password: 'john-doe-password',
-    },
+  const {control, handleSubmit} = useForm<FormValues>({
+    defaultValues: {username: '', password: ''},
   });
 
   const onSignIn = async (formValues: FieldValues) => {
@@ -56,7 +49,7 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
           <Input
             placeholder={'Username'}
             value={value}
-            onChange={onChange}
+            onChangeText={onChange}
             errorText={error?.message}
           />
         )}
@@ -68,7 +61,7 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
           <InputPassword
             placeholder={'Password'}
             value={value}
-            onChange={onChange}
+            onChangeText={onChange}
             errorText={error?.message}
           />
         )}

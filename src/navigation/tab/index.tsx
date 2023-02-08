@@ -1,7 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home} from 'screens/Home';
 import {Profile} from 'screens/Profile';
-import {PressableOpacity} from 'components/PressableOpacity';
 import {COLORS} from 'constants/colors';
 import {TabsParamList} from 'src/navigation/types';
 import {HomeIcon, FemaleUser} from 'assets/svg';
@@ -12,14 +11,18 @@ export const Main = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: COLORS.primaryDark,
+        tabBarActiveTintColor: COLORS.primary,
       }}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: () => <HomeIcon color={COLORS.greyscaleContent} />,
+          tabBarIcon: ({focused}) => (
+            <HomeIcon
+              color={focused ? COLORS.primary : COLORS.greyscaleContent}
+            />
+          ),
         }}
       />
 
@@ -27,7 +30,11 @@ export const Main = () => {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: () => <FemaleUser color={COLORS.greyscaleContent} />,
+          tabBarIcon: ({focused}) => (
+            <FemaleUser
+              color={focused ? COLORS.primary : COLORS.greyscaleContent}
+            />
+          ),
         }}
       />
     </Tab.Navigator>

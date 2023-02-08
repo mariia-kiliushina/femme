@@ -41,9 +41,14 @@
 - Create modal window component
 - Create Modal for record creation and displaying record's info for selecte date
 - Create user profile component
-- Fix main image positioning and size
-- Create dropdowns for selections for the records
+- ~~Fix main image positioning and size~~
+- ~~Create dropdowns for selections for the records/ Changed to pressable icons~~
 - Fix calendar behaviour (highlight selected days if they have records)
+- Create auto sorting for imports
+- Highlight those days with no flows but with some records with dots but not a color
+- Change ordering rule for backend symptoms, moods etc.
+- Add names for symptoms (not clear)
+-
 
 <!-- ## 3. Additional functionality
 

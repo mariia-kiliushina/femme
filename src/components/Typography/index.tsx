@@ -56,7 +56,7 @@ type Props = TextProps & {
 export const Typography = ({
   children,
   color = COLORS.greyscaleContent,
-  fontSize = '14',
+  fontSize = '16',
   textStyle,
   style,
   weight = 'regular',
