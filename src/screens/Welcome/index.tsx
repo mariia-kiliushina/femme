@@ -12,14 +12,21 @@ export const Welcome = ({navigation}: RootStackScreenProps<'Welcome'>) => {
 
   return (
     <Container contentContainerStyle={styles.container}>
-      <View>
+      <View style={styles.imageContainer}>
         <Image
           resizeMode="contain"
           source={girlWithFlowers}
           style={styles.image}
         />
       </View>
-      <Typography fontSize="36">Welcome to Femme</Typography>
+      <Typography
+        fontSize="36"
+        adjustsFontSizeToFit={true}
+        numberOfLines={1}
+        style={styles.welcomeText}
+      >
+        Welcome to Femme
+      </Typography>
       <Button type="primary" title="Sign In" onPress={onSignIn} />
     </Container>
   );
@@ -28,9 +35,17 @@ export const Welcome = ({navigation}: RootStackScreenProps<'Welcome'>) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    rowGap: 20,
+    rowGap: 10,
+  },
+  imageContainer: {
+    maxHeight: '60%',
   },
   image: {
     width: '100%',
+    height: '100%',
+  },
+  welcomeText: {
+    alignSelf: 'center',
+    textAlign: 'center',
   },
 });

@@ -39,7 +39,7 @@
 - ~~Replace native pickers with calendar~~
 - ~~Fix main image positioning and size~~
 - ~~Create dropdowns for selections for the records/ Changed to pressable icons~~
-- Initial values for the days' form where there are some info
+- ~~Initial values for the days' form where there are some info~~
 - Fix toolBAr on Android
 - Create modal window component
 - Create Text/Numeric inputs

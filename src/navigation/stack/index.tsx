@@ -5,7 +5,7 @@ import {Main} from 'src/navigation/tab/index';
 import {RootStackParamList} from 'src/navigation/types';
 import {FC} from 'react';
 import {useGetUserQuery} from 'src/api/users';
-import {StyleSheet, Text, View} from 'react-native';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import {checkIsAuthorized} from '../../helpers/checkIsAuthorized';
 
 export const ScreenNavigation: FC = () => {
@@ -26,21 +26,28 @@ export const ScreenNavigation: FC = () => {
   });
 
   return (
-    <Stack.Navigator
-      screenOptions={{headerShown: false}}
-      initialRouteName="Welcome"
-    >
-      {isAuthorized ? (
-        <>
-          <Stack.Screen name="Main" component={Main} />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name="Welcome" component={Welcome} />
-          <Stack.Screen name="Sign In" component={SignIn} />
-        </>
-      )}
-    </Stack.Navigator>
+    <>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="dark-content"
+      />
+      <Stack.Navigator
+        screenOptions={{headerShown: false}}
+        initialRouteName="Welcome"
+      >
+        {isAuthorized ? (
+          <>
+            <Stack.Screen name="Main" component={Main} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Welcome" component={Welcome} />
+            <Stack.Screen name="Sign In" component={SignIn} />
+          </>
+        )}
+      </Stack.Navigator>
+    </>
   );
 };
 
