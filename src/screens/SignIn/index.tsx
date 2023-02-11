@@ -16,7 +16,7 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
   const [authorize] = useAuthorizeMutation();
 
   const {control, handleSubmit} = useForm<FormValues>({
-    defaultValues: {username: '', password: ''},
+    defaultValues: {username: 'john-doe', password: 'john-doe-password'},
   });
 
   const onSignIn = async (formValues: FieldValues) => {

@@ -1,26 +1,22 @@
 import * as Types from '../types';
 
-import {gql} from '@apollo/client';
-import {PeriodIntensitiesFieldsFragmentDoc} from '../fragments';
+import { gql } from '@apollo/client';
+import { PeriodIntensitiesFieldsFragmentDoc } from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetPeriodIntensitiesQueryVariables = Types.Exact<{
-  [key: string]: never;
-}>;
+export type GetPeriodIntensitiesQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
-export type GetPeriodIntensitiesQuery = {
-  __typename?: 'Query';
-  periodIntensities: Array<{__typename?: 'PeriodIntensity'; slug: string}>;
-};
+
+export type GetPeriodIntensitiesQuery = { __typename?: 'Query', periodIntensities: Array<{ __typename?: 'PeriodIntensity', slug: string }> };
+
 
 export const GetPeriodIntensitiesDocument = gql`
-  query GetPeriodIntensities {
-    periodIntensities {
-      ...periodIntensitiesFields
-    }
+    query GetPeriodIntensities {
+  periodIntensities {
+    ...periodIntensitiesFields
   }
-  ${PeriodIntensitiesFieldsFragmentDoc}
-`;
+}
+    ${PeriodIntensitiesFieldsFragmentDoc}`;
 
 /**
  * __useGetPeriodIntensitiesQuery__
@@ -37,37 +33,14 @@ export const GetPeriodIntensitiesDocument = gql`
  *   },
  * });
  */
-export function useGetPeriodIntensitiesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetPeriodIntensitiesQuery,
-    GetPeriodIntensitiesQueryVariables
-  >,
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<
-    GetPeriodIntensitiesQuery,
-    GetPeriodIntensitiesQueryVariables
-  >(GetPeriodIntensitiesDocument, options);
-}
-export function useGetPeriodIntensitiesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetPeriodIntensitiesQuery,
-    GetPeriodIntensitiesQueryVariables
-  >,
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<
-    GetPeriodIntensitiesQuery,
-    GetPeriodIntensitiesQueryVariables
-  >(GetPeriodIntensitiesDocument, options);
-}
-export type GetPeriodIntensitiesQueryHookResult = ReturnType<
-  typeof useGetPeriodIntensitiesQuery
->;
-export type GetPeriodIntensitiesLazyQueryHookResult = ReturnType<
-  typeof useGetPeriodIntensitiesLazyQuery
->;
-export type GetPeriodIntensitiesQueryResult = Apollo.QueryResult<
-  GetPeriodIntensitiesQuery,
-  GetPeriodIntensitiesQueryVariables
->;
+export function useGetPeriodIntensitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetPeriodIntensitiesQuery, GetPeriodIntensitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPeriodIntensitiesQuery, GetPeriodIntensitiesQueryVariables>(GetPeriodIntensitiesDocument, options);
+      }
+export function useGetPeriodIntensitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPeriodIntensitiesQuery, GetPeriodIntensitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPeriodIntensitiesQuery, GetPeriodIntensitiesQueryVariables>(GetPeriodIntensitiesDocument, options);
+        }
+export type GetPeriodIntensitiesQueryHookResult = ReturnType<typeof useGetPeriodIntensitiesQuery>;
+export type GetPeriodIntensitiesLazyQueryHookResult = ReturnType<typeof useGetPeriodIntensitiesLazyQuery>;
+export type GetPeriodIntensitiesQueryResult = Apollo.QueryResult<GetPeriodIntensitiesQuery, GetPeriodIntensitiesQueryVariables>;

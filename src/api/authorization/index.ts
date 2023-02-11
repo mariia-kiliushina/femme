@@ -1,6 +1,6 @@
 import * as Types from '../types';
 
-import {gql} from '@apollo/client';
+import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type AuthorizeMutationVariables = Types.Exact<{
@@ -8,17 +8,16 @@ export type AuthorizeMutationVariables = Types.Exact<{
   password: Types.Scalars['String'];
 }>;
 
-export type AuthorizeMutation = {__typename?: 'Mutation'; authorize: string};
+
+export type AuthorizeMutation = { __typename?: 'Mutation', authorize: string };
+
 
 export const AuthorizeDocument = gql`
-  mutation Authorize($username: String!, $password: String!) {
-    authorize(input: {username: $username, password: $password})
-  }
-`;
-export type AuthorizeMutationFn = Apollo.MutationFunction<
-  AuthorizeMutation,
-  AuthorizeMutationVariables
->;
+    mutation Authorize($username: String!, $password: String!) {
+  authorize(input: {username: $username, password: $password})
+}
+    `;
+export type AuthorizeMutationFn = Apollo.MutationFunction<AuthorizeMutation, AuthorizeMutationVariables>;
 
 /**
  * __useAuthorizeMutation__
@@ -38,23 +37,10 @@ export type AuthorizeMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useAuthorizeMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AuthorizeMutation,
-    AuthorizeMutationVariables
-  >,
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<AuthorizeMutation, AuthorizeMutationVariables>(
-    AuthorizeDocument,
-    options,
-  );
-}
-export type AuthorizeMutationHookResult = ReturnType<
-  typeof useAuthorizeMutation
->;
+export function useAuthorizeMutation(baseOptions?: Apollo.MutationHookOptions<AuthorizeMutation, AuthorizeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AuthorizeMutation, AuthorizeMutationVariables>(AuthorizeDocument, options);
+      }
+export type AuthorizeMutationHookResult = ReturnType<typeof useAuthorizeMutation>;
 export type AuthorizeMutationResult = Apollo.MutationResult<AuthorizeMutation>;
-export type AuthorizeMutationOptions = Apollo.BaseMutationOptions<
-  AuthorizeMutation,
-  AuthorizeMutationVariables
->;
+export type AuthorizeMutationOptions = Apollo.BaseMutationOptions<AuthorizeMutation, AuthorizeMutationVariables>;

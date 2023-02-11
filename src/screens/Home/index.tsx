@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {ImageSourcePropType, ScrollView, StyleSheet, View} from 'react-native';
 import {Controller, FieldValues, useForm} from 'react-hook-form';
 import {Typography} from 'components/Typography';
@@ -14,11 +14,12 @@ import {
   useGetPeriodRecordsQuery,
   GetPeriodRecordsDocument,
   useCreatePeriodRecordMutation,
+  useGetPeriodRecordQuery,
 } from 'api/periods';
 import {Symptom, Mood, PeriodIntensity} from 'api/types';
-
 import {formatDateToString} from 'src/helpers/formatDate';
 import {LAYOUT} from 'constants/layout';
+
 import good from 'assets/moods/good.png';
 import sad from 'assets/moods/sad.png';
 import noFlow from 'assets/flows/no-flows.png';
@@ -51,19 +52,23 @@ export const Home = () => {
   const moodsQueryResult = useGetMoodsQuery();
   const periodIntensitiesQueryResult = useGetPeriodIntensitiesQuery();
   const getPeriodsQueryResponse = useGetPeriodRecordsQuery();
+  const getPeriodByDateQueryResponse = useGetPeriodRecordQuery({
+    variables: {date: selectedDateString},
+  });
+
+  const periodRecordOfSelectedDay =
+    getPeriodByDateQueryResponse.data?.periodRecord;
 
   const symptomsNamesArray =
-    symptomsQueryResult.data?.symptoms.map((symptom) => symptom.name) ||
-    ([] as const);
-  console.log('symptomsNamesArray >>', symptomsNamesArray);
+    symptomsQueryResult.data?.symptoms.map((symptom) => symptom.name) || [];
 
-  const periodSlugsArray =
+  const periodIntensitiesSlugsArray =
     periodIntensitiesQueryResult.data?.periodIntensities.map(
       (period) => period.slug,
-    ) || ([] as const);
+    ) || [];
 
   const moodsSlugsArray =
-    moodsQueryResult.data?.moods.map((mood) => mood.slug) || ([] as const);
+    moodsQueryResult.data?.moods.map((mood) => mood.slug) || [];
 
   const symptomsImg: Record<
     (typeof symptomsNamesArray)[number],
@@ -82,7 +87,7 @@ export const Home = () => {
   };
 
   const periodIntensitiesSlugsMock: Record<
-    (typeof periodSlugsArray)[number],
+    (typeof periodIntensitiesSlugsArray)[number],
     ImageSourcePropType
   > = {
     'no-flow': noFlow,
@@ -107,11 +112,24 @@ export const Home = () => {
     ],
   });
 
-  const {control, handleSubmit} = useForm<FormValues>({
+  const {control, handleSubmit, reset} = useForm<FormValues>({
     defaultValues: {
       symptomsIds: [],
     },
   });
+
+  useEffect(() => {
+    const symptomsIdsArrayByDate =
+      periodRecordOfSelectedDay?.symptoms.map((symptom) => symptom.id) || [];
+
+    const initialData = {
+      intensitySlug: periodRecordOfSelectedDay?.intensity.slug,
+      moodSlug: periodRecordOfSelectedDay?.mood.slug,
+      symptomsIds: symptomsIdsArrayByDate || [],
+    };
+
+    reset(initialData);
+  }, [reset, periodRecordOfSelectedDay]);
 
   if (getAuthorizedUserQueryResult.data === undefined) return null;
   if (getPeriodsQueryResponse.data === undefined) return null;
@@ -120,16 +138,16 @@ export const Home = () => {
     createPeriodRecordMuatation({
       variables: {
         date: selectedDateString,
-        moodSlug: formValues.moodSlug,
         intensitySlug: formValues.intensitySlug,
+        moodSlug: formValues.moodSlug,
         symptomsIds: formValues.symptomsIds,
       },
     });
     console.log({
       variables: {
         date: selectedDateString,
-        moodSlug: formValues.moodSlug,
         intensitySlug: formValues.intensitySlug,
+        moodSlug: formValues.moodSlug,
         symptomsIds: formValues.symptomsIds,
       },
     });

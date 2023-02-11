@@ -1,5 +1,5 @@
-query GetPeriodRecord($id: Int!) {
-  periodRecord(id: $id) {
+query GetPeriodRecord($id: Int, $date: String) {
+  periodRecord(id: $id, date: $date) {
     ...periodRecordFields
   }
 }
