@@ -3,6 +3,7 @@ import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ConditionalWrapper} from 'src/helpers/conditionalWrapper';
+import {COLORS} from 'constants/colors';
 
 export type AppScreenProps = {
   children: React.ReactNode[] | React.ReactNode;
@@ -42,7 +43,7 @@ export const Container = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.greyscaleWhite,
     flexGrow: 1,
   },
   contentContainer: {

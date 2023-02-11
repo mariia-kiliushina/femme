@@ -15,7 +15,7 @@ const PROD_HOST = 'https://women-health-server.onrender.com/graphql';
 const DEV_HOST =
   Platform.OS === 'ios'
     ? 'http://localhost:3080/graphql'
-    : 'http://192.168.100.4:3080/graphql';
+    : 'http://192.168.100.2:3080/graphql';
 
 const Host = __DEV__ ? DEV_HOST : PROD_HOST;
 
