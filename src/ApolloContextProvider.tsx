@@ -4,7 +4,6 @@ import {
   ApolloProvider,
   createHttpLink,
   InMemoryCache,
-  useReactiveVar,
 } from '@apollo/client';
 import {setContext} from '@apollo/client/link/context';
 import {authorizationToken} from 'src/state';
@@ -36,12 +35,7 @@ export const ApolloContextProvider: FC<PropsWithChildren> = ({children}) => {
     link: authorizationLink.concat(httpLink),
   });
 
-  const authorizationTokenValue = useReactiveVar(authorizationToken);
-
-  console.log(
-    'authorizationTokenValue inside ApolloContextProvider  >>',
-    authorizationTokenValue,
-  );
+  // const authorizationTokenValue = useReactiveVar(authorizationToken);
 
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 };

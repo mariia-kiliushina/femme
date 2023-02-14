@@ -40,18 +40,17 @@
 - ~~Fix main image positioning and size~~
 - ~~Create dropdowns for selections for the records/ Changed to pressable icons~~
 - ~~Initial values for the days' form where there are some info~~
-- Fix toolBAr on Android
+- ~~Fix toolBAr on Android~~
+- ~~Fix calendar behaviour (highlight selected days if they have records)~~
+- ~~Welcome screen align text center~~
+- Highlight those days with no flows but with some records with dots but not a color
 - Create modal window component
 - Create Text/Numeric inputs
-- Create Modal for record creation and displaying record's info for selecte date
 - Create user profile component
-- Fix calendar behaviour (highlight selected days if they have records)
 - Create auto sorting for imports
-- Highlight those days with no flows but with some records with dots but not a color
-- Change rdering rule for backend symptoms, moods etc.
-- Add names for symptoms (not clear)
+- Change ordering rule for backend symptoms, moods etc.
+- Add names for symptoms (not clear what does a picture mean)
 - Add internationalization for month ( and othr text, use theme for that) ( Ru/Eng)
-- Welcome screen align text center
 <!-- ## 3. Additional functionality
 
 

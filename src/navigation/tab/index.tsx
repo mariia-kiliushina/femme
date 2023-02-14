@@ -1,12 +1,15 @@
+import {useTranslation} from 'react-i18next';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home} from 'screens/Home';
 import {Profile} from 'screens/Profile';
 import {COLORS} from 'constants/colors';
 import {TabsParamList} from 'src/navigation/types';
-import {HomeIcon, FemaleUser} from 'assets/svg';
+import {CalendarIcon, ProfileIcon} from 'assets/svg';
 
 export const Main = () => {
   const Tab = createBottomTabNavigator<TabsParamList>();
+  const {t} = useTranslation();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -18,8 +21,9 @@ export const Main = () => {
         name="Home"
         component={Home}
         options={{
+          tabBarLabel: t('calendar') || undefined,
           tabBarIcon: ({focused}) => (
-            <HomeIcon
+            <CalendarIcon
               color={focused ? COLORS.primary : COLORS.greyscaleContent}
             />
           ),
@@ -30,8 +34,9 @@ export const Main = () => {
         name="Profile"
         component={Profile}
         options={{
+          tabBarLabel: t('profile') || undefined,
           tabBarIcon: ({focused}) => (
-            <FemaleUser
+            <ProfileIcon
               color={focused ? COLORS.primary : COLORS.greyscaleContent}
             />
           ),

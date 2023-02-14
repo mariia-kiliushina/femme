@@ -1,4 +1,5 @@
-import {Calendar, CalendarProps} from 'react-native-calendars';
+import {useTranslation} from 'react-i18next';
+import {Calendar, CalendarProps, LocaleConfig} from 'react-native-calendars';
 import {GetPeriodRecordQuery} from 'api/periods';
 import {COLORS} from 'constants/colors';
 
@@ -14,6 +15,9 @@ export const MainCalendar = ({
   setSelectedDateString,
   ...props
 }: CalendarProps & TMainCalendarProps) => {
+  const {i18n} = useTranslation();
+  LocaleConfig.defaultLocale = i18n.language;
+
   const periodRecordsDates = periodRecords.map(
     (periodRecord) => periodRecord.date,
   );
