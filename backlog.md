@@ -44,6 +44,8 @@
 - ~~Fix calendar behaviour (highlight selected days if they have records)~~
 - ~~Welcome screen align text center~~
 - Highlight those days with no flows but with some records with dots but not a color
+- Record updating? or creation once again?
+- Higlight in green those that are selected
 - Create modal window component
 - Create Text/Numeric inputs
 - Create user profile component
