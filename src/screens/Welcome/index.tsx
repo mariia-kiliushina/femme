@@ -2,6 +2,7 @@ import {StyleSheet, Image, View} from 'react-native';
 import {Button} from 'components/Button';
 import {Container} from 'components/Container';
 import {Typography} from 'components/Typography';
+import {useTranslation} from 'react-i18next';
 import {RootStackScreenProps} from 'src/navigation/types';
 import girlWithFlowers from 'assets/girl-welcome-screen.png';
 
@@ -9,6 +10,8 @@ export const Welcome = ({navigation}: RootStackScreenProps<'Welcome'>) => {
   const onSignIn = () => {
     navigation.navigate('Sign In');
   };
+
+  const {t} = useTranslation();
 
   return (
     <Container contentContainerStyle={styles.container}>
@@ -25,9 +28,9 @@ export const Welcome = ({navigation}: RootStackScreenProps<'Welcome'>) => {
         numberOfLines={1}
         style={styles.welcomeText}
       >
-        Welcome to Femme
+        {t('welcome to femme')}
       </Typography>
-      <Button type="primary" title="Sign In" onPress={onSignIn} />
+      <Button type="primary" title={t('sign in')} onPress={onSignIn} />
     </Container>
   );
 };

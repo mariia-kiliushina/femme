@@ -1,19 +1,22 @@
 import {StyleSheet} from 'react-native';
+import {useTranslation} from 'react-i18next';
 import {Button} from 'components/Button';
 import {Controller, FieldValues, useForm} from 'react-hook-form';
 import {RootStackScreenProps} from 'src/navigation/types';
 import {useAuthorizeMutation} from 'src/api/authorization';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import {authorizationToken} from 'src/state';
 import {Container} from 'components/Container';
 import {Input} from 'components/Inputs/Input';
 import {InputPassword} from 'components/Inputs/InputPassword';
 import {Typography} from 'components/Typography';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 type FormValues = {username: string; password: string};
 
 export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
   const [authorize] = useAuthorizeMutation();
+
+  const {t} = useTranslation();
 
   const {control, handleSubmit} = useForm<FormValues>({
     defaultValues: {username: 'john-doe', password: 'john-doe-password'},
@@ -37,17 +40,20 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
     }
   };
 
+  const usernamePlaceholder = t('username');
+  const passwordPlaceholder = t('password');
+
   return (
     <Container>
       <Typography fontSize="24" style={styles.text}>
-        Sign In
+        {t('sign in')}
       </Typography>
       <Controller
         name={'username'}
         control={control}
         render={({field: {value, onChange}, fieldState: {error}}) => (
           <Input
-            placeholder={'Username'}
+            placeholder={usernamePlaceholder}
             value={value}
             onChangeText={onChange}
             errorText={error?.message}
@@ -59,7 +65,7 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
         control={control}
         render={({field: {value, onChange}, fieldState: {error}}) => (
           <InputPassword
-            placeholder={'Password'}
+            placeholder={passwordPlaceholder}
             value={value}
             onChangeText={onChange}
             errorText={error?.message}
@@ -67,7 +73,11 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
         )}
       />
 
-      <Button type="primary" title="Sign In" onPress={handleSubmit(onSignIn)} />
+      <Button
+        type="primary"
+        title={t('sign in')}
+        onPress={handleSubmit(onSignIn)}
+      />
     </Container>
   );
 };

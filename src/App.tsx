@@ -5,6 +5,8 @@ import {FC, useEffect} from 'react';
 import {ApolloContextProvider} from './ApolloContextProvider';
 import {authorizationToken} from 'src/state';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import 'components/Calendar/config';
+import 'src/translation/i18n';
 
 const App: FC = () => {
   useEffect(() => {
@@ -17,6 +19,7 @@ const App: FC = () => {
       },
     );
   }, []);
+
   return (
     <ApolloContextProvider>
       <SafeAreaProvider>

@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {ImageSourcePropType, ScrollView, StyleSheet, View} from 'react-native';
 import {Controller, FieldValues, useForm} from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
 import {Typography} from 'components/Typography';
 import {Button} from 'components/Button';
 import {Container} from 'components/Container';
@@ -118,6 +119,8 @@ export const Home = () => {
     },
   });
 
+  const {t} = useTranslation();
+
   useEffect(() => {
     const symptomsIdsArrayByDate =
       periodRecordOfSelectedDay?.symptoms.map((symptom) => symptom.id) || [];
@@ -166,7 +169,7 @@ export const Home = () => {
         />
       </View>
 
-      <Typography style={styles.recordFieldText}>Intensity</Typography>
+      <Typography style={styles.recordFieldText}>{t('intensity')}</Typography>
 
       <ScrollView
         horizontal
@@ -192,7 +195,7 @@ export const Home = () => {
         )}
       </ScrollView>
 
-      <Typography style={styles.recordFieldText}>Moods</Typography>
+      <Typography style={styles.recordFieldText}>{t('mood')}</Typography>
 
       <View style={styles.buttonWrapper}>
         <ScrollView
@@ -218,7 +221,7 @@ export const Home = () => {
         </ScrollView>
       </View>
 
-      <Typography style={styles.recordFieldText}>Symptoms</Typography>
+      <Typography style={styles.recordFieldText}>{t('symptoms')}</Typography>
 
       <ScrollView
         horizontal
@@ -256,7 +259,7 @@ export const Home = () => {
       <Button
         style={styles.formSubmitButton}
         onPress={handleSubmit(createRecord)}
-        title="Save"
+        title={t('save')}
       />
     </Container>
   );
