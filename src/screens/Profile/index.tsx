@@ -21,7 +21,6 @@ import {ModalWindow} from 'components/Modal';
 import {Input} from 'components/Inputs/Input';
 import {InputDateTime} from 'components/Inputs/InputDateTime';
 import {PressableOpacity} from 'components/PressableOpacity';
-import {Typography} from 'components/Typography';
 import {Add, Remove} from 'assets/svg';
 import {LAYOUT} from 'constants/layout';
 
