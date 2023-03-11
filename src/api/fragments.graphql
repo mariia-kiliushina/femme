@@ -27,6 +27,15 @@ fragment symptomFields on Symptom {
   name
 }
 
+fragment medicationCourseFields on MedicationCourse {
+  id
+  name
+  user {
+    id
+    username
+  }
+}
+
 fragment moodFields on Mood {
   slug
 }

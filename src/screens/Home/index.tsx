@@ -10,6 +10,7 @@ import {PressableRoundIcon} from 'components/PressableRoundIcon';
 import {useGetSymptomsQuery} from 'api/symptoms';
 import {useGetUserQuery} from 'api/users';
 import {useGetMoodsQuery} from 'api/mood/index';
+import {useGetMedicationCoursesQuery} from 'api/medication-course';
 import {useGetPeriodIntensitiesQuery} from 'api/period-intensity';
 import {
   useGetPeriodRecordsQuery,
@@ -56,6 +57,7 @@ export const Home = () => {
   const getPeriodByDateQueryResponse = useGetPeriodRecordQuery({
     variables: {date: selectedDateString},
   });
+  const getMedicationCoursesQueryResponse = useGetMedicationCoursesQuery();
 
   const periodRecordOfSelectedDay =
     getPeriodByDateQueryResponse.data?.periodRecord;
@@ -66,6 +68,11 @@ export const Home = () => {
   const periodIntensitiesSlugsArray =
     periodIntensitiesQueryResult.data?.periodIntensities.map(
       (period) => period.slug,
+    ) || [];
+
+  const medicationCoursesNamesArray =
+    getMedicationCoursesQueryResponse.data?.medicationCourses.map(
+      (medicationCourse) => medicationCourse.name,
     ) || [];
 
   const moodsSlugsArray =
@@ -105,7 +112,7 @@ export const Home = () => {
     sad,
   };
 
-  const [createPeriodRecordMuatation] = useCreatePeriodRecordMutation({
+  const [createPeriodRecordMutation] = useCreatePeriodRecordMutation({
     refetchQueries: [
       {
         query: GetPeriodRecordsDocument,
@@ -138,7 +145,7 @@ export const Home = () => {
   if (getPeriodsQueryResponse.data === undefined) return null;
 
   const createRecord = (formValues: FieldValues) => {
-    createPeriodRecordMuatation({
+    createPeriodRecordMutation({
       variables: {
         date: selectedDateString,
         intensitySlug: formValues.intensitySlug,
@@ -167,6 +174,10 @@ export const Home = () => {
           setSelectedDateString={setSelectedDateString}
           periodRecords={getPeriodsQueryResponse.data?.periodRecords}
         />
+      </View>
+
+      <View>
+        <Typography>{medicationCoursesNamesArray}</Typography>
       </View>
 
       <Typography style={styles.recordFieldText}>{t('intensity')}</Typography>

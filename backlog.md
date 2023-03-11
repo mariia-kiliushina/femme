@@ -43,6 +43,7 @@
 - ~~Fix toolBAr on Android~~
 - ~~Fix calendar behaviour (highlight selected days if they have records)~~
 - ~~Welcome screen align text center~~
+- ~~Add internationalization for month ( and othr text, use theme for that) ( Ru/Eng)~~
 - Highlight those days with no flows but with some records with dots but not a color
 - Record updating? or creation once again?
 - Higlight in green those that are selected
@@ -52,7 +53,12 @@
 - Create auto sorting for imports
 - Change ordering rule for backend symptoms, moods etc.
 - Add names for symptoms (not clear what does a picture mean)
-- Add internationalization for month ( and othr text, use theme for that) ( Ru/Eng)
+- Add UI for pills intake
+- Integrate with iOS Health App
+- Calendar initial value is wrong
+- Locale for datepicker depends on language
+-
+
 <!-- ## 3. Additional functionality
 
 

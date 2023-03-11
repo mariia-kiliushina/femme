@@ -1,0 +1,55 @@
+query GetMedicationCourse($id: Int!) {
+  medicationCourse(id: $id) {
+    ...medicationCourseFields
+  }
+}
+
+query GetMedicationCourses {
+  medicationCourses {
+    ...medicationCourseFields
+  }
+}
+
+mutation CreateMedicationCourse(
+  $endDate: String!
+  $name: String!
+  $startDate: String!
+  $times: [String!]!
+) {
+  createMedicationCourse(
+    input: {
+      endDate: $endDate
+      name: $name
+      startDate: $startDate
+      times: $times
+    }
+  ) {
+    ...medicationCourseFields
+  }
+}
+
+mutation UpdateMedicationCourse(
+  $id: Int!
+  $endDate: String
+  $name: String
+  $startDate: String
+  $times: [String!]
+) {
+  updateMedicationCourse(
+    input: {
+      id: $id
+      endDate: $endDate
+      name: $name
+      startDate: $startDate
+      times: $times
+    }
+  ) {
+    ...medicationCourseFields
+  }
+}
+
+mutation DeleteMedicationCourse($id: Int!) {
+  deleteMedicationCourse(id: $id) {
+    ...medicationCourseFields
+  }
+}

@@ -1,8 +1,12 @@
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends {[key: string]: unknown}> = {[K in keyof T]: T[K]};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -118,6 +122,19 @@ export type CreateBudgetRecordInput = {
   date: Scalars['String'];
 };
 
+export type CreateMedicationCourseInput = {
+  endDate: Scalars['String'];
+  name: Scalars['String'];
+  startDate: Scalars['String'];
+  times: Array<Scalars['String']>;
+};
+
+export type CreateMedicationCourseTakingInput = {
+  date: Scalars['String'];
+  medicationCourseId: Scalars['Int'];
+  time: Scalars['String'];
+};
+
 export type CreatePeriodRecordInput = {
   date: Scalars['String'];
   intensitySlug: Scalars['String'];
@@ -128,6 +145,22 @@ export type CreatePeriodRecordInput = {
 export type CreateUserInput = {
   password: Scalars['String'];
   username: Scalars['String'];
+};
+
+export type MedicationCourse = {
+  __typename?: 'MedicationCourse';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  user: User;
+};
+
+export type MedicationCourseTaking = {
+  __typename?: 'MedicationCourseTaking';
+  date: Scalars['String'];
+  id: Scalars['Int'];
+  isTaken: Scalars['Boolean'];
+  medicationCourse: MedicationCourse;
+  time: Scalars['String'];
 };
 
 export type Mood = {
@@ -144,6 +177,8 @@ export type Mutation = {
   createBoard: Board;
   createBudgetCategory: BudgetCategory;
   createBudgetRecord: BudgetRecord;
+  createMedicationCourse: MedicationCourse;
+  createMedicationCoursesTaking: MedicationCourseTaking;
   createPeriodRecord: PeriodRecord;
   createUser: User;
   deleteActivityCategory: ActivityCategory;
@@ -151,6 +186,8 @@ export type Mutation = {
   deleteBoard: Board;
   deleteBudgetCategory: BudgetCategory;
   deleteBudgetRecord: BudgetRecord;
+  deleteMedicationCourse: MedicationCourse;
+  deleteMedicationCoursesTaking: MedicationCourseTaking;
   deletePeriodRecord: PeriodRecord;
   deleteUser: User;
   removeBoardMember: Board;
@@ -159,125 +196,127 @@ export type Mutation = {
   updateBoard: Board;
   updateBudgetCategory: BudgetCategory;
   updateBudgetRecord: BudgetRecord;
+  updateMedicationCourse: MedicationCourse;
+  updateMedicationCoursesTaking: MedicationCourseTaking;
   updatePeriodRecord: PeriodRecord;
   updateUser: User;
 };
-
 
 export type MutationAddBoardMemberArgs = {
   input: AddMemberInput;
 };
 
-
 export type MutationAuthorizeArgs = {
   input: AuthorizeInput;
 };
-
 
 export type MutationCreateActivityCategoryArgs = {
   input: CreateActivityCategoryInput;
 };
 
-
 export type MutationCreateActivityRecordArgs = {
   input: CreateActivityRecordInput;
 };
-
 
 export type MutationCreateBoardArgs = {
   input: CreateBoardInput;
 };
 
-
 export type MutationCreateBudgetCategoryArgs = {
   input: CreateBudgetCategoryInput;
 };
-
 
 export type MutationCreateBudgetRecordArgs = {
   input: CreateBudgetRecordInput;
 };
 
+export type MutationCreateMedicationCourseArgs = {
+  input: CreateMedicationCourseInput;
+};
+
+export type MutationCreateMedicationCoursesTakingArgs = {
+  input: CreateMedicationCourseTakingInput;
+};
 
 export type MutationCreatePeriodRecordArgs = {
   input: CreatePeriodRecordInput;
 };
 
-
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
 };
-
 
 export type MutationDeleteActivityCategoryArgs = {
   id: Scalars['Int'];
 };
 
-
 export type MutationDeleteActivityRecordArgs = {
   id: Scalars['Int'];
 };
-
 
 export type MutationDeleteBoardArgs = {
   id: Scalars['Int'];
 };
 
-
 export type MutationDeleteBudgetCategoryArgs = {
   id: Scalars['Int'];
 };
-
 
 export type MutationDeleteBudgetRecordArgs = {
   id: Scalars['Int'];
 };
 
+export type MutationDeleteMedicationCourseArgs = {
+  id: Scalars['Int'];
+};
+
+export type MutationDeleteMedicationCoursesTakingArgs = {
+  id: Scalars['Int'];
+};
 
 export type MutationDeletePeriodRecordArgs = {
   id: Scalars['Int'];
 };
 
-
 export type MutationDeleteUserArgs = {
   id: Scalars['Int'];
 };
-
 
 export type MutationRemoveBoardMemberArgs = {
   input: RemoveMemberInput;
 };
 
-
 export type MutationUpdateActivityCategoryArgs = {
   input: UpdateActivityCategoryInput;
 };
-
 
 export type MutationUpdateActivityRecordArgs = {
   input: UpdateActivityRecordInput;
 };
 
-
 export type MutationUpdateBoardArgs = {
   input: UpdateBoardInput;
 };
-
 
 export type MutationUpdateBudgetCategoryArgs = {
   input: UpdateBudgetCategoryInput;
 };
 
-
 export type MutationUpdateBudgetRecordArgs = {
   input: UpdateBudgetRecordInput;
 };
 
+export type MutationUpdateMedicationCourseArgs = {
+  input: UpdateMedicationCourseInput;
+};
+
+export type MutationUpdateMedicationCoursesTakingArgs = {
+  input: UpdateMedicationCourseTakingInput;
+};
 
 export type MutationUpdatePeriodRecordArgs = {
   input: UpdatePeriodRecordInput;
 };
-
 
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
@@ -316,6 +355,10 @@ export type Query = {
   budgetCategoryTypes: Array<BudgetCategoryType>;
   budgetRecord: BudgetRecord;
   budgetRecords: Array<BudgetRecord>;
+  medicationCourse: MedicationCourse;
+  medicationCourses: Array<MedicationCourse>;
+  medicationCoursesTaking: MedicationCourseTaking;
+  medicationCoursesTakings: Array<MedicationCourseTaking>;
   mood: Mood;
   moods: Array<Mood>;
   periodIntensities: Array<PeriodIntensity>;
@@ -328,28 +371,23 @@ export type Query = {
   users: Array<User>;
 };
 
-
 export type QueryActivityCategoriesArgs = {
   boardsIds?: InputMaybe<Array<Scalars['Int']>>;
   ids?: InputMaybe<Array<Scalars['Int']>>;
   ownersIds?: InputMaybe<Array<Scalars['Int']>>;
 };
 
-
 export type QueryActivityCategoryArgs = {
   id: Scalars['Int'];
 };
-
 
 export type QueryActivityCategoryMeasurementTypeArgs = {
   id: Scalars['Int'];
 };
 
-
 export type QueryActivityRecordArgs = {
   id: Scalars['Int'];
 };
-
 
 export type QueryActivityRecordsArgs = {
   boardsIds?: InputMaybe<Array<Scalars['Int']>>;
@@ -362,16 +400,13 @@ export type QueryActivityRecordsArgs = {
   take?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QueryBoardArgs = {
   id: Scalars['Int'];
 };
 
-
 export type QueryBoardSubjectArgs = {
   id: Scalars['Int'];
 };
-
 
 export type QueryBoardsArgs = {
   iAmAdminOf?: InputMaybe<Scalars['Boolean']>;
@@ -381,27 +416,22 @@ export type QueryBoardsArgs = {
   subjectsIds?: InputMaybe<Array<Scalars['Int']>>;
 };
 
-
 export type QueryBudgetCategoriesArgs = {
   boardsIds?: InputMaybe<Array<Scalars['Int']>>;
   ids?: InputMaybe<Array<Scalars['Int']>>;
 };
 
-
 export type QueryBudgetCategoryArgs = {
   id: Scalars['Int'];
 };
-
 
 export type QueryBudgetCategoryTypeArgs = {
   id: Scalars['Int'];
 };
 
-
 export type QueryBudgetRecordArgs = {
   id: Scalars['Int'];
 };
-
 
 export type QueryBudgetRecordsArgs = {
   amount?: InputMaybe<Scalars['Float']>;
@@ -416,38 +446,39 @@ export type QueryBudgetRecordsArgs = {
   take?: InputMaybe<Scalars['Int']>;
 };
 
+export type QueryMedicationCourseArgs = {
+  id: Scalars['Int'];
+};
+
+export type QueryMedicationCoursesTakingArgs = {
+  id: Scalars['Int'];
+};
 
 export type QueryMoodArgs = {
   slug: Scalars['String'];
 };
 
-
 export type QueryPeriodIntensityArgs = {
   slug: Scalars['String'];
 };
-
 
 export type QueryPeriodRecordArgs = {
   date?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QueryPeriodRecordsArgs = {
   date?: InputMaybe<Scalars['String']>;
 };
-
 
 export type QuerySymptomArgs = {
   id: Scalars['Int'];
 };
 
-
 export type QueryUserArgs = {
   id?: InputMaybe<Scalars['Int']>;
   username?: InputMaybe<Scalars['String']>;
 };
-
 
 export type QueryUsersArgs = {
   ids?: InputMaybe<Array<Scalars['Int']>>;
@@ -502,6 +533,22 @@ export type UpdateBudgetRecordInput = {
   date?: InputMaybe<Scalars['String']>;
   id: Scalars['Int'];
   isTrashed?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type UpdateMedicationCourseInput = {
+  endDate?: InputMaybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  startDate?: InputMaybe<Scalars['String']>;
+  times?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type UpdateMedicationCourseTakingInput = {
+  date?: InputMaybe<Scalars['String']>;
+  id: Scalars['Int'];
+  isTaken?: InputMaybe<Scalars['Boolean']>;
+  medicationCourseId?: InputMaybe<Scalars['Int']>;
+  time?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdatePeriodRecordInput = {

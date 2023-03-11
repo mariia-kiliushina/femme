@@ -7,6 +7,8 @@ export type UserFieldsFragment = { __typename?: 'User', id: number, username: st
 
 export type SymptomFieldsFragment = { __typename?: 'Symptom', id: number, name: string };
 
+export type MedicationCourseFieldsFragment = { __typename?: 'MedicationCourse', id: number, name: string, user: { __typename?: 'User', id: number, username: string } };
+
 export type MoodFieldsFragment = { __typename?: 'Mood', slug: string };
 
 export type PeriodIntensitiesFieldsFragment = { __typename?: 'PeriodIntensity', slug: string };
@@ -41,6 +43,16 @@ export const SymptomFieldsFragmentDoc = gql`
     fragment symptomFields on Symptom {
   id
   name
+}
+    `;
+export const MedicationCourseFieldsFragmentDoc = gql`
+    fragment medicationCourseFields on MedicationCourse {
+  id
+  name
+  user {
+    id
+    username
+  }
 }
     `;
 export const MoodFieldsFragmentDoc = gql`
