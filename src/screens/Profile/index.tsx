@@ -12,10 +12,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import {Controller, useForm} from 'react-hook-form';
 import {LANGUAGES} from 'src/translation/i18n';
 import {format as formatDate} from 'date-fns';
-import {
-  GetMedicationCoursesDocument,
-  useCreateMedicationCourseMutation,
-} from 'api/medication-course';
+import {useCreateMedicationCourseMutation} from 'api/medication-course';
 import {MedicationCourse, MedicationCourseTaking} from 'api/types';
 import {ModalWindow} from 'components/Modal';
 import {Input} from 'components/Inputs/Input';
@@ -23,6 +20,8 @@ import {InputDateTime} from 'components/Inputs/InputDateTime';
 import {PressableOpacity} from 'components/PressableOpacity';
 import {Add, Remove} from 'assets/svg';
 import {LAYOUT} from 'constants/layout';
+import {GetMedicationCoursesTakingsDocument} from 'api/medication-course-taking';
+import {GetPeriodRecordsDocument} from 'api/periods';
 
 type FormValues = {
   startDate: MedicationCourseTaking['date'];
@@ -70,7 +69,10 @@ export const Profile = ({}: TabScreenProps<'Profile'>) => {
   const getAuthorizedUserQueryResult = useGetUserQuery({variables: {id: 0}});
 
   const [createMedicationCourseMutation] = useCreateMedicationCourseMutation({
-    refetchQueries: [{query: GetMedicationCoursesDocument}],
+    refetchQueries: [
+      {query: GetPeriodRecordsDocument},
+      {query: GetMedicationCoursesTakingsDocument},
+    ],
   });
 
   const createMedicationCourse = (formValues: FormValues) => {

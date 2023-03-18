@@ -35,6 +35,20 @@ fragment medicationCourseFields on MedicationCourse {
     username
   }
 }
+fragment medicationCourseTakingFields on MedicationCourseTaking {
+  id
+  date
+  isTaken
+  medicationCourse {
+    id
+    name
+    user {
+      id
+      username
+    }
+  }
+  time
+}
 
 fragment moodFields on Mood {
   slug

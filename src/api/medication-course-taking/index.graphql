@@ -1,0 +1,17 @@
+query GetMedicationCourseTaking($id: Int!) {
+  medicationCoursesTaking(id: $id) {
+    ...medicationCourseTakingFields
+  }
+}
+
+query GetMedicationCoursesTakings($dates: [String!]!) {
+  medicationCoursesTakings(dates: $dates) {
+    ...medicationCourseTakingFields
+  }
+}
+
+mutation UpdateMedicationCourseTaking($id: Int!, $isTaken: Boolean!) {
+  updateMedicationCoursesTaking(input: {id: $id, isTaken: $isTaken}) {
+    ...medicationCourseTakingFields
+  }
+}

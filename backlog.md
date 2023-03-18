@@ -44,10 +44,11 @@
 - ~~Fix calendar behaviour (highlight selected days if they have records)~~
 - ~~Welcome screen align text center~~
 - ~~Add internationalization for month ( and othr text, use theme for that) ( Ru/Eng)~~
+- ~~Calendar initial value is wrong~~
+- ~~Higlight in green those that are selected~~
+- ~~Create modal window component~~
 - Highlight those days with no flows but with some records with dots but not a color
 - Record updating? or creation once again?
-- Higlight in green those that are selected
-- Create modal window component
 - Create Text/Numeric inputs
 - Create user profile component
 - Create auto sorting for imports
@@ -55,9 +56,9 @@
 - Add names for symptoms (not clear what does a picture mean)
 - Add UI for pills intake
 - Integrate with iOS Health App
-- Calendar initial value is wrong
 - Locale for datepicker depends on language
--
+- Group times to separate them from dates
+- Blur pill's name when unfocused
 
 <!-- ## 3. Additional functionality
 

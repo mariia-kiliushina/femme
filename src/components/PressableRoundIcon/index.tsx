@@ -3,10 +3,14 @@ import {PressableOpacity} from 'components/PressableOpacity';
 import {COLORS} from 'constants/colors';
 import headache from 'assets/symptoms/headache.png';
 import {Done} from 'assets/svg';
+import {Typography} from 'components/Typography';
+import {capitalizeFirstLetter} from 'src/helpers/capitalizeFirstLetter';
 
 type TPressableRoundIconProps = {
   marked: boolean;
+  size?: number;
   image?: ImageSourcePropType;
+  label?: string;
   onPress: () => void;
 };
 
@@ -14,29 +18,38 @@ export const PressableRoundIcon = ({
   marked,
   image = headache,
   onPress,
+  label,
+  size = 100,
 }: TPressableRoundIconProps) => {
   return (
-    <PressableOpacity
-      onPress={() => {
-        onPress();
-      }}
-      style={styles.impageWrapper}
-    >
-      <Image resizeMode="contain" source={image} style={styles.image} />
-      {marked && (
-        <View style={styles.doneMark}>
-          <Done color={'white'} width={'100%'} height={'100%'} />
-        </View>
+    <View>
+      <PressableOpacity
+        onPress={() => {
+          onPress();
+        }}
+        style={styles.impageWrapper}
+      >
+        <Image
+          resizeMode="contain"
+          source={image}
+          style={{height: `${size}%`, width: `${size}%`}}
+        />
+        {marked && (
+          <View style={styles.doneMark}>
+            <Done color={'white'} width={'100%'} height={'100%'} />
+          </View>
+        )}
+      </PressableOpacity>
+      {label && (
+        <Typography textStyle={styles.textStyle}>
+          {capitalizeFirstLetter(label)}
+        </Typography>
       )}
-    </PressableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  image: {
-    height: '100%',
-    width: '100%',
-  },
   impageWrapper: {
     borderWidth: 2,
     borderColor: COLORS.secondary,
@@ -44,9 +57,13 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 80 / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   doneMark: {
     position: 'absolute',
+    right: 0,
+    top: 0,
     height: 20,
     width: 20,
     borderRadius: 20 / 2,
@@ -54,5 +71,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     padding: 2,
+  },
+  textStyle: {
+    textAlign: 'center',
   },
 });
