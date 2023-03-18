@@ -17,6 +17,7 @@ import {
   useCreatePeriodRecordMutation,
   useGetPeriodRecordQuery,
   GetPeriodRecordDocument,
+  useUpdatePeriodRecordMutation,
 } from 'api/periods';
 import {
   Symptom,
@@ -58,7 +59,6 @@ type FormValues = {
   intensitySlug: PeriodIntensity['slug'];
   medicationCoursesTakingsIds: MedicationCourseTaking['id'][];
   moodSlug: Mood['slug'];
-  symptomsIds: Symptom['id'][];
 };
 
 export const Home = () => {
@@ -76,6 +76,7 @@ export const Home = () => {
   });
   const getMedicationCoursesTakingsQueryResponse =
     useGetMedicationCoursesTakingsQuery({variables: {dates: [selectedDate]}});
+  const [updatePeriodRecord] = useUpdatePeriodRecordMutation();
 
   const periodRecordOfSelectedDay =
     getPeriodByDateQueryResponse.data?.periodRecord;
@@ -127,7 +128,7 @@ export const Home = () => {
   const [createPeriodRecordMutation] = useCreatePeriodRecordMutation({
     refetchQueries: [
       {query: GetPeriodRecordsDocument},
-      {query: GetPeriodRecordDocument},
+      {query: GetPeriodRecordDocument, variables: {date: selectedDate}},
     ],
   });
 
@@ -139,7 +140,6 @@ export const Home = () => {
       intensitySlug: '',
       medicationCoursesTakingsIds: [],
       moodSlug: '',
-      symptomsIds: [],
     },
   });
 
@@ -288,29 +288,45 @@ export const Home = () => {
           contentContainerStyle={styles.scrollView}
         >
           {symptomsQueryResult.data?.symptoms.map((symptom) => (
-            <Controller
+            <PressableRoundIcon
               key={symptom.id}
-              name="symptomsIds"
-              control={control}
-              render={({field}) => (
-                <PressableRoundIcon
-                  key={symptom.id}
-                  onPress={() => {
-                    if (field.value.includes(symptom.id)) {
-                      const updatedSymptomsIds = field.value.filter(
-                        (symptomId) => {
-                          return symptomId !== symptom.id;
-                        },
-                      );
-                      field.onChange(updatedSymptomsIds);
-                    } else {
-                      field.onChange([...field.value, symptom.id]);
-                    }
-                  }}
-                  image={symptomsImgMap[symptom.name]}
-                  marked={field.value.includes(symptom.id)}
-                />
-              )}
+              onPress={() => {
+                if (periodRecordOfSelectedDay === undefined) {
+                  createPeriodRecordMutation({
+                    variables: {
+                      date: selectedDate,
+                      intensitySlug: 'light',
+                      moodSlug: 'good',
+                      symptomsIds: [symptom.id],
+                    },
+                  });
+                } else {
+                  const symptomsIds = periodRecordOfSelectedDay.symptoms.map(
+                    (_symptom) => _symptom.id,
+                  );
+                  const didIncludeBefore = symptomsIds.includes(symptom.id);
+
+                  const updatedSymptomsIds = didIncludeBefore
+                    ? symptomsIds.filter(
+                        (symptomId) => symptomId !== symptom.id,
+                      )
+                    : [...symptomsIds, symptom.id];
+
+                  updatePeriodRecord({
+                    variables: {
+                      id: periodRecordOfSelectedDay.id,
+                      symptomsIds: updatedSymptomsIds,
+                    },
+                  });
+                }
+              }}
+              image={symptomsImgMap[symptom.name]}
+              marked={
+                periodRecordOfSelectedDay !== undefined &&
+                periodRecordOfSelectedDay.symptoms.some(
+                  (selectedSymptom) => selectedSymptom.id === symptom.id,
+                )
+              }
             />
           ))}
         </ScrollView>
@@ -342,6 +358,7 @@ export const Home = () => {
                       medicationCoursesImg.length
                   ]
                 }
+                // @ts-ignore
                 size={80}
                 label={medicationCourseTaking.medicationCourse.name}
                 marked={medicationCourseTaking.isTaken}
