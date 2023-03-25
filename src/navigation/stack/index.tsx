@@ -1,6 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Welcome} from 'screens/Welcome';
 import {SignIn} from 'screens/SignIn';
+import {SignUp} from 'screens/SignUp ';
 import {Main} from 'src/navigation/tab/index';
 import {RootStackParamList} from 'src/navigation/types';
 import {FC} from 'react';
@@ -44,6 +45,7 @@ export const ScreenNavigation: FC = () => {
           <>
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Sign In" component={SignIn} />
+            <Stack.Screen name="Sign Up" component={SignUp} />
           </>
         )}
       </Stack.Navigator>

@@ -14,31 +14,33 @@ export const ModalWindow = ({
   modalVisible,
   setModalVisible,
 }: TProps) => (
-  <Modal
-    style={styles.modal}
-    animationType="slide"
-    transparent={true}
-    visible={modalVisible}
-    onRequestClose={() => {
-      setModalVisible(!modalVisible);
-    }}
-  >
-    <PressableOpacity
-      onPress={() => setModalVisible(false)}
-      style={styles.pressable}
+  <View>
+    <Modal
+      style={styles.modal}
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}
     >
-      <Pressable>
-        <View style={styles.contentWrapper}>
-          <ScrollView
-            contentContainerStyle={styles.contentContainerStyle}
-            style={styles.scrollView}
-          >
-            {children}
-          </ScrollView>
-        </View>
-      </Pressable>
-    </PressableOpacity>
-  </Modal>
+      <PressableOpacity
+        onPress={() => setModalVisible(false)}
+        style={styles.pressable}
+      >
+        <Pressable style={styles.contentWrapper}>
+          <View style={styles.contentWrapper}>
+            <ScrollView
+              contentContainerStyle={styles.contentContainerStyle}
+              style={styles.scrollView}
+            >
+              {children}
+            </ScrollView>
+          </View>
+        </Pressable>
+      </PressableOpacity>
+    </Modal>
+  </View>
 );
 
 const styles = StyleSheet.create({
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     width: '100%',
-    minHeight: '60%',
+    minHeight: '50%',
     padding: 20,
     justifyContent: 'center',
     backgroundColor: COLORS.greyscaleWhite,

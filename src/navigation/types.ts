@@ -7,7 +7,7 @@ import type {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 
 export type RootStackParamList = {
   Welcome: undefined;
-  'Sign In': undefined;
+  'Sign In': {defaultUserName: string} | undefined;
   'Sign Up': undefined;
   Main: NavigatorScreenParams<TabsParamList>;
 };
