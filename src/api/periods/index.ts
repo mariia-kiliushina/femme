@@ -10,27 +10,26 @@ export type GetPeriodRecordQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetPeriodRecordQuery = { __typename?: 'Query', periodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
+export type GetPeriodRecordQuery = { __typename?: 'Query', periodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity?: { __typename?: 'PeriodIntensity', slug: string } | null, mood?: { __typename?: 'Mood', slug: string } | null, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
 
 export type GetPeriodRecordsQueryVariables = Types.Exact<{
   date?: Types.InputMaybe<Types.Scalars['String']>;
 }>;
 
 
-export type GetPeriodRecordsQuery = { __typename?: 'Query', periodRecords: Array<{ __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } }> };
+export type GetPeriodRecordsQuery = { __typename?: 'Query', periodRecords: Array<{ __typename?: 'PeriodRecord', id: number, date: string, intensity?: { __typename?: 'PeriodIntensity', slug: string } | null, mood?: { __typename?: 'Mood', slug: string } | null, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } }> };
 
 export type CreatePeriodRecordMutationVariables = Types.Exact<{
   date: Types.Scalars['String'];
-  intensitySlug: Types.Scalars['String'];
-  moodSlug: Types.Scalars['String'];
-  symptomsIds: Array<Types.Scalars['Int']> | Types.Scalars['Int'];
+  intensitySlug?: Types.InputMaybe<Types.Scalars['String']>;
+  moodSlug?: Types.InputMaybe<Types.Scalars['String']>;
+  symptomsIds?: Types.InputMaybe<Array<Types.Scalars['Int']> | Types.Scalars['Int']>;
 }>;
 
 
-export type CreatePeriodRecordMutation = { __typename?: 'Mutation', createPeriodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
+export type CreatePeriodRecordMutation = { __typename?: 'Mutation', createPeriodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity?: { __typename?: 'PeriodIntensity', slug: string } | null, mood?: { __typename?: 'Mood', slug: string } | null, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
 
 export type UpdatePeriodRecordMutationVariables = Types.Exact<{
-  date?: Types.InputMaybe<Types.Scalars['String']>;
   id: Types.Scalars['Int'];
   intensitySlug?: Types.InputMaybe<Types.Scalars['String']>;
   moodSlug?: Types.InputMaybe<Types.Scalars['String']>;
@@ -38,14 +37,14 @@ export type UpdatePeriodRecordMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdatePeriodRecordMutation = { __typename?: 'Mutation', updatePeriodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
+export type UpdatePeriodRecordMutation = { __typename?: 'Mutation', updatePeriodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity?: { __typename?: 'PeriodIntensity', slug: string } | null, mood?: { __typename?: 'Mood', slug: string } | null, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
 
 export type DeletePeriodRecordMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type DeletePeriodRecordMutation = { __typename?: 'Mutation', deletePeriodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
+export type DeletePeriodRecordMutation = { __typename?: 'Mutation', deletePeriodRecord: { __typename?: 'PeriodRecord', id: number, date: string, intensity?: { __typename?: 'PeriodIntensity', slug: string } | null, mood?: { __typename?: 'Mood', slug: string } | null, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } } };
 
 
 export const GetPeriodRecordDocument = gql`
@@ -120,7 +119,7 @@ export type GetPeriodRecordsQueryHookResult = ReturnType<typeof useGetPeriodReco
 export type GetPeriodRecordsLazyQueryHookResult = ReturnType<typeof useGetPeriodRecordsLazyQuery>;
 export type GetPeriodRecordsQueryResult = Apollo.QueryResult<GetPeriodRecordsQuery, GetPeriodRecordsQueryVariables>;
 export const CreatePeriodRecordDocument = gql`
-    mutation CreatePeriodRecord($date: String!, $intensitySlug: String!, $moodSlug: String!, $symptomsIds: [Int!]!) {
+    mutation CreatePeriodRecord($date: String!, $intensitySlug: String, $moodSlug: String, $symptomsIds: [Int!]) {
   createPeriodRecord(
     input: {date: $date, intensitySlug: $intensitySlug, moodSlug: $moodSlug, symptomsIds: $symptomsIds}
   ) {
@@ -158,9 +157,9 @@ export type CreatePeriodRecordMutationHookResult = ReturnType<typeof useCreatePe
 export type CreatePeriodRecordMutationResult = Apollo.MutationResult<CreatePeriodRecordMutation>;
 export type CreatePeriodRecordMutationOptions = Apollo.BaseMutationOptions<CreatePeriodRecordMutation, CreatePeriodRecordMutationVariables>;
 export const UpdatePeriodRecordDocument = gql`
-    mutation UpdatePeriodRecord($date: String, $id: Int!, $intensitySlug: String, $moodSlug: String, $symptomsIds: [Int!]) {
+    mutation UpdatePeriodRecord($id: Int!, $intensitySlug: String, $moodSlug: String, $symptomsIds: [Int!]) {
   updatePeriodRecord(
-    input: {id: $id, date: $date, intensitySlug: $intensitySlug, moodSlug: $moodSlug, symptomsIds: $symptomsIds}
+    input: {id: $id, intensitySlug: $intensitySlug, moodSlug: $moodSlug, symptomsIds: $symptomsIds}
   ) {
     ...periodRecordFields
   }
@@ -181,7 +180,6 @@ export type UpdatePeriodRecordMutationFn = Apollo.MutationFunction<UpdatePeriodR
  * @example
  * const [updatePeriodRecordMutation, { data, loading, error }] = useUpdatePeriodRecordMutation({
  *   variables: {
- *      date: // value for 'date'
  *      id: // value for 'id'
  *      intensitySlug: // value for 'intensitySlug'
  *      moodSlug: // value for 'moodSlug'

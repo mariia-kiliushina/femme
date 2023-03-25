@@ -1,7 +1,7 @@
 import * as Types from './types';
 
 import { gql } from '@apollo/client';
-export type PeriodRecordFieldsFragment = { __typename?: 'PeriodRecord', id: number, date: string, intensity: { __typename?: 'PeriodIntensity', slug: string }, mood: { __typename?: 'Mood', slug: string }, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } };
+export type PeriodRecordFieldsFragment = { __typename?: 'PeriodRecord', id: number, date: string, intensity?: { __typename?: 'PeriodIntensity', slug: string } | null, mood?: { __typename?: 'Mood', slug: string } | null, symptoms: Array<{ __typename?: 'Symptom', id: number, name: string }>, user: { __typename?: 'User', id: number, username: string } };
 
 export type UserFieldsFragment = { __typename?: 'User', id: number, username: string };
 

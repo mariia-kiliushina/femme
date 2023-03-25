@@ -147,8 +147,6 @@ export const Home = () => {
                       variables: {
                         date: selectedDate,
                         intensitySlug: periodIntensity.slug,
-                        moodSlug: 'good',
-                        symptomsIds: [],
                       },
                     });
                   } else {
@@ -162,7 +160,7 @@ export const Home = () => {
                 }}
                 image={periodIntensitiesImgMap[periodIntensity.slug]}
                 marked={
-                  periodRecordOfSelectedDay?.intensity.slug ===
+                  periodRecordOfSelectedDay?.intensity?.slug ===
                   periodIntensity.slug
                 }
               />
@@ -185,9 +183,7 @@ export const Home = () => {
                     createPeriodRecordMutation({
                       variables: {
                         date: selectedDate,
-                        intensitySlug: 'light',
                         moodSlug: mood.slug,
-                        symptomsIds: [],
                       },
                     });
                   } else {
@@ -200,7 +196,7 @@ export const Home = () => {
                   }
                 }}
                 image={moodsImgMap[mood.slug]}
-                marked={periodRecordOfSelectedDay?.mood.slug === mood.slug}
+                marked={periodRecordOfSelectedDay?.mood?.slug === mood.slug}
               />
             ))}
           </ScrollView>
@@ -220,8 +216,6 @@ export const Home = () => {
                   createPeriodRecordMutation({
                     variables: {
                       date: selectedDate,
-                      intensitySlug: 'light',
-                      moodSlug: 'good',
                       symptomsIds: [symptom.id],
                     },
                   });

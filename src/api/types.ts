@@ -133,9 +133,9 @@ export type CreateMedicationCourseTakingInput = {
 
 export type CreatePeriodRecordInput = {
   date: Scalars['String'];
-  intensitySlug: Scalars['String'];
-  moodSlug: Scalars['String'];
-  symptomsIds: Array<Scalars['Int']>;
+  intensitySlug?: InputMaybe<Scalars['String']>;
+  moodSlug?: InputMaybe<Scalars['String']>;
+  symptomsIds?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type CreateUserInput = {
@@ -357,8 +357,8 @@ export type PeriodRecord = {
   __typename?: 'PeriodRecord';
   date: Scalars['String'];
   id: Scalars['Int'];
-  intensity: PeriodIntensity;
-  mood: Mood;
+  intensity?: Maybe<PeriodIntensity>;
+  mood?: Maybe<Mood>;
   symptoms: Array<Symptom>;
   user: User;
 };
@@ -605,7 +605,6 @@ export type UpdateMedicationCourseTakingInput = {
 };
 
 export type UpdatePeriodRecordInput = {
-  date?: InputMaybe<Scalars['String']>;
   id: Scalars['Int'];
   intensitySlug?: InputMaybe<Scalars['String']>;
   moodSlug?: InputMaybe<Scalars['String']>;
