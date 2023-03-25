@@ -1,9 +1,7 @@
 import {useState, useEffect} from 'react';
 import {ImageSourcePropType, ScrollView, StyleSheet, View} from 'react-native';
-import {Controller, FieldValues, useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {Typography} from 'components/Typography';
-import {Button} from 'components/Button';
 import {Container} from 'components/Container';
 import {MainCalendar} from 'components/Calendar';
 import {PressableRoundIcon} from 'components/PressableRoundIcon';
@@ -16,8 +14,9 @@ import {
   GetPeriodRecordsDocument,
   useCreatePeriodRecordMutation,
   useGetPeriodRecordQuery,
+  GetPeriodRecordDocument,
+  useUpdatePeriodRecordMutation,
 } from 'api/periods';
-import {Symptom, Mood, PeriodIntensity} from 'api/types';
 import {formatDateToString} from 'src/helpers/formatDate';
 import {LAYOUT} from 'constants/layout';
 
@@ -37,42 +36,48 @@ import discharges from 'assets/symptoms/discharges.png';
 import fatigue from 'assets/symptoms/fatigue.png';
 import spotting from 'assets/symptoms/spotting.png';
 import moodSwings from 'assets/symptoms/mood-swings.png';
-
-type FormValues = {
-  intensitySlug: PeriodIntensity['slug'];
-  moodSlug: Mood['slug'];
-  symptomsIds: Symptom['id'][];
-};
+import blueRed from 'assets/pills/blue-red.png';
+import pinkGreen from 'assets/pills/pink-green.png';
+import purplePink from 'assets/pills/purple-pink.png';
+import blueViolet from 'assets/pills/blue-violet.png';
+import yellowGreen from 'assets/pills/yellow-green.png';
+import yellowRed from 'assets/pills/yellow-red.png';
+import {
+  useGetMedicationCoursesTakingsQuery,
+  useUpdateMedicationCourseTakingMutation,
+} from 'api/medication-course-taking';
 
 export const Home = () => {
-  const [selectedDateString, setSelectedDateString] = useState<string>(
+  const [selectedDate, setSelectedDate] = useState<string>(
     formatDateToString(new Date()),
   );
+
   const getAuthorizedUserQueryResult = useGetUserQuery({variables: {id: 0}});
   const symptomsQueryResult = useGetSymptomsQuery();
   const moodsQueryResult = useGetMoodsQuery();
   const periodIntensitiesQueryResult = useGetPeriodIntensitiesQuery();
   const getPeriodsQueryResponse = useGetPeriodRecordsQuery();
   const getPeriodByDateQueryResponse = useGetPeriodRecordQuery({
-    variables: {date: selectedDateString},
+    variables: {date: selectedDate},
   });
+  const getMedicationCoursesTakingsQueryResponse =
+    useGetMedicationCoursesTakingsQuery({variables: {dates: [selectedDate]}});
+  const [updatePeriodRecord] = useUpdatePeriodRecordMutation();
 
   const periodRecordOfSelectedDay =
     getPeriodByDateQueryResponse.data?.periodRecord;
 
-  const symptomsNamesArray =
+  const symptomsNames =
     symptomsQueryResult.data?.symptoms.map((symptom) => symptom.name) || [];
-
-  const periodIntensitiesSlugsArray =
+  const periodIntensitiesSlugs =
     periodIntensitiesQueryResult.data?.periodIntensities.map(
       (period) => period.slug,
     ) || [];
-
-  const moodsSlugsArray =
+  const moodsSlugs =
     moodsQueryResult.data?.moods.map((mood) => mood.slug) || [];
 
-  const symptomsImg: Record<
-    (typeof symptomsNamesArray)[number],
+  const symptomsImgMap: Record<
+    (typeof symptomsNames)[number],
     ImageSourcePropType
   > = {
     acne,
@@ -86,181 +91,205 @@ export const Home = () => {
     'food craving': foodCraving,
     'mood swings': moodSwings,
   };
-
-  const periodIntensitiesSlugsMock: Record<
-    (typeof periodIntensitiesSlugsArray)[number],
+  const medicationCoursesImg = [
+    blueRed,
+    blueViolet,
+    yellowGreen,
+    purplePink,
+    yellowRed,
+    pinkGreen,
+  ];
+  const periodIntensitiesImgMap: Record<
+    (typeof periodIntensitiesSlugs)[number],
     ImageSourcePropType
-  > = {
-    'no-flow': noFlow,
-    light,
-    medium,
-    heavy,
-  };
+  > = {'no-flow': noFlow, light, medium, heavy};
+  const moodsImgMap: Record<(typeof moodsSlugs)[number], ImageSourcePropType> =
+    {good, sad};
 
-  const moodsSlugsMock: Record<
-    (typeof moodsSlugsArray)[number],
-    ImageSourcePropType
-  > = {
-    good,
-    sad,
-  };
-
-  const [createPeriodRecordMuatation] = useCreatePeriodRecordMutation({
+  const [createPeriodRecordMutation] = useCreatePeriodRecordMutation({
     refetchQueries: [
-      {
-        query: GetPeriodRecordsDocument,
-      },
+      {query: GetPeriodRecordsDocument},
+      {query: GetPeriodRecordDocument, variables: {date: selectedDate}},
     ],
   });
 
-  const {control, handleSubmit, reset} = useForm<FormValues>({
-    defaultValues: {
-      symptomsIds: [],
-    },
-  });
+  const [updateMedicationCourseTaking] =
+    useUpdateMedicationCourseTakingMutation();
 
   const {t} = useTranslation();
-
-  useEffect(() => {
-    const symptomsIdsArrayByDate =
-      periodRecordOfSelectedDay?.symptoms.map((symptom) => symptom.id) || [];
-
-    const initialData = {
-      intensitySlug: periodRecordOfSelectedDay?.intensity.slug,
-      moodSlug: periodRecordOfSelectedDay?.mood.slug,
-      symptomsIds: symptomsIdsArrayByDate || [],
-    };
-
-    reset(initialData);
-  }, [reset, periodRecordOfSelectedDay]);
 
   if (getAuthorizedUserQueryResult.data === undefined) return null;
   if (getPeriodsQueryResponse.data === undefined) return null;
 
-  const createRecord = (formValues: FieldValues) => {
-    createPeriodRecordMuatation({
-      variables: {
-        date: selectedDateString,
-        intensitySlug: formValues.intensitySlug,
-        moodSlug: formValues.moodSlug,
-        symptomsIds: formValues.symptomsIds,
-      },
-    });
-    console.log({
-      variables: {
-        date: selectedDateString,
-        intensitySlug: formValues.intensitySlug,
-        moodSlug: formValues.moodSlug,
-        symptomsIds: formValues.symptomsIds,
-      },
-    });
-  };
-
   return (
-    <Container
-      viewType="scroll"
-      contentContainerStyle={styles.contentContainer}
-    >
+    <Container viewType="fixed" contentContainerStyle={styles.contentContainer}>
       <View style={styles.paddingHorizontalWrapper}>
         <MainCalendar
-          selectedDateString={selectedDateString}
-          setSelectedDateString={setSelectedDateString}
+          selectedDateString={selectedDate}
+          setSelectedDateString={setSelectedDate}
           periodRecords={getPeriodsQueryResponse.data?.periodRecords}
         />
       </View>
-
-      <Typography style={styles.recordFieldText}>{t('intensity')}</Typography>
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollView}
-      >
-        {periodIntensitiesQueryResult.data?.periodIntensities.map(
-          (periodIntensity) => (
-            <Controller
-              key={periodIntensity.slug}
-              name={'intensitySlug'}
-              control={control}
-              render={({field}) => (
-                <PressableRoundIcon
-                  key={periodIntensity.slug}
-                  onPress={() => field.onChange(periodIntensity.slug)}
-                  image={periodIntensitiesSlugsMock[periodIntensity.slug]}
-                  marked={field.value === periodIntensity.slug}
-                />
-              )}
-            />
-          ),
-        )}
-      </ScrollView>
-
-      <Typography style={styles.recordFieldText}>{t('mood')}</Typography>
-
-      <View style={styles.buttonWrapper}>
+      <ScrollView style={styles.formContainer}>
+        <Typography style={styles.recordFieldText}>{t('intensity')}</Typography>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollView}
         >
-          {moodsQueryResult.data?.moods.map((mood) => (
-            <Controller
-              key={mood.slug}
-              name={'moodSlug'}
-              control={control}
-              render={({field}) => (
-                <PressableRoundIcon
-                  key={mood.slug}
-                  onPress={() => field.onChange(mood.slug)}
-                  image={moodsSlugsMock[mood.slug]}
-                  marked={field.value === mood.slug}
-                />
-              )}
+          {periodIntensitiesQueryResult.data?.periodIntensities.map(
+            (periodIntensity) => (
+              <PressableRoundIcon
+                key={periodIntensity.slug}
+                onPress={() => {
+                  if (periodRecordOfSelectedDay === undefined) {
+                    createPeriodRecordMutation({
+                      variables: {
+                        date: selectedDate,
+                        intensitySlug: periodIntensity.slug,
+                      },
+                    });
+                  } else {
+                    updatePeriodRecord({
+                      variables: {
+                        id: periodRecordOfSelectedDay.id,
+                        intensitySlug: periodIntensity.slug,
+                      },
+                    });
+                  }
+                }}
+                image={periodIntensitiesImgMap[periodIntensity.slug]}
+                marked={
+                  periodRecordOfSelectedDay?.intensity?.slug ===
+                  periodIntensity.slug
+                }
+              />
+            ),
+          )}
+        </ScrollView>
+
+        <Typography style={styles.recordFieldText}>{t('mood')}</Typography>
+        <View style={styles.buttonWrapper}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.scrollView}
+          >
+            {moodsQueryResult.data?.moods.map((mood) => (
+              <PressableRoundIcon
+                key={mood.slug}
+                onPress={() => {
+                  if (periodRecordOfSelectedDay === undefined) {
+                    createPeriodRecordMutation({
+                      variables: {
+                        date: selectedDate,
+                        moodSlug: mood.slug,
+                      },
+                    });
+                  } else {
+                    updatePeriodRecord({
+                      variables: {
+                        id: periodRecordOfSelectedDay.id,
+                        moodSlug: mood.slug,
+                      },
+                    });
+                  }
+                }}
+                image={moodsImgMap[mood.slug]}
+                marked={periodRecordOfSelectedDay?.mood?.slug === mood.slug}
+              />
+            ))}
+          </ScrollView>
+        </View>
+
+        <Typography style={styles.recordFieldText}>{t('symptoms')}</Typography>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollView}
+        >
+          {symptomsQueryResult.data?.symptoms.map((symptom) => (
+            <PressableRoundIcon
+              key={symptom.id}
+              onPress={() => {
+                if (periodRecordOfSelectedDay === undefined) {
+                  createPeriodRecordMutation({
+                    variables: {
+                      date: selectedDate,
+                      symptomsIds: [symptom.id],
+                    },
+                  });
+                } else {
+                  const symptomsIds = periodRecordOfSelectedDay.symptoms.map(
+                    (_symptom) => _symptom.id,
+                  );
+                  const didIncludeBefore = symptomsIds.includes(symptom.id);
+
+                  const updatedSymptomsIds = didIncludeBefore
+                    ? symptomsIds.filter(
+                        (symptomId) => symptomId !== symptom.id,
+                      )
+                    : [...symptomsIds, symptom.id];
+
+                  updatePeriodRecord({
+                    variables: {
+                      id: periodRecordOfSelectedDay.id,
+                      symptomsIds: updatedSymptomsIds,
+                    },
+                  });
+                }
+              }}
+              image={symptomsImgMap[symptom.name]}
+              marked={
+                periodRecordOfSelectedDay !== undefined &&
+                periodRecordOfSelectedDay.symptoms.some(
+                  (selectedSymptom) => selectedSymptom.id === symptom.id,
+                )
+              }
             />
           ))}
         </ScrollView>
-      </View>
 
-      <Typography style={styles.recordFieldText}>{t('symptoms')}</Typography>
+        {getMedicationCoursesTakingsQueryResponse.data?.medicationCoursesTakings
+          .length ? (
+          <>
+            <Typography style={styles.recordFieldText}>
+              {t('medicationCourse')}
+            </Typography>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollView}
-      >
-        {symptomsQueryResult.data?.symptoms.map((symptom) => (
-          <Controller
-            key={symptom.id}
-            name="symptomsIds"
-            control={control}
-            render={({field}) => (
-              <PressableRoundIcon
-                key={symptom.id}
-                onPress={() => {
-                  if (field.value.includes(symptom.id)) {
-                    const updatedSymptomsIds = field.value.filter(
-                      (symptomId) => {
-                        return symptomId !== symptom.id;
-                      },
-                    );
-                    field.onChange(updatedSymptomsIds);
-                  } else {
-                    field.onChange([...field.value, symptom.id]);
-                  }
-                }}
-                image={symptomsImg[symptom.name]}
-                marked={field.value.includes(symptom.id)}
-              />
-            )}
-          />
-        ))}
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.scrollView}
+            >
+              {getMedicationCoursesTakingsQueryResponse.data?.medicationCoursesTakings.map(
+                (medicationCourseTaking) => (
+                  <PressableRoundIcon
+                    key={medicationCourseTaking.id}
+                    onPress={() => {
+                      updateMedicationCourseTaking({
+                        variables: {
+                          id: medicationCourseTaking.id,
+                          isTaken: !medicationCourseTaking.isTaken,
+                        },
+                      });
+                    }}
+                    image={
+                      medicationCoursesImg[
+                        medicationCourseTaking.medicationCourse.id %
+                          medicationCoursesImg.length
+                      ]
+                    }
+                    size={80}
+                    label={medicationCourseTaking.medicationCourse.name}
+                    marked={medicationCourseTaking.isTaken}
+                  />
+                ),
+              )}
+            </ScrollView>
+          </>
+        ) : null}
       </ScrollView>
-
-      <Button
-        style={styles.formSubmitButton}
-        onPress={handleSubmit(createRecord)}
-        title={t('save')}
-      />
     </Container>
   );
 };
@@ -271,10 +300,6 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     flexDirection: 'row',
-  },
-  formSubmitButton: {
-    marginTop: 8,
-    marginHorizontal: LAYOUT.paddingHorizontal,
   },
   paddingHorizontalWrapper: {
     paddingHorizontal: LAYOUT.paddingHorizontal,
@@ -289,5 +314,8 @@ const styles = StyleSheet.create({
   },
   recordFieldText: {
     marginLeft: LAYOUT.paddingHorizontal,
+  },
+  formContainer: {
+    flex: 1,
   },
 });

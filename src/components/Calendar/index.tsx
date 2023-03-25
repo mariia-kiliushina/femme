@@ -2,6 +2,8 @@ import {useTranslation} from 'react-i18next';
 import {Calendar, CalendarProps, LocaleConfig} from 'react-native-calendars';
 import {GetPeriodRecordQuery} from 'api/periods';
 import {COLORS} from 'constants/colors';
+import {format} from 'date-fns';
+import {StyleSheet} from 'react-native';
 
 type TMainCalendarProps = {
   periodRecords: GetPeriodRecordQuery['periodRecord'][];
@@ -23,6 +25,7 @@ export const MainCalendar = ({
   );
 
   let periodRecordsDatesConfigForCalendar = {};
+
   periodRecordsDates.forEach((periodRecordDate) => {
     periodRecordsDatesConfigForCalendar = {
       ...periodRecordsDatesConfigForCalendar,
@@ -48,7 +51,7 @@ export const MainCalendar = ({
     <Calendar
       markingType={'custom'}
       markedDates={{...selected}}
-      initialDate={'2023-02-05'}
+      initialDate={format(new Date(), 'yyyy-MM-dd')}
       minDate={'2022-01-01'}
       maxDate={'2023-12-12'}
       disableAllTouchEventsForDisabledDays={true}
@@ -63,7 +66,15 @@ export const MainCalendar = ({
         todayTextColor: COLORS.primary,
         selectedDayBackgroundColor: COLORS.primary,
       }}
+      style={styles.resetPaddins}
       {...props}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  resetPaddins: {
+    paddingRight: 0,
+    paddingLeft: 0,
+  },
+});

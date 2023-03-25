@@ -25,6 +25,6 @@ export const PressableOpacity = ({children, style, ...restProps}: Props) => {
 
 const styles = StyleSheet.create({
   pressed: {
-    opacity: 0.8,
+    opacity: 0.7,
   },
 });

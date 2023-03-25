@@ -44,10 +44,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: LAYOUT.borderRadius,
-    maxHeight: 50,
+    height: 50,
     padding: 10,
     marginBottom: 10,
-    flex: 1,
   },
   /*eslint-disable react-native/no-unused-styles */
   primary: {

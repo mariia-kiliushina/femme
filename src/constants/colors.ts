@@ -1,5 +1,6 @@
 export const COLORS = {
   greyscaleBackgroundGrey: '#f9f9f9',
+  greyscaleOpaqueGrey: 'rgba(0, 0, 0, 0.5)',
   greyscaleContent: '#1a1a1a',
   greyscaleLineGrey: '#e0e0e0',
   greyscaleSecondaryGrey: '#767676',

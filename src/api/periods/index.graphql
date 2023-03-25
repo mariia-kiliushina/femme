@@ -12,9 +12,9 @@ query GetPeriodRecords($date: String) {
 
 mutation CreatePeriodRecord(
   $date: String!
-  $intensitySlug: String!
-  $moodSlug: String!
-  $symptomsIds: [Int!]!
+  $intensitySlug: String
+  $moodSlug: String
+  $symptomsIds: [Int!]
 ) {
   createPeriodRecord(
     input: {
@@ -29,7 +29,6 @@ mutation CreatePeriodRecord(
 }
 
 mutation UpdatePeriodRecord(
-  $date: String
   $id: Int!
   $intensitySlug: String
   $moodSlug: String
@@ -38,7 +37,6 @@ mutation UpdatePeriodRecord(
   updatePeriodRecord(
     input: {
       id: $id
-      date: $date
       intensitySlug: $intensitySlug
       moodSlug: $moodSlug
       symptomsIds: $symptomsIds

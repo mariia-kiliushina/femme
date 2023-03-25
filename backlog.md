@@ -43,16 +43,24 @@
 - ~~Fix toolBAr on Android~~
 - ~~Fix calendar behaviour (highlight selected days if they have records)~~
 - ~~Welcome screen align text center~~
+- ~~Add internationalization for month ( and othr text, use theme for that) ( Ru/Eng)~~
+- ~~Calendar initial value is wrong~~
+- ~~Higlight in green those that are selected~~
+- ~~Create modal window component~~
+- ~~Record updating? or creation once again?~~
+- ~~Add UI for pills intake~~
 - Highlight those days with no flows but with some records with dots but not a color
-- Record updating? or creation once again?
-- Higlight in green those that are selected
-- Create modal window component
+- Make icons diabaled for pressing (and/or shoe loading indicator) when loading
 - Create Text/Numeric inputs
 - Create user profile component
 - Create auto sorting for imports
 - Change ordering rule for backend symptoms, moods etc.
 - Add names for symptoms (not clear what does a picture mean)
-- Add internationalization for month ( and othr text, use theme for that) ( Ru/Eng)
+- Integrate with iOS Health App
+- Locale for datepicker depends on language
+- Group times to separate them from dates
+- Blur pill's name input when unfocused
+
 <!-- ## 3. Additional functionality
 
 

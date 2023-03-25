@@ -5,6 +5,7 @@ import {PressableOpacity} from 'components/PressableOpacity';
 import {VisibilityOn, VisibilityOff, IconsType} from 'assets/svg';
 import {COLORS} from 'constants/colors';
 import {LAYOUT} from 'constants/layout';
+import {ConditionalWrapper} from 'components/ConditionalWrapper';
 
 const INPUT_HORIZONTAL_PADDING = 12;
 const INPUT_VERTICAL_PADDING = 5;
@@ -17,11 +18,12 @@ const icons: IconsType = {
 export type TInputProps = TextInputProps & {
   label?: string;
   errorText?: string | undefined;
-  onPress?: () => void;
   iconName?: string;
   onIconPress?: () => void;
   iconColor?: string;
   editable?: boolean;
+  withErrorPlaceholder?: boolean;
+  onChange: (...event: any[]) => void;
 };
 
 export const Input = ({
@@ -32,6 +34,8 @@ export const Input = ({
   onIconPress,
   iconName,
   iconColor,
+  onChange,
+  withErrorPlaceholder = false,
   ...props
 }: TInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -71,6 +75,7 @@ export const Input = ({
       }
     }
   };
+
   return (
     <View>
       {label && (
@@ -89,14 +94,17 @@ export const Input = ({
             onBlur={() => {
               setIsFocused(false);
             }}
+            onChangeText={onChange}
             {...props}
           />
           {renderIcon()}
         </>
       </View>
-      <Typography textStyle={styles.errorText}>
-        {editable && errorText}
-      </Typography>
+      {withErrorPlaceholder && (
+        <Typography textStyle={styles.errorText}>
+          {editable && errorText}
+        </Typography>
+      )}
     </View>
   );
 };

@@ -55,8 +55,9 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
           <Input
             placeholder={usernamePlaceholder}
             value={value}
-            onChangeText={onChange}
+            onChange={onChange}
             errorText={error?.message}
+            withErrorPlaceholder
           />
         )}
       />
@@ -67,8 +68,9 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
           <InputPassword
             placeholder={passwordPlaceholder}
             value={value}
-            onChangeText={onChange}
+            onChange={onChange}
             errorText={error?.message}
+            withErrorPlaceholder
           />
         )}
       />
