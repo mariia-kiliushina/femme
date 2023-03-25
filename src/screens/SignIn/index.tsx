@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native';
+import {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {Button} from 'components/Button';
 import {Controller, FieldValues, useForm} from 'react-hook-form';
@@ -10,16 +11,21 @@ import {Input} from 'components/Inputs/Input';
 import {InputPassword} from 'components/Inputs/InputPassword';
 import {Typography} from 'components/Typography';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {ModalWindow} from 'components/Modal';
 
 type FormValues = {username: string; password: string};
 
-export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
+export const SignIn = ({route}: RootStackScreenProps<'Sign In'>) => {
+  const hasJustRegistered = Boolean(route.params?.defaultUserName);
+  const defaultUserName = route.params?.defaultUserName;
+  const [modalVisible, setModalVisible] = useState(hasJustRegistered);
   const [authorize] = useAuthorizeMutation();
-
   const {t} = useTranslation();
 
   const {control, handleSubmit} = useForm<FormValues>({
-    defaultValues: {username: 'john-doe', password: 'john-doe-password'},
+    defaultValues: {
+      username: defaultUserName ? defaultUserName : '',
+    },
   });
 
   const onSignIn = async (formValues: FieldValues) => {
@@ -80,6 +86,22 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
         title={t('sign in')}
         onPress={handleSubmit(onSignIn)}
       />
+      {modalVisible && (
+        <ModalWindow
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        >
+          <View style={styles.modalView}>
+            <Typography fontSize="24" textStyle={styles.modalText}>
+              Congratulations
+            </Typography>
+            <Typography fontSize="18" textStyle={styles.modalText}>
+              You have succesfully registered in Femme
+            </Typography>
+            <Button title="Continue" onPress={() => setModalVisible(false)} />
+          </View>
+        </ModalWindow>
+      )}
     </Container>
   );
 };
@@ -87,5 +109,13 @@ export const SignIn = ({}: RootStackScreenProps<'Sign In'>) => {
 const styles = StyleSheet.create({
   text: {
     marginVertical: 20,
+  },
+  modalText: {
+    textAlign: 'center',
+  },
+  modalView: {
+    justifyContent: 'center',
+    flex: 1,
+    rowGap: 10,
   },
 });

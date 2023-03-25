@@ -10,6 +10,9 @@ export const Welcome = ({navigation}: RootStackScreenProps<'Welcome'>) => {
   const onSignIn = () => {
     navigation.navigate('Sign In');
   };
+  const onSignUp = () => {
+    navigation.navigate('Sign Up');
+  };
 
   const {t} = useTranslation();
 
@@ -31,6 +34,7 @@ export const Welcome = ({navigation}: RootStackScreenProps<'Welcome'>) => {
         {t('welcome to femme')}
       </Typography>
       <Button type="primary" title={t('sign in')} onPress={onSignIn} />
+      <Button type="primary" title={t('sign up')} onPress={onSignUp} />
     </Container>
   );
 };

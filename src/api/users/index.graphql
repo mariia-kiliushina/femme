@@ -3,3 +3,10 @@ query GetUser($id: Int, $username: String) {
     ...userFields
   }
 }
+
+mutation CreateUser($username: String!, $password: String!) {
+  createUser(input: {username: $username, password: $password}) {
+    ...userFields
+  }
+}
+v
